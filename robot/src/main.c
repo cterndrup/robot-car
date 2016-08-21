@@ -2,7 +2,6 @@
 
 /* SYSTEM INCLUDES */
 #include <avr/io.h>
-#include <util/delay.h>
 
 /* APPLICATION INCLUDES */
 #include "pwm/pfcpwm.h"
@@ -22,7 +21,7 @@ int main(void)
     //
 
     //
-    // Trivial test program to drive a signal motor using two inputs:
+    // Trivial test program to drive a DC motor using two inputs:
     // 1). A PWM output signal to drive the motor
     // 2). A low output signal
     // 
