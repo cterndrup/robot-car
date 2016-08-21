@@ -72,8 +72,8 @@
  */
 #define SET_TIMER_MODE_WGM(reg, mode) \
         do { \
-            reg##A |= (mode >> 2); \
-            reg##B |= ((mode) >> 2) << 3; \
+            reg##A |= ((mode) & 0b00000011); \
+            reg##B |= (((mode) << 1) & 0b00011000); \
         } while (0)
 
 /*!
@@ -84,8 +84,12 @@
  * @param[in]     mode  The compare output mode (see #define's above)
  */
 #define SET_TIMER_MODE_COM(reg, mode) \
-        reg |= ((mode & 0b11) << 6) | ((mode & 0b11) << 4) | \
-            ((mode & 0b11) << 2)
+        do { \
+            unsigned char modeMask = (mode) & 0b00000011; \
+            reg |= (modeMask << 6); \
+            reg |= (modeMask << 4); \
+            reg |= (modeMask << 2); \
+        } while (0)
 
 /*!
  * Helper macro to set the waveform generation mode bits and the compare 
@@ -96,7 +100,7 @@
  * @param[in]     comMode   The compare output mode
  * @param[in]     wgmMode   The waveform generation mode  
  */
-#define SET_TIMER_MODE(reg, comMode, wgmMode) \
+#define SET_TIMER_MODE(reg, wgmMode, comMode) \
         do { \
             SET_TIMER_MODE_WGM(reg, wgmMode); \
             SET_TIMER_MODE_COM(reg##A, comMode); \
@@ -125,7 +129,6 @@
 /*!
  * Helper macro to intialize a 16-bit timer
  *
- * @param[in/out] port      An I/O port
  * @param[in/out] prr       A power reduction register (i.e. PRR1) whose given
  *                          bits are cleared to enable timer to be initialized
  * @param[in]     prrBit    Bit in prr to be cleared
@@ -133,12 +136,12 @@
  * @param[in]     wgmMode   The waveform generation mode for th timer
  * @param[in]     clkSrc    The clock source for the timer
  */
-#define TIMER16_INIT(port, prr, prrBit, tccr, comMode, wgmMode, clkSrc) \
+#define TIMER16_INIT(prr, prrBit, tccr, wgmMode, comMode, clkSrc) \
         do { \
             /* clear appropriate power/reduction timer bit to 0 */ \
             CLEAR_BIT(prr, prrBit); \
             /* set timer mode */ \
-            SET_TIMER_MODE(tccr, comMode, wgmMode); \
+            SET_TIMER_MODE(tccr, wgmMode, comMode); \
             /* set clk source */ \
             SET_CLK_SOURCE(tccr##B, clkSrc); \
         } while (0)

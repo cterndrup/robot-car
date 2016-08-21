@@ -1,10 +1,10 @@
 /* Main function for robot execution */
 
-/* ------------------------ SYSTEM INCLUDES --------------------------------- */
+/* SYSTEM INCLUDES */
 #include <avr/io.h>
-//#include <util/delay.h>
+#include <util/delay.h>
 
-/* ------------------------ APPLICATION INCLUDES ---------------------------- */
+/* APPLICATION INCLUDES */
 #include "pwm/pfcpwm.h"
 #include "common/utils.h"
 
@@ -30,13 +30,15 @@ int main(void)
     // forward direction. PWM is used to control the speed of the motor.
     //
 
-    // Initialize PWM on 4th bit of PORTE
-    PFC_PWM_TOP_OCRnA_INIT(PORTE, DDRE, 4, PRR1, 3, TCCR3,
+    // Initialize PWM
+    PFC_PWM_TOP_OCRnA_INIT(DDRE, 4, PRR1, 3, TCCR3,
         CLK_SEL_NO_PRESCALE, OCR3);
 
-    // Set $th bit of PORTH to an output, then clear it
     SET_PORT_BIT_OUTPUT(DDRH, 4);
     CLEAR_BIT(PORTH, 4);
+
+    // Set duty cycle
+    PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 25);
 
     // Run infinitely
     while (1);
