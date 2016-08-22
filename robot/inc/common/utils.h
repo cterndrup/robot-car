@@ -75,4 +75,21 @@
 #define SET_PORT_BIT_OUTPUT(port, bit) \
         SET_BIT(port, bit)
 
+/* ------------------------ TYPEDEFS ---------------------------------------- */
+
+/*!
+ * An I/O port
+ */
+typedef volatile uint8_t PORT;
+
+/*!
+ * An 8-bit CPU register
+ */
+typedef volatile uint8_t REG8;
+
+/*!
+ * A 16-bit CPU register
+ */
+typedef volatile uint16_t REG16;
+
 #endif /* _COMMON_UTILS_ */

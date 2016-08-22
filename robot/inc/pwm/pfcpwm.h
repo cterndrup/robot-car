@@ -5,6 +5,7 @@
 
 /* ------------------------ INCLUDES ---------------------------------------- */
 #include "timer/timer16/timer16.h"
+#include "common/utils.h"
 
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 #define NON_INVERTED_PWM    (0)
@@ -32,9 +33,9 @@
  * @param[in/out] prr       A power reduction register
  * @param[in]     prrBit    The bit in the power reduction register to clear
  *                          in order to enable the corresponding timer unit
- * @param[in]     tccr      A timer control register
+ * @param[in/out] tccr      A timer control register
  * @param[in]     clkSrc    The clock source for the timer used for PWM
- * @param[in]     ocr       An output compare register of timer used for PWM
+ * @param[in/out] ocr       An output compare register of timer used for PWM
  */
 #define PFC_PWM_TOP_OCRnA_INIT(ddr, bit, prr, prrBit, tccr, \
             clkSrc, ocr) \
@@ -49,5 +50,25 @@
             /*set appropriate port bits to output mode */ \
             SET_PORT_BIT_OUTPUT(ddr, bit); \
         } while (0)
-            
+
+/* ------------------------ FUNCTION DECLARATIONS --------------------------- */
+
+/*!
+ * Function to initialize phase & frequency correct (PFC) PWM on the I/O
+ * bit of the provided port
+ *
+ * @param[in/out] ddr       A data direction register for port
+ * @param[in]     bit       The bit of port to initialize PWM on
+ * @param[in/out] prr       A power reduction register
+ * @param[in]     prrBit    The bit in the power reduction register to clear
+ *                          in order to enable the corresponding timer unit
+ * @param[in/out] tccrA     Timer control register A
+ * @param[in/out] tccrB     Timer control register B
+ * @param[in]     clkSrc    The clock source for the timer used for PWM
+ * @param[in/out] ocrA      Output compare register A of timer used for PWM
+ * @param[in/out] ocrB      Output compare register B of timer used for PWM
+ */
+void pfcPWMInit(REG8 *ddr, uint8_t bit, REG8 *prr, uint8_t prrBit, REG8 *tccrA,
+                REG8 *tccrB, uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB);
+
 #endif /* _PFCPWM_H_ */

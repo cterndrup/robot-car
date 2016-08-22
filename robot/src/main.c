@@ -1,12 +1,14 @@
 /* Main function for robot execution */
 
-/* SYSTEM INCLUDES */
+/* ------------------------  SYSTEM INCLUDES -------------------------------- */
 #include <avr/io.h>
+#include <util/delay.h>
 
-/* APPLICATION INCLUDES */
+/* ------------------------ APPLICATION INCLUDES ---------------------------- */
 #include "pwm/pfcpwm.h"
 #include "common/utils.h"
 
+/* ------------------------ MAIN -------------------------------------------- */
 int main(void)
 {
     // 
@@ -21,7 +23,7 @@ int main(void)
     //
 
     //
-    // Trivial test program to drive a DC motor using two inputs:
+    // Trivial test program to drive a motor using two inputs:
     // 1). A PWM output signal to drive the motor
     // 2). A low output signal
     // 
@@ -30,17 +32,27 @@ int main(void)
     //
 
     // Initialize PWM
-    PFC_PWM_TOP_OCRnA_INIT(DDRE, 4, PRR1, 3, TCCR3,
-        CLK_SEL_NO_PRESCALE, OCR3);
+    pfcPWMInit(&DDRE, 4, &PRR1, 3, &TCCR3A, &TCCR3B, CLK_SEL_NO_PRESCALE,
+        &OCR3A, &OCR3B);
 
     SET_PORT_BIT_OUTPUT(DDRH, 4);
     CLEAR_BIT(PORTH, 4);
 
-    // Set duty cycle
-    PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 25);
-
     // Run infinitely
-    while (1);
+    while (1)
+    {
+        // Set duty cycle
+        PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 0);
+        _delay_ms(2000);
+        PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 25);
+        _delay_ms(2000);
+        PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 50);
+        _delay_ms(2000);
+        PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 75);
+        _delay_ms(2000);
+        PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(OCR3, 100);
+        _delay_ms(2000);
+    }
 
     return 0;
 }
