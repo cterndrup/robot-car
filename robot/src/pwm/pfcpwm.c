@@ -23,7 +23,8 @@ pfcPWMInit
     REG8    *tccrB,
     uint8_t  clkSrc,
     REG16   *ocrA,
-    REG16   *ocrB
+    REG16   *ocrB,
+    REG16   *ocrC
 )
 {
     // Initialize 16-bit timer
@@ -33,6 +34,7 @@ pfcPWMInit
     // Initialize output compare registers
     SET_OUTPUT_COMPARE_REG(*ocrA, 0xFFFF);
     SET_OUTPUT_COMPARE_REG(*ocrB, 0x0000);
+    SET_OUTPUT_COMPARE_REG(*ocrC, 0x0000);
 
     // Set OCnx pin to output to enable PWM waveform generation
     SET_PORT_BIT_OUTPUT(*ddr, bit);

@@ -67,8 +67,10 @@
  * @param[in]     clkSrc    The clock source for the timer used for PWM
  * @param[in/out] ocrA      Output compare register A of timer used for PWM
  * @param[in/out] ocrB      Output compare register B of timer used for PWM
+ * @param[in/out] ocrC      Output compare register C of timer used for PWM
  */
 void pfcPWMInit(REG8 *ddr, uint8_t bit, REG8 *prr, uint8_t prrBit, REG8 *tccrA,
-                REG8 *tccrB, uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB);
+                REG8 *tccrB, uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB,
+                REG16 *ocrC);
 
 #endif /* _PFCPWM_H_ */
