@@ -1,14 +1,20 @@
 SRC_PATH  := /home/pi/robot/src
 INC	      := /home/pi/robot/inc
+
 PWMDIR	  := $(SRC_PATH)/pwm
 PWMOBJS   := pfcpwm.o
+
 TIMERDIR  := $(SRC_PATH)/timer/timer16
 TIMEROBJS := timer16.o
 
+SPIDIR    := $(SRC_PATH)/spi
+SPIOBJS   := spi.o
+
 PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
+SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
 
-OBJS	  := $(TIMEROBJS) $(PWMOBJS)
+OBJS	  := $(TIMEROBJS) $(PWMOBJS) $(SPIOBJS)
 EXEC	  := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -29,6 +35,9 @@ $(PWMDIR)/%.o: $(PWMDIR)/%.c $(TIMEROBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(TIMERDIR)/%.o: $(TIMERDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
+$(SPIDIR)/%.o: $(SPIDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 copy:
