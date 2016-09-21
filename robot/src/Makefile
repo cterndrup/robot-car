@@ -1,7 +1,7 @@
 SRC_PATH  := /home/pi/robot/src
-INC	      := /home/pi/robot/inc
+INC       := /home/pi/robot/inc
 
-PWMDIR	  := $(SRC_PATH)/pwm
+PWMDIR    := $(SRC_PATH)/pwm
 PWMOBJS   := pfcpwm.o
 
 TIMERDIR  := $(SRC_PATH)/timer/timer16
@@ -14,12 +14,12 @@ PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
 
-OBJS	  := $(TIMEROBJS) $(PWMOBJS) $(SPIOBJS)
-EXEC	  := main
+OBJS      := $(TIMEROBJS) $(PWMOBJS) $(SPIOBJS)
+EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
-HEX		  := main.hex
-MCU		  := atmega2560
+HEX       := main.hex
+MCU       := atmega2560
 
 .PHONY: all copy upload clean
 
