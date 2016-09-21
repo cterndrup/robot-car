@@ -32,7 +32,7 @@ void spiMasterInit(void);
  * Function to transmit a single byte of data to SPI slave
  * 
  * @param[in]       sendByte  A byte of data to send to SPI slave
- * @param[in/out]   pRecvByte  A pointer to a byte of data. If not NULL, this
+ * @param[in/out]   pRecvByte A pointer to a byte of data. If not NULL, this
  *                            argument is populated with the data sent from
  *                            the slave device. 
  */
