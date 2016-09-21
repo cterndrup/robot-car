@@ -7,8 +7,8 @@
 #include "common/utils.h"
 
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
-#define COUNTER_BOTTOM 0x0000
-#define COUNTER_MAX    0xFFFF
+#define COUNTER_BOTTOM  (0x0000)
+#define COUNTER_MAX     (0xFFFF)
 
 //
 // USEFUL ABBREVIATIONS
@@ -23,45 +23,45 @@
 // COM = compare output mode
 //
 
-#define TIMER_MODE_WGM_NORMAL               0x00
-#define TIMER_MODE_WGM_PC_PWM_8b            0x01
-#define TIMER_MODE_WGM_PC_PWM_9b            0x02
-#define TIMER_MODE_WGM_PC_PWM_10b           0x03
-#define TIMER_MODE_WGM_CTC                  0x04
-#define TIMER_MODE_WGM_FPWM_8b              0x05
-#define TIMER_MODE_WGM_FPWM_9b              0x06
-#define TIMER_MODE_WGM_FPWM_10b             0x07
-#define TIMER_MODE_WGM_PFC_PWM_TOP_ICRn     0x08
-#define TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA    0x09  
-#define TIMER_MODE_WGM_PC_PWM_TOP_ICRn      0x0A
-#define TIMER_MODE_WGM_PC_PWM_TOP_OCRnA     0x0B
-#define TIMER_MODE_WGM_CTC_TOP_ICRn         0x0C
-#define TIMER_MODE_WGM_FPWM_TOP_ICRn        0x0E
-#define TIMER_MODE_WGM_FPWM_TOP_OCRnA       0x0F
+#define TIMER_MODE_WGM_NORMAL               (0x00)
+#define TIMER_MODE_WGM_PC_PWM_8b            (0x01)
+#define TIMER_MODE_WGM_PC_PWM_9b            (0x02)
+#define TIMER_MODE_WGM_PC_PWM_10b           (0x03)
+#define TIMER_MODE_WGM_CTC                  (0x04)
+#define TIMER_MODE_WGM_FPWM_8b              (0x05)
+#define TIMER_MODE_WGM_FPWM_9b              (0x06)
+#define TIMER_MODE_WGM_FPWM_10b             (0x07)
+#define TIMER_MODE_WGM_PFC_PWM_TOP_ICRn     (0x08)
+#define TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA    (0x09)  
+#define TIMER_MODE_WGM_PC_PWM_TOP_ICRn      (0x0A)
+#define TIMER_MODE_WGM_PC_PWM_TOP_OCRnA     (0x0B)
+#define TIMER_MODE_WGM_CTC_TOP_ICRn         (0x0C)
+#define TIMER_MODE_WGM_FPWM_TOP_ICRn        (0x0E)
+#define TIMER_MODE_WGM_FPWM_TOP_OCRnA       (0x0F)
 
-#define TIMER_MODE_COM_NON_PWM_NORMAL       0x00
-#define TIMER_MODE_COM_NON_PWM_TOGGLE       0x01
-#define TIMER_MODE_COM_NON_PWM_CLEAR        0x02
-#define TIMER_MODE_COM_NON_PWM_SET          0x03
+#define TIMER_MODE_COM_NON_PWM_NORMAL       (0x00)
+#define TIMER_MODE_COM_NON_PWM_TOGGLE       (0x01)
+#define TIMER_MODE_COM_NON_PWM_CLEAR        (0x02)
+#define TIMER_MODE_COM_NON_PWM_SET          (0x03)
 
-#define TIMER_MODE_COM_FPWM_NORMAL          0x00 
-#define TIMER_MODE_COM_FPWM_TOGGLE          0x01
-#define TIMER_MODE_COM_FPWM_CLEAR           0x02
-#define TIMER_MODE_COM_FPWM_SET             0x03
+#define TIMER_MODE_COM_FPWM_NORMAL          (0x00) 
+#define TIMER_MODE_COM_FPWM_TOGGLE          (0x01)
+#define TIMER_MODE_COM_FPWM_CLEAR           (0x02)
+#define TIMER_MODE_COM_FPWM_SET             (0x03)
 
-#define TIMER_MODE_COM_PFC_PWM_NORMAL       0x00
-#define TIMER_MODE_COM_PFC_PWM_TOGGLE       0x01
-#define TIMER_MODE_COM_PFC_PWM_CLEAR_UP     0x02
-#define TIMER_MODE_COM_PFC_PWM_SET_UP       0x03
+#define TIMER_MODE_COM_PFC_PWM_NORMAL       (0x00)
+#define TIMER_MODE_COM_PFC_PWM_TOGGLE       (0x01)
+#define TIMER_MODE_COM_PFC_PWM_CLEAR_UP     (0x02)
+#define TIMER_MODE_COM_PFC_PWM_SET_UP       (0x03)
 
-#define CLK_SEL_NO_SOURCE                   0x00
-#define CLK_SEL_NO_PRESCALE                 0x01
-#define CLK_SEL_PRESCALE_8                  0x02
-#define CLK_SEL_PRESCALE_64                 0x03
-#define CLK_SEL_PRESCALE_256                0x04
-#define CLK_SEL_PRESCALE_1024               0x05
-#define CLK_SEL_EXTERN_FALL_EDGE            0x06
-#define CLK_SEL_EXTERN_RISE_EDGE            0x07
+#define CLK_SEL_NO_SOURCE                   (0x00)
+#define CLK_SEL_NO_PRESCALE                 (0x01)
+#define CLK_SEL_PRESCALE_8                  (0x02)
+#define CLK_SEL_PRESCALE_64                 (0x03)
+#define CLK_SEL_PRESCALE_256                (0x04)
+#define CLK_SEL_PRESCALE_1024               (0x05)
+#define CLK_SEL_EXTERN_FALL_EDGE            (0x06)
+#define CLK_SEL_EXTERN_RISE_EDGE            (0x07)
 
 /*!
  * Helper macro to set the waveform generation bits of the timer control
@@ -119,7 +119,9 @@
  * @param[in]     source    The desired clock source for the timer/counter
  */
 #define SET_CLK_SOURCE(tccrB, source) \
-        tccrB |= source
+        do { \
+            tccrB |= source; \
+        } while (0)
 
 /*!
  * Helper macro to set output compare register to provided value
@@ -129,8 +131,9 @@
  * @param[in]     val   The value reg is set to
  */
 #define SET_OUTPUT_COMPARE_REG(reg, val) \
-        reg = val
-
+        do { \
+            reg = val; \
+        } while (0)
 /*!
  * Helper macro to intialize a 16-bit timer
  *

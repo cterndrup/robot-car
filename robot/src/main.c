@@ -11,17 +11,6 @@
 /* ------------------------ MAIN -------------------------------------------- */
 int main(void)
 {
-    // 
-    // Currently, this code is commented out because the enables pins 
-    // are fixed high on the L298 motor driver by jumpers. 
-    //
-    // Initialize directional I/O register bits 
-    // to outputs
-    //
-    // SET_PORT_BIT_OUTPUT(DDRC, 0);
-    // SET_PORT_BIT_OUTPUT(DDRC, 1);
-    //
-
     //
     // Trivial test program to drive a motor using two inputs:
     // 1). A PWM output signal to drive the motor

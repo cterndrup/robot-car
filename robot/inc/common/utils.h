@@ -1,11 +1,11 @@
 /* Common set of utilities for all of project */
 
-#ifndef _COMMON_UTILS_
-#define _COMMON_UTILS_
+#ifndef _COMMON_UTILS_H_
+#define _COMMON_UTILS_H_
 
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
-#define INPUT_PORT      0x00
-#define OUTPUT_PORT     0xFF
+#define INPUT_PORT      (0x00)
+#define OUTPUT_PORT     (0xFF)
 
 /*!
  * Sets a bit high for a given byte
@@ -14,7 +14,9 @@
  * @param[in]     bit   The bit position to set in byte
  */
 #define SET_BIT(byte, bit) \
-        byte |= (1 << (bit))
+        do { \
+            byte |= (1 << (bit)); \
+        } while (0)
 
 /*!
  * Clears a bit for a given byte
@@ -23,7 +25,9 @@
  * @param[in]     bit   The bit position to clear in byte
  */
 #define CLEAR_BIT(byte, bit) \
-        byte &= ~(1 << (bit))
+        do { \
+            byte &= ~(1 << (bit)); \
+        } while (0)
 
 /*!
  * Toggles a bit for a given byte
@@ -32,7 +36,9 @@
  * @param[in]     bit   The bit position to toggle in byte
  */
 #define TOGGLE_BIT(byte, bit) \
-        byte ^= (1 << (bit))
+        do { \
+            byte ^= (1 << (bit)); \
+        } while (0)
 
 /*!
  * Helper macro to set an I/O port's mode to either input or output
@@ -45,7 +51,9 @@
  *       direction register (DDR)
  */
 #define SET_PORT_MODE(port, mode) \
-        port = mode
+        do { \
+            port = mode; \
+        } while (0)
 
 /*!
  * Helper macro to set the data direction mode of a given I/O port's bit to
@@ -92,4 +100,4 @@ typedef volatile uint8_t REG8;
  */
 typedef volatile uint16_t REG16;
 
-#endif /* _COMMON_UTILS_ */
+#endif /* _COMMON_UTILS_H_ */

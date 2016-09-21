@@ -22,7 +22,9 @@
  *       integer division
  */
 #define PFC_PWM_TOP_OCRnA_SET_DUTY_CYCLE(ocr, pct) \
-        ocr##B = ((ocr##A)/100)*(pct)
+        do { \
+            ocr##B = ((ocr##A)/100)*(pct); \
+        } while (0)
 
 /*!
  * Helper macro to initialize phase & frequency correct (PFC) PWM on the I/O
