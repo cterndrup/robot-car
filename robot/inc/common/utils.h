@@ -8,6 +8,13 @@
 #define OUTPUT_PORT     (0xFF)
 
 /*!
+ * Status codes for functions return values
+ */
+#define STATUS_OK              (0)
+#define STATUS_ERR_GENERAL     (-1)
+#define STATUS_ERR_INVALID_PTR (-2)
+
+/*!
  * Sets a bit high for a given byte
  *
  * @param[in/out] byte  The byte whose bit to set
@@ -99,5 +106,10 @@ typedef volatile uint8_t REG8;
  * A 16-bit CPU register
  */
 typedef volatile uint16_t REG16;
+
+/*!
+ * A status code
+ */
+typedef int8_t STATUS;
 
 #endif /* _COMMON_UTILS_H_ */
