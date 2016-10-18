@@ -35,8 +35,8 @@ pwmConstruct
     }
 
     // Populate the pwm object data fields
-    pPwm->ddr = ddr;
-    pPwm->bit = bit;
+    pPwm->ddr    = ddr;
+    pPwm->bit    = bit;
 
     pPwm->prr    = prr;
     pPwm->prrBit = prrBit;
@@ -45,9 +45,9 @@ pwmConstruct
     pPwm->tccrB  = tccrB;
     pPwm->clkSrc = clkSrc;
 
-    pPwm->ocrA = ocrA;
-    pPwm->ocrB = ocrB;
-    pPwm->ocrC = ocrC;
+    pPwm->ocrA   = ocrA;
+    pPwm->ocrB   = ocrB;
+    pPwm->ocrC   = ocrC;
 
     // Populate the pwm object's methods
     pPwm->pwmInit         = pwmInit;
