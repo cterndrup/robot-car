@@ -88,7 +88,7 @@
  */
 #define SET_TIMER_MODE_COM(reg, mode) \
         do { \
-            unsigned char modeMask = (mode) & 0b00000011; \
+            uint8_t modeMask = (mode) & 0b00000011; \
             reg |= (modeMask << 6); \
             reg |= (modeMask << 4); \
             reg |= (modeMask << 2); \

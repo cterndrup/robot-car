@@ -7,7 +7,7 @@
 #include "timer/timer16/timer16.h"
 #include "common/utils.h"
 
-/* ------------------------- FUNCTIONS -------------------------------------- */
+/* ------------------------- FUNCTION DEFINITIONS --------------------------- */
 
 /*!
  * @ref timer16.h for function documentation

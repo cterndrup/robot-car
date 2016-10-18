@@ -8,7 +8,7 @@
 #include "spi/spi.h"
 #include "common/utils.h"
 
-/* ------------------------- FUNCTIONS -------------------------------------- */
+/* ------------------------- FUNCTION DEFINITIONS --------------------------- */
 
 /*!
  * @ref spi.h for function documentation
@@ -65,6 +65,7 @@ spiMasterSend(char sendByte, char *pRecvByte)
     // Responsibility of the caller to pull SS high when transmission is 
     // complete
     //
+    // TODO: Don't forget to address this.
 }
 
 /*!
