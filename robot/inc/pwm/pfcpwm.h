@@ -11,6 +11,108 @@
 #define NON_INVERTED_PWM    (0)
 #define INVERTED_PWM        (1)
 
+// See note in PWM struct below above field id
+#define PWM_ID_LEFT         (0)
+#define PWM_ID_RIGHT        (1)
+
+/* ------------------------ TYPE DEFINITIONS -------------------------------- */
+
+/*!
+ * Forward definition of the PWM object
+ */
+typedef struct PWM PWM;
+
+/*!
+ * Type definition for the PWM object's constructor
+ * 
+ * @param[in/out] pPWM      pointer to the PWM object to construct
+ * @param[in/out] ddr       A data direction register for port
+ * @param[in]     bit       The bit of port to initialize PWM on
+ * @param[in/out] prr       A power reduction register
+ * @param[in]     prrBit    The bit in the power reduction register to clear
+ *                          in order to enable the corresponding timer unit
+ * @param[in/out] tccrA     Timer control register A
+ * @param[in/out] tccrB     Timer control register B
+ * @param[in]     clkSrc    The clock source for the timer used for PWM
+ * @param[in/out] ocrA      Output compare register A of timer used for PWM
+ * @param[in/out] ocrB      Output compare register B of timer used for PWM
+ * @param[in/out] ocrC      Output compare register C of timer used for PWM
+ *
+ * @return STATUS_OK if PWM constructed successfully
+ * @return STATUS_ERR_INVALID_PTR if input pointer is NULL
+ */
+typedef STATUS PWMConstruct(PWM *pPWM, REG8 *ddr, uint8_t bit, REG8 *prr,
+                            uint8_t prrBit, REG8 *tccrA, REG8 *tccrB,
+                            uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB
+                            REG16 *ocrC);
+
+/*!
+ * Type definition for function to initialize phase & frequency correct (PFC)
+ * PWM.
+ *
+ * @param[in/out] pPWM  pointer to PWM object to initialize
+ * 
+ * @return STATUS_OK if PWM initialized successfully
+ * @return STATUS_ERR_INVALID_PTR if input pointer is NULL
+ */
+typedef STATUS PWMInit(PWM *pPWM);
+
+/*!
+ * Type definition for the PWM object's setDutyCycle method
+ * 
+ * param[in/out] pPWM   pointer to the PWM object's duty cycle to change
+ * param[in]     pct    percent representing PWM duty cycle
+ */
+typedef STATUS PWMSetDutyCycle(PWM *pPWM, uint8_t pct);
+
+/*!
+ * Structure definition for the pwm object
+ */
+struct PWM
+{
+    //
+    // Each PWM object is shared between two wheels, L and R. This field
+    // should be populated by the wheel constructor and is used for the
+    // purposes of determining which output compare register to modify
+    // for setting the PWM duty cycle.
+    //
+    uint8_t id;
+
+    //
+    // Data direction register and associated bit used to set waveform
+    // generation pin to output
+    //
+    REG8   *ddr;
+    uint8_t bit;
+
+    //
+    // Power reduction register and associated bit used to enable underlying
+    // timer unit used for generating PWM
+    //
+    REG8   *prr;
+    uint8_t prrBit;    
+
+    //
+    // Timer control registers and Clk source for underlying timer unit used
+    // for generating PWM
+    //
+    REG8   *tccrA;
+    REG8   *tccrB;
+    uint8_t clkSrc;
+
+    // Output compare registers used for setting PWM duty cycle
+    REG16  *ocrA;
+    REG16  *ocrB;
+    REG16  *ocrC;
+
+    // Method to initialize this PWM object
+    PWMInit         *pwmInit;
+
+    // Method to set PWM duty cycle
+    PWMSetDutyCycle *pwmSetDutyCycle;
+};
+
+// TODO: Deprecate use of this macro
 /*!
  * Helper macro to set the PWM duty cycle
  * 
@@ -26,53 +128,9 @@
             ocr##B = ((ocr##A)/100)*(pct); \
         } while (0)
 
-/*!
- * Helper macro to initialize phase & frequency correct (PFC) PWM on the I/O
- * bit of the provided port
- *
- * @param[in/out] ddr       A data direction register for port
- * @param[in]     bit       The bit of port to initialize PWM on
- * @param[in/out] prr       A power reduction register
- * @param[in]     prrBit    The bit in the power reduction register to clear
- *                          in order to enable the corresponding timer unit
- * @param[in/out] tccr      A timer control register
- * @param[in]     clkSrc    The clock source for the timer used for PWM
- * @param[in/out] ocr       An output compare register of timer used for PWM
- */
-#define PFC_PWM_TOP_OCRnA_INIT(ddr, bit, prr, prrBit, tccr, \
-            clkSrc, ocr) \
-        do { \
-            /* initialize 16 bit timer */ \
-            TIMER16_INIT(prr, prrBit, tccr, \
-                TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA, \
-                TIMER_MODE_COM_PFC_PWM_CLEAR_UP, clkSrc); \
-            /* initialize output compare registers */ \
-            SET_OUTPUT_COMPARE_REG(ocr##A, 0xFFFF); \
-            SET_OUTPUT_COMPARE_REG(ocr##B, 0xFFFF); \
-            /*set appropriate port bits to output mode */ \
-            SET_PORT_BIT_OUTPUT(ddr, bit); \
-        } while (0)
-
-/* ------------------------ FUNCTION DECLARATIONS --------------------------- */
-
-/*!
- * Function to initialize phase & frequency correct (PFC) PWM on the I/O
- * bit of the provided port
- *
- * @param[in/out] ddr       A data direction register for port
- * @param[in]     bit       The bit of port to initialize PWM on
- * @param[in/out] prr       A power reduction register
- * @param[in]     prrBit    The bit in the power reduction register to clear
- *                          in order to enable the corresponding timer unit
- * @param[in/out] tccrA     Timer control register A
- * @param[in/out] tccrB     Timer control register B
- * @param[in]     clkSrc    The clock source for the timer used for PWM
- * @param[in/out] ocrA      Output compare register A of timer used for PWM
- * @param[in/out] ocrB      Output compare register B of timer used for PWM
- * @param[in/out] ocrC      Output compare register C of timer used for PWM
- */
-void pfcPWMInit(REG8 *ddr, uint8_t bit, REG8 *prr, uint8_t prrBit, REG8 *tccrA,
-                REG8 *tccrB, uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB,
-                REG16 *ocrC);
+/* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
+PWMConstruct    pwmConstruct;
+PWMInit         pwmInit;
+PWMSetDutyCycle pwmSetDutyCycle;
 
 #endif /* _PFCPWM_H_ */

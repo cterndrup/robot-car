@@ -7,14 +7,15 @@
 #include "pwm/pfcpwm.h"
 #include "common/utils.h"
 
-/* ------------------------- FUNCTIONS -------------------------------------- */
+/* ------------------------- FUNCTION DEFINITIONS --------------------------- */
 
 /*!
  * @ref pfcpwm.h for function documentation
  */
-void
-pfcPWMInit
+STATUS
+pwmConstruct
 (
+    PWM     *pPwm,
     REG8    *ddr,
     uint8_t  bit,
     REG8    *prr,
@@ -27,15 +28,94 @@ pfcPWMInit
     REG16   *ocrC
 )
 {
+    // Sanity check the pointer to the pwm object
+    if (pPwm == NULL)
+    {
+        return STATUS_ERR_INVALID_PTR;
+    }
+
+    // Populate the pwm object data fields
+    pPwm->ddr = ddr;
+    pPwm->bit = bit;
+
+    pPwm->prr    = prr;
+    pPwm->prrBit = prrBit;
+
+    pPwm->tccrA  = tccrA;
+    pPwm->tccrB  = tccrB;
+    pPwm->clkSrc = clkSrc;
+
+    pPwm->ocrA = ocrA;
+    pPwm->ocrB = ocrB;
+    pPwm->ocrC = ocrC;
+
+    // Populate the pwm object's methods
+    pPwm->pwmInit         = pwmInit;
+    pPwm->pwmSetDutyCycle = pwmSetDutyCycle;
+
+    return STATUS_OK;
+}
+
+
+/*!
+ * @ref pfcpwm.h for function documentation
+ */
+STATUS
+pwmInit
+(
+    PWM *pPwm
+)
+{
+    // Sanity check the input pointer
+    if (pPwm == NULL)
+    {
+        return STATUS_ERR_INVALID_PTR;
+    }
+
     // Initialize 16-bit timer
-    timer16Init(prr, prrBit, tccrA, tccrB, TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA,
-        TIMER_MODE_COM_PFC_PWM_CLEAR_UP, clkSrc);
+    timer16Init(pPwm->prr, pPwm->prrBit, pPwm->tccrA, pPwm->tccrB,
+        TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA,
+        TIMER_MODE_COM_PFC_PWM_CLEAR_UP, pPwm->clkSrc);
     
     // Initialize output compare registers
-    SET_OUTPUT_COMPARE_REG(*ocrA, 0xFFFF);
-    SET_OUTPUT_COMPARE_REG(*ocrB, 0x0000);
-    SET_OUTPUT_COMPARE_REG(*ocrC, 0x0000);
+    SET_OUTPUT_COMPARE_REG(*(pPwm->ocrA), 0xFFFF);
+    SET_OUTPUT_COMPARE_REG(*(pPwm->ocrB), 0x0000);
+    SET_OUTPUT_COMPARE_REG(*(pPwm->ocrC), 0x0000);
 
     // Set OCnx pin to output to enable PWM waveform generation
-    SET_PORT_BIT_OUTPUT(*ddr, bit);
+    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), bit);
+
+    return STATUS_OK;
+}
+
+/*!
+ * @ref pfcpwm.h for function documentation
+ */
+STATUS
+pwmSetDutyCycle
+(
+    PWM     *pPwm,
+    uint8_t  pct
+)
+{
+    // Sanity check the input pointer
+    if (pPwm == NULL)
+    {
+        return STATUS_ERR_INVALID_PTR;
+    }
+
+    // Set PWM duty cycle
+    if (pPwm->id == PWM_ID_LEFT)
+    {
+        pPwm->ocrB = (pPwm->ocrA/100)*pct;
+    }
+    else if (pPwm->id == PWM_ID_RIGHT) {
+        pPwm->ocrC = (pPwm->ocrA/100)*pct;
+    }
+    else
+    {
+        return STATUS_ERR_GENERAL;
+    }
+
+    return STATUS_OK;
 }
