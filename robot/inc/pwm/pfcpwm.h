@@ -11,9 +11,9 @@
 #define NON_INVERTED_PWM    (0)
 #define INVERTED_PWM        (1)
 
-// See note in PWM struct below above field id
-#define PWM_ID_LEFT         (0)
-#define PWM_ID_RIGHT        (1)
+// See note in PWM struct below above field dir
+#define PWM_FORWARD         (0)
+#define PWM_REVERSE         (1)
 
 /* ------------------------ TYPE DEFINITIONS -------------------------------- */
 
@@ -43,7 +43,7 @@ typedef struct PWM PWM;
  */
 typedef STATUS PWMConstruct(PWM *pPWM, REG8 *ddr, uint8_t bit, REG8 *prr,
                             uint8_t prrBit, REG8 *tccrA, REG8 *tccrB,
-                            uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB
+                            uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB,
                             REG16 *ocrC);
 
 /*!
@@ -66,17 +66,25 @@ typedef STATUS PWMInit(PWM *pPWM);
 typedef STATUS PWMSetDutyCycle(PWM *pPWM, uint8_t pct);
 
 /*!
+ * Type definition for the PWM object's reverse method
+ *
+ * param[in/out] pPWM   pointer to the PWM object's direction to reverse
+ * 
+ */
+typedef STATUS PWMReverse(PWM *pPWM);
+
+/*!
  * Structure definition for the pwm object
  */
 struct PWM
 {
+    // TODO:Remove LED from header slot 13 on MEGA board.
+
     //
-    // Each PWM object is shared between two wheels, L and R. This field
-    // should be populated by the wheel constructor and is used for the
-    // purposes of determining which output compare register to modify
-    // for setting the PWM duty cycle.
+    // This field is used for the purposes of determining which output 
+    // compare register to modify when setting the PWM duty cycle.
     //
-    uint8_t id;
+    uint8_t dir;
 
     //
     // Data direction register and associated bit used to set waveform
@@ -110,6 +118,9 @@ struct PWM
 
     // Method to set PWM duty cycle
     PWMSetDutyCycle *pwmSetDutyCycle;
+
+    // Method to reverse PWM direction
+    PWMReverse      *pwmReverse;
 };
 
 // TODO: Deprecate use of this macro
@@ -132,5 +143,6 @@ struct PWM
 PWMConstruct    pwmConstruct;
 PWMInit         pwmInit;
 PWMSetDutyCycle pwmSetDutyCycle;
+PWMReverse      pwmReverse;
 
 #endif /* _PFCPWM_H_ */

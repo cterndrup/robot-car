@@ -1,6 +1,7 @@
 /* Implementation file for Phase & Frequency Correct PWM */
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
+#include <stdlib.h>
 #include <avr/io.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
@@ -83,7 +84,7 @@ pwmInit
     SET_OUTPUT_COMPARE_REG(*(pPwm->ocrC), 0x0000);
 
     // Set OCnx pin to output to enable PWM waveform generation
-    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), bit);
+    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), pPwm->bit);
 
     return STATUS_OK;
 }
@@ -105,12 +106,12 @@ pwmSetDutyCycle
     }
 
     // Set PWM duty cycle
-    if (pPwm->id == PWM_ID_LEFT)
+    if (pPwm->dir == PWM_FORWARD)
     {
-        pPwm->ocrB = (pPwm->ocrA/100)*pct;
+        *pPwm->ocrB = (*pPwm->ocrA/100)*pct;
     }
-    else if (pPwm->id == PWM_ID_RIGHT) {
-        pPwm->ocrC = (pPwm->ocrA/100)*pct;
+    else if (pPwm->dir == PWM_REVERSE) {
+        *pPwm->ocrC = (*pPwm->ocrA/100)*pct;
     }
     else
     {
@@ -119,3 +120,28 @@ pwmSetDutyCycle
 
     return STATUS_OK;
 }
+
+/*!
+ * @ref pfcpwm.h for function documentation
+ */
+STATUS
+pwmReverse
+(
+    PWM *pPwm
+)
+{
+    // Sanity check the input pointer
+    if (pPwm == NULL) 
+    {
+        return STATUS_ERR_INVALID_PTR;
+    }
+
+    // Swap the values in OCRxB and OCRxC
+    pPwm->dir    = !pPwm->dir;
+    uint8_t temp = *pPwm->ocrB;
+    *pPwm->ocrB  = *pPwm->ocrC;
+    *pPwm->ocrC  = temp;
+
+    return STATUS_OK;
+}
+
