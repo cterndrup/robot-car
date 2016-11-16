@@ -1,5 +1,5 @@
-SRC_PATH  := /home/pi/robot/src
-INC       := /home/pi/robot/inc
+SRC_PATH  := /Users/colint/Development/robot-car/robot/src#/home/pi/robot/src
+INC       := /Users/colint/Development/robot-car/robot/inc#/home/pi/robot/inc
 
 PWMDIR    := $(SRC_PATH)/pwm
 PWMOBJS   := pfcpwm.o
@@ -25,13 +25,13 @@ MCU       := atmega2560
 
 all: $(EXEC)
 
-$(EXEC): $(MAIN_OBJ)
+$(EXEC): $(MAIN_OBJ) $(OBJS)
 	avr-gcc -mmcu=$(MCU) $(MAIN_OBJ) $(OBJS) -o $(EXEC)
 
-$(MAIN_OBJ): $(MAIN_SRC) $(OBJS)
+$(MAIN_OBJ): $(MAIN_SRC) #$(OBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $(MAIN_SRC) -o $(MAIN_OBJ) -I $(INC)
 
-$(PWMDIR)/%.o: $(PWMDIR)/%.c $(TIMEROBJS)
+$(PWMDIR)/%.o: $(PWMDIR)/%.c #$(TIMEROBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(TIMERDIR)/%.o: $(TIMERDIR)/%.c
