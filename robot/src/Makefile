@@ -1,6 +1,9 @@
 SRC_PATH  := /Users/colint/Development/robot-car/robot/src#/home/pi/robot/src
 INC       := /Users/colint/Development/robot-car/robot/inc#/home/pi/robot/inc
 
+MOTORDIR  := $(SRC_PATH)/motor
+MOTOROBJS := motor.o
+
 PWMDIR    := $(SRC_PATH)/pwm
 PWMOBJS   := pfcpwm.o
 
@@ -10,11 +13,12 @@ TIMEROBJS := timer16.o
 SPIDIR    := $(SRC_PATH)/spi
 SPIOBJS   := spi.o
 
+MOTOROBJS := $(patsubst %.o, $(MOTORDIR)/%.o, $(MOTOROBJS))
 PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
 
-OBJS      := $(TIMEROBJS) $(PWMOBJS) $(SPIOBJS)
+OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(SPIOBJS)
 EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -30,6 +34,9 @@ $(EXEC): $(MAIN_OBJ) $(OBJS)
 
 $(MAIN_OBJ): $(MAIN_SRC) #$(OBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $(MAIN_SRC) -o $(MAIN_OBJ) -I $(INC)
+
+$(MOTORDIR)/%.o: $(MOTORDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(PWMDIR)/%.o: $(PWMDIR)/%.c #$(TIMEROBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)

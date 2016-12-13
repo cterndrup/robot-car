@@ -53,9 +53,9 @@ motorDriveForward(Motor *pMotor, uint8_t speed)
     // Set the motor's speed and direction
     pMotor->speed = speed;
 
-    if (pMotor->direction == REVERSE_DIR) {
-        pMotor->pwmReverse(pMotor->pPwm);
-        pMotor->direction = FORWARD_DIR;
+    if (pMotor->bDirection == REVERSE_DIR) {
+        pMotor->pPwm->pwmReverse(pMotor->pPwm);
+        pMotor->bDirection = FORWARD_DIR;
     }
 
     pMotor->pPwm->pwmSetDutyCycle(pMotor->pPwm, speed);
@@ -82,10 +82,10 @@ motorDriveReverse(Motor *pMotor, uint8_t speed)
     // Set the motor's speed and direction
     pMotor->speed = speed;
 
-    if (pMotor->direction == FORWARD_DIR)
+    if (pMotor->bDirection == FORWARD_DIR)
     {
         pMotor->pPwm->pwmReverse(pMotor->pPwm);
-        pMotor->direction = REVERSE_DIR;
+        pMotor->bDirection = REVERSE_DIR;
     }
 
     pMotor->pPwm->pwmSetDutyCycle(pMotor->pPwm, speed);
@@ -104,8 +104,8 @@ motorStop(Motor *pMotor)
         return STATUS_ERR_INVALID_PTR;
 
     // Set the motor's speed and direction
-    pMotor->speed     = DEFAULT_SPEED;
-    pMotor->direction = DEFAULT_DIR;
+    pMotor->speed      = DEFAULT_SPEED;
+    pMotor->bDirection = DEFAULT_DIR;
 
     pMotor->pPwm->pwmSetDutyCycle(pMotor->pPwm, 0);
 

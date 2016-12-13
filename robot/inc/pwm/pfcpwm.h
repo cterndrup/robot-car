@@ -27,7 +27,8 @@ typedef struct PWM PWM;
  * 
  * @param[in/out] pPWM      pointer to the PWM object to construct
  * @param[in/out] ddr       A data direction register for port
- * @param[in]     bit       The bit of port to initialize PWM on
+ * @param[in]     bit1      The bit of port to initialize PWM on
+ * @param[in]     bit2      The bit of port to initialize PWM on
  * @param[in/out] prr       A power reduction register
  * @param[in]     prrBit    The bit in the power reduction register to clear
  *                          in order to enable the corresponding timer unit
@@ -41,8 +42,8 @@ typedef struct PWM PWM;
  * @return STATUS_OK if PWM constructed successfully
  * @return STATUS_ERR_INVALID_PTR if input pointer is NULL
  */
-typedef STATUS PWMConstruct(PWM *pPWM, REG8 *ddr, uint8_t bit, REG8 *prr,
-                            uint8_t prrBit, REG8 *tccrA, REG8 *tccrB,
+typedef STATUS PWMConstruct(PWM *pPWM, REG8 *ddr, uint8_t bit1, uint8_t bit2,
+                            REG8 *prr, uint8_t prrBit, REG8 *tccrA, REG8 *tccrB,
                             uint8_t clkSrc, REG16 *ocrA, REG16 *ocrB,
                             REG16 *ocrC);
 
@@ -78,8 +79,6 @@ typedef STATUS PWMReverse(PWM *pPWM);
  */
 struct PWM
 {
-    // TODO:Remove LED from header slot 13 on MEGA board.
-
     //
     // This field is used for the purposes of determining which output 
     // compare register to modify when setting the PWM duty cycle.
@@ -91,7 +90,8 @@ struct PWM
     // generation pin to output
     //
     REG8   *ddr;
-    uint8_t bit;
+    uint8_t bit1;
+    uint8_t bit2;
 
     //
     // Power reduction register and associated bit used to enable underlying

@@ -18,7 +18,8 @@ pwmConstruct
 (
     PWM     *pPwm,
     REG8    *ddr,
-    uint8_t  bit,
+    uint8_t  bit1,
+    uint8_t  bit2,
     REG8    *prr,
     uint8_t  prrBit,
     REG8    *tccrA,
@@ -37,7 +38,8 @@ pwmConstruct
 
     // Populate the pwm object data fields
     pPwm->ddr    = ddr;
-    pPwm->bit    = bit;
+    pPwm->bit1   = bit1;
+    pPwm->bit2   = bit2;
 
     pPwm->prr    = prr;
     pPwm->prrBit = prrBit;
@@ -84,7 +86,8 @@ pwmInit
     SET_OUTPUT_COMPARE_REG(*(pPwm->ocrC), 0x0000);
 
     // Set OCnx pin to output to enable PWM waveform generation
-    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), pPwm->bit);
+    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), pPwm->bit1);
+    SET_PORT_BIT_OUTPUT(*(pPwm->ddr), pPwm->bit2);
 
     return STATUS_OK;
 }

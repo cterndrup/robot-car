@@ -7,6 +7,9 @@
 #define INPUT_PORT      (0x00)
 #define OUTPUT_PORT     (0xFF)
 
+#define FALSE           (0x00)
+#define TRUE            (0x01)
+
 /*!
  * Status codes for functions return values
  */

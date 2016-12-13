@@ -6,6 +6,7 @@
 /* ------------------------ INCLUDES ---------------------------------------- */
 #include <avr/io.h>
 
+#include "pwm/pfcpwm.h"
 #include "common/utils.h"
 
 /* ------------------------ TYPE DEFINITIONS -------------------------------- */
@@ -53,8 +54,9 @@ typedef STATUS MotorStop(Motor *pMotor);
  * Type definition for the Motor object's changeSpeed method
  *
  * @param[in/out] pMotor    pointer to the Moto object to change speed
+ * @param[in]     speed     speed to drive Motor
  */
-typedef STATUS MotorChangeSpeed(Motor *pMotor);
+typedef STATUS MotorChangeSpeed(Motor *pMotor, uint8_t speed);
 
 /*!
  * Structure definition for the motor object
@@ -77,7 +79,7 @@ struct Motor
     PWM               *pPwm;
 
     // Method to drive motor forward
-    MotorDriveFoward  *driveForward;
+    MotorDriveForward  *driveForward;
 
     // Method to drive motor in reverse
     MotorDriveReverse *driveReverse;
