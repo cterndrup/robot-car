@@ -51,7 +51,7 @@ copy:
 	avr-objcopy -O ihex -R .eeprom $(EXEC) $(HEX)
 
 upload:
-	avrdude -D -F -V -c wiring -p m2560 -P /dev/ttyACM0 -b 115200 -U flash:w:$(HEX)
+	avrdude -D -F -V -c wiring -p m2560 -P /dev/cu.usbmodem1411 -b 115200 -U flash:w:$(HEX)
 
 clean:
 	rm $(MAIN_OBJ) $(OBJS) $(HEX) $(EXEC)
