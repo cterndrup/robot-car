@@ -79,7 +79,7 @@ struct Motor
     PWM               *pPwm;
 
     // Method to drive motor forward
-    MotorDriveForward  *driveForward;
+    MotorDriveForward *driveForward;
 
     // Method to drive motor in reverse
     MotorDriveReverse *driveReverse;
@@ -92,10 +92,10 @@ struct Motor
 };
 
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
-#define DEFAULT_SPEED   (0)
-#define DEFAULT_DIR     (0)
-#define FORWARD_DIR     DEFAULT_DIR
+#define FORWARD_DIR     (0)
 #define REVERSE_DIR     (1)
+#define DEFAULT_SPEED   (0)
+#define DEFAULT_DIR     FORWARD_DIR
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 MotorConstruct    motorConstruct;

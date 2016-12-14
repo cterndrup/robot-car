@@ -17,7 +17,9 @@ motorConstruct(Motor *pMotor, PWM *pPwm)
 {
     // Ensure the pointer is not NULL
     if (pMotor == NULL || pPwm == NULL)
+    {
         return STATUS_ERR_INVALID_PTR;
+    }
 
     pMotor->pPwm = pPwm;
 
@@ -42,7 +44,9 @@ motorDriveForward(Motor *pMotor, uint8_t speed)
 {
     // Ensure the input pointer is not NULL
     if (pMotor == NULL)
+    {
         return STATUS_ERR_INVALID_PTR;
+    }
 
     // Ensure the speed is valid
     if (speed > 100)
@@ -53,8 +57,9 @@ motorDriveForward(Motor *pMotor, uint8_t speed)
     // Set the motor's speed and direction
     pMotor->speed = speed;
 
-    if (pMotor->bDirection == REVERSE_DIR) {
-        pMotor->pPwm->pwmReverse(pMotor->pPwm);
+    if (pMotor->bDirection == REVERSE_DIR)
+    {
+        pMotor->pPwm->dir  = PWM_FORWARD;
         pMotor->bDirection = FORWARD_DIR;
     }
 
@@ -71,7 +76,9 @@ motorDriveReverse(Motor *pMotor, uint8_t speed)
 {
     // Ensure the input pointer is not NULL
     if (pMotor == NULL)
+    {
         return STATUS_ERR_INVALID_PTR;
+    }
 
     // Ensure the speed is valid
     if (speed > 100)
@@ -84,7 +91,7 @@ motorDriveReverse(Motor *pMotor, uint8_t speed)
 
     if (pMotor->bDirection == FORWARD_DIR)
     {
-        pMotor->pPwm->pwmReverse(pMotor->pPwm);
+        pMotor->pPwm->dir  = PWM_REVERSE;
         pMotor->bDirection = REVERSE_DIR;
     }
 
@@ -101,12 +108,12 @@ motorStop(Motor *pMotor)
 {
     // Ensure the input pointer is not NULL
     if (pMotor == NULL)
+    {
         return STATUS_ERR_INVALID_PTR;
+    }
 
     // Set the motor's speed and direction
-    pMotor->speed      = DEFAULT_SPEED;
-    pMotor->bDirection = DEFAULT_DIR;
-
+    pMotor->speed = DEFAULT_SPEED;
     pMotor->pPwm->pwmSetDutyCycle(pMotor->pPwm, 0);
 
     return STATUS_OK;
@@ -120,7 +127,9 @@ motorChangeSpeed(Motor *pMotor, uint8_t speed)
 {
     // Ensure the input pointer is not NULL
     if (pMotor == NULL)
+    {
         return STATUS_ERR_INVALID_PTR;
+    }
 
     // Ensure the speed is valid
     if (speed > 100)
@@ -130,7 +139,6 @@ motorChangeSpeed(Motor *pMotor, uint8_t speed)
 
     // Set the motor's speed
     pMotor->speed = speed;
-
     pMotor->pPwm->pwmSetDutyCycle(pMotor->pPwm, speed);
 
     return STATUS_OK;
