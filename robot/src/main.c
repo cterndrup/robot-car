@@ -46,21 +46,53 @@ void test_initialize()
 
 void test_driveForwardFullSpeed()
 {
-    // Initialize PWM and Motors
-    test_initialize();
-
     // Do the driving...
     lf.driveForward(&lf, 100);
-    lb.driveForward(&lb, 100);
+    lb.driveForward(&lb, 25);
     rf.driveForward(&rf, 100);
-    rb.driveForward(&rb, 100);
+    rb.driveForward(&rb, 25);
+}
+
+void test_changeSpeed(uint8_t speed)
+{
+    // Change speed of each motor
+    lf.changeSpeed(&lf, speed);
+    lb.changeSpeed(&lb, speed);
+    rf.changeSpeed(&rf, speed);
+    rb.changeSpeed(&rb, speed);
+}
+
+void test_driveReverseFullSpeed()
+{
+    // Reverse each motor and drive full speed
+    lf.driveReverse(&lf, 25);
+    lb.driveReverse(&lb, 100);
+    rf.driveReverse(&rf, 25);
+    rb.driveReverse(&rb, 100);
+}
+
+void test_stop()
+{
+    // Stop each motor
+    lf.stop(&lf);
+    lb.stop(&lb);
+    rf.stop(&rf);
+    rb.stop(&rb);
 }
 
 int main(void)
 {
+    // Initialize PWM and Motors
+    test_initialize();
+
     while (TRUE)
     {
         test_driveForwardFullSpeed();
+        _delay_ms(2000);
+        test_driveReverseFullSpeed();
+        _delay_ms(2000);
+        test_stop();
+        _delay_ms(2000);
     }
 
     return 0;
