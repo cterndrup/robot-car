@@ -67,14 +67,6 @@ typedef STATUS PWMInit(PWM *pPWM);
 typedef STATUS PWMSetDutyCycle(PWM *pPWM, uint8_t pct);
 
 /*!
- * Type definition for the PWM object's reverse method
- *
- * param[in/out] pPWM   pointer to the PWM object's direction to reverse
- * 
- */
-typedef STATUS PWMReverse(PWM *pPWM);
-
-/*!
  * Structure definition for the pwm object
  */
 struct PWM
@@ -143,6 +135,5 @@ struct PWM
 PWMConstruct    pwmConstruct;
 PWMInit         pwmInit;
 PWMSetDutyCycle pwmSetDutyCycle;
-PWMReverse      pwmReverse;
 
 #endif /* _PFCPWM_H_ */

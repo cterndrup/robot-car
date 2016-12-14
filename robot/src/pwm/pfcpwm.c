@@ -112,38 +112,17 @@ pwmSetDutyCycle
     if (pPwm->dir == PWM_FORWARD)
     {
         *pPwm->ocrB = (*pPwm->ocrA/100)*pct;
+        *pPwm->ocrC = 0x0000;
     }
-    else if (pPwm->dir == PWM_REVERSE) {
+    else if (pPwm->dir == PWM_REVERSE)
+    {
         *pPwm->ocrC = (*pPwm->ocrA/100)*pct;
+        *pPwm->ocrB = 0x0000;
     }
     else
     {
         return STATUS_ERR_GENERAL;
     }
-
-    return STATUS_OK;
-}
-
-/*!
- * @ref pfcpwm.h for function documentation
- */
-STATUS
-pwmReverse
-(
-    PWM *pPwm
-)
-{
-    // Sanity check the input pointer
-    if (pPwm == NULL) 
-    {
-        return STATUS_ERR_INVALID_PTR;
-    }
-
-    // Swap the values in OCRxB and OCRxC
-    pPwm->dir    = !pPwm->dir;
-    uint8_t temp = *pPwm->ocrB;
-    *pPwm->ocrB  = *pPwm->ocrC;
-    *pPwm->ocrC  = temp;
 
     return STATUS_OK;
 }
