@@ -82,6 +82,9 @@ void test_stop()
 
 int main(void)
 {
+    // Enable global interrupts
+    SET_BIT(SREG, 7);
+
     // Initialize PWM and Motors
     test_initialize();
 

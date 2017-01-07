@@ -110,9 +110,6 @@ struct PWM
 
     // Method to set PWM duty cycle
     PWMSetDutyCycle *pwmSetDutyCycle;
-
-    // Method to reverse PWM direction
-    PWMReverse      *pwmReverse;
 };
 
 // TODO: Deprecate use of this macro

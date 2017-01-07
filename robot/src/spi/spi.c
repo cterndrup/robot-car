@@ -35,6 +35,9 @@ spiMasterInit(void)
     // Select Master
     SET_BIT(SPCR, MSTR);
 
+    // Enable SPI interrupts
+    SET_BIT(SPCR, SPIE);
+
     // Enable SPI
     SET_BIT(SPCR, SPE);
 }
@@ -43,7 +46,7 @@ spiMasterInit(void)
  * @ref spi.h for function documentation
  */
 void
-spiMasterSend(char sendByte, char *pRecvByte)
+spiMasterSendByte(char sendByte, char *pRecvByte)
 {
     // Pull SS low
     CLEAR_BIT(SPI_PORT, SS);
@@ -72,9 +75,19 @@ spiMasterSend(char sendByte, char *pRecvByte)
  * @ref spi.h for function documentation
  */
 char
-spiMasterRecv(char sendByte)
+spiMasterRecvByte(char sendByte)
 {
     char data;
-    spiMasterSend(sendByte, &data); 
+    spiMasterSendByte(sendByte, &data); 
     return data;
+}
+
+/*!
+ * @ref spi.h for function documentation
+ */
+void
+spiMasterTerminate(void)
+{
+    // Pull SS high
+    SET_BIT(SPI_PORT, SS);
 }

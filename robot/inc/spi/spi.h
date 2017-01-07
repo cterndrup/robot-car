@@ -36,7 +36,7 @@ void spiMasterInit(void);
  *                            argument is populated with the data sent from
  *                            the slave device. 
  */
-void spiMasterSend(char sendByte, char *pRecvByte);
+void spiMasterSendByte(char sendByte, char *pRecvByte);
 
 /*!
  * Function to receive a single byte of data from SPI slave
@@ -49,6 +49,12 @@ void spiMasterSend(char sendByte, char *pRecvByte);
  *
  * @return    A character representing the data received from the slave. 
  */
-char spiMasterRecv(char sendByte);
+char spiMasterRecvByte(char sendByte);
+
+/*!
+ * Function to terminate SPI send by raising the chip select high
+ *
+ */
+void spiMasterTerminate(void);
 
 #endif // _SPI_H_
