@@ -25,30 +25,4 @@
 #define SDEP_ERRORID_INVALID_CMDID      (0x0001)
 #define SDEP_ERRORID_INVALID_PAYLOAD    (0x0003)
 
-// TODO: Modify to handle commands w/ payloads > 16 bytes
-/*!
- * Macro to send an SDEP command to the BLE module
- *
- * @param[in] length    The length of the payload, in bytes
- * @param[in] payload   A pointer to a character string representing the payload
- */
-#define SDEP_AT_CMD_SEND(length, payload) \
-        do { \
-            /* Send SDEP header */ \
-            spiMasterSend(SDEP_MSGTYPE_CMD); \
-            spiMasterSend(0x00); \
-            spiMasterSend(0x0A); \
-            spiMasterSend(length); \
-            /* Send SDEP payload */ \
-            char *letter = payload; \
-            while (letter != '\0') \
-            { \
-                spiMasterSend(*letter); \
-                letter++; \
-            } \
-            /* Terminate the send */ \
-            spiMasterTerminate(); \
-        } while (0)
-               
-
 #endif // _SDEP_H_
