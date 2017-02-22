@@ -7,8 +7,10 @@
 #define INPUT_PORT      (0x00)
 #define OUTPUT_PORT     (0xFF)
 
-#define FALSE           (0x00)
-#define TRUE            (0x01)
+#define false           (0x00)
+#define true            (0x01)
+
+#define NULL            ((void *)(0))
 
 /*!
  * Status codes for functions return values
@@ -114,5 +116,10 @@ typedef volatile uint16_t REG16;
  * A status code
  */
 typedef int8_t STATUS;
+
+/*!
+ * A boolean type
+ */
+typedef uint8_t bool;
 
 #endif /* _COMMON_UTILS_H_ */

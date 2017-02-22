@@ -1,7 +1,6 @@
 /* Implementation file for Phase & Frequency Correct PWM */
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
-#include <stdlib.h>
 #include <avr/io.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */

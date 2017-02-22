@@ -1,7 +1,6 @@
 /* Implementation file for SPI Interface */
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
-#include <stdlib.h>
 #include <avr/io.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */

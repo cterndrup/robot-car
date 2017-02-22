@@ -88,7 +88,7 @@ int main(void)
     // Initialize PWM and Motors
     test_initialize();
 
-    while (TRUE)
+    while (true)
     {
         test_driveForwardFullSpeed();
         _delay_ms(2000);

@@ -2,10 +2,10 @@
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
 #include <avr/io.h>
-#include <stdlib.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "motor/motor.h"
+#include "common/utils.h"
 
 /* ------------------------- FUNCTION DEFINITIONS  -------------------------- */
 
