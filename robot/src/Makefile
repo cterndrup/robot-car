@@ -10,15 +10,19 @@ PWMOBJS   := pfcpwm.o
 TIMERDIR  := $(SRC_PATH)/timer/timer16
 TIMEROBJS := timer16.o
 
+BLEDIR    := $(SRC_PATH)/ble
+BLEOBJS   := ble.o
+
 SPIDIR    := $(SRC_PATH)/spi
 SPIOBJS   := spi.o
 
 MOTOROBJS := $(patsubst %.o, $(MOTORDIR)/%.o, $(MOTOROBJS))
 PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
+BLEOBJS   := $(patsubst %.o, $(BLEDIR)/%.o, $(BLEOBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
 
-OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(SPIOBJS)
+OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) $(SPIOBJS)
 EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -42,6 +46,9 @@ $(PWMDIR)/%.o: $(PWMDIR)/%.c #$(TIMEROBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(TIMERDIR)/%.o: $(TIMERDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
+$(BLEDIR)/%.o: $(BLEDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(SPIDIR)/%.o: $(SPIDIR)/%.c
