@@ -14,11 +14,14 @@
 /*!
  * Registers the external BLE interrupt with the MCU
  *
- * TODO: Ensure the external interrupt pin chosen is available
  */
 ISR(BLE_vect, ISR_BLOCK)
 {
     // TODO: implement
+    while ((1 << (BLE_IRQ)) & EIFR)
+    {
+
+    }
 }
 
 /* ------------------------ FUNCTION DEFINITIONS  --------------------------- */
@@ -122,7 +125,10 @@ _bleCmdSendNextState
 inline void
 bleIRQRegister(void)
 {
-    // Enables external interrupt on pin
+    // Set BLE_IRQ pin to input
+    SET_PORT_BIT_INPUT(DDRE, BLE_IRQ);
+
+    // Enables external interrupt on BLE_IRQ pin
     SET_BIT(EIMSK, BLE_IRQ);
 }
 

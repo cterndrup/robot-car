@@ -474,7 +474,7 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
 /*!
  * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
  */
-#define BLE_IRQ  0
+#define BLE_IRQ  6
 #define BLE_vect INT0_vect
 
 /* ------------------------ ENUMS ------------------------------------------- */
@@ -490,11 +490,6 @@ typedef enum BLE_CMD_SEND_STATE
 /* ------------------------ TYPEDEFS ---------------------------------------- */
 
 /*!
- * Registers BLE module's external interrupt with MCU
- */
-typedef inline void BleIRQRegister(void);
-
-/*!
  * Sends AT-commands to the BLE module
  *
  * @param[in] length    The length of the payload of the AT-command
@@ -506,7 +501,12 @@ typedef void BleCmdSend(uint8_t length, const char *pBase,
                         const char *pMode, const char *pPayload);
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
-BleIRQRegister bleIRQRegister;
+
+/*!
+ * Registers BLE module's external interrupt with MCU
+ */
+inline void BleIRQRegister(void);
+
 BleCmdSend     bleCmdSend;
 
 #endif // _BLE_H_
