@@ -1,12 +1,25 @@
 /*! Implementation file for Bluetooth Low Energy code */
 
 /* ------------------------ SYSTEM INCLUDES --------------------------------- */
+#include <avr/interrupt.h>
 
 /* ------------------------ APPLICATION INCLUDES ---------------------------- */
 #include "spi/spi.h"
 #include "sdep/sdep.h"
 #include "ble/ble.h"
 #include "common/utils.h"
+
+/* ------------------------ ISR DEFS ---------------------------------------- */
+
+/*!
+ * Registers the external BLE interrupt with the MCU
+ *
+ * TODO: Ensure the external interrupt pin chosen is available
+ */
+ISR(BLE_vect, ISR_BLOCK)
+{
+    // TODO: implement
+}
 
 /* ------------------------ FUNCTION DEFINITIONS  --------------------------- */
 
@@ -97,9 +110,20 @@ _bleCmdSendNextState
             break;
         }
         case DONE:
+            break;
     }
 
     return next;
+}
+
+/*!
+ * @ref ble.h for function documentation
+ */
+inline void
+bleIRQRegister(void)
+{
+    // Enables external interrupt on pin
+    SET_BIT(EIMSK, BLE_IRQ);
 }
 
 /*!
@@ -114,9 +138,9 @@ bleCmdSend
     const char      *pPayload
 )
 {
-    char *pByte = pBase; 
-    char *pLoad = pPayload;
-    char *pM    = pMode;
+    const char *pByte = pBase; 
+    const char *pLoad = pPayload;
+    const char *pM    = pMode;
 
     bool    done        = false;
     bool    baseDone    = false;
@@ -137,10 +161,11 @@ bleCmdSend
             case SEND_HDR:
             {
                 bytesSent = 0;
-                spiMasterSendByte(SDEP_MSGTYPE_CMD);
-                spiMasterSendByte(0x00);
-                spiMasterSendByte(0x0A);
-                spiMasterSendByte(length);
+                spiMasterSendByte(SDEP_MSGTYPE_CMD, NULL);
+                spiMasterSendByte(0x00, NULL);
+                spiMasterSendByte(0x0A, NULL);
+                spiMasterSendByte(length, NULL);
+                spiMasterSendDone();
                 bytesSent += 4;
                 break;
             }
@@ -148,7 +173,8 @@ bleCmdSend
             {
                 if (!baseDone)
                 {
-                    spiMasterSendByte(*pByte);
+                    spiMasterSendByte(*pByte, NULL);
+                    spiMasterSendDone();
                     bytesSent++;
                     pByte++;
                     if (pByte == '\0') baseDone = true;
@@ -159,7 +185,8 @@ bleCmdSend
             {
                 if (!modeDone)
                 {
-                    spiMasterSendByte(*pM);
+                    spiMasterSendByte(*pM, NULL);
+                    spiMasterSendDone();
                     bytesSent++;
                     pM++;
                     if (pM == '\0') modeDone = true;
@@ -170,7 +197,8 @@ bleCmdSend
             {
                 if (!payloadDone)
                 {
-                    spiMasterSendByte(*pLoad);
+                    spiMasterSendByte(*pLoad, NULL);
+                    spiMasterSendDone();
                     bytesSent++;
                     pLoad++;
                     if (pLoad == '\0') payloadDone = true;

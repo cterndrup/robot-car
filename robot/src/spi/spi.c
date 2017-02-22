@@ -84,8 +84,8 @@ spiMasterRecvByte(char sendByte)
 /*!
  * @ref spi.h for function documentation
  */
-void
-spiMasterTerminate(void)
+inline void
+spiMasterSendDone(void)
 {
     // Pull SS high
     SET_BIT(SPI_PORT, SS);

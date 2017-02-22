@@ -55,6 +55,6 @@ char spiMasterRecvByte(char sendByte);
  * Function to terminate SPI send by raising the chip select high
  *
  */
-void spiMasterTerminate(void);
+inline void spiMasterSendDone(void);
 
 #endif // _SPI_H_

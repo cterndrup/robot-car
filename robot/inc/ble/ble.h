@@ -471,20 +471,28 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
 
 /* ----------------------- MACROS AND DEFINES ------------------------------- */
 
+/*!
+ * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
+ */
+#define BLE_IRQ  0
+#define BLE_vect INT0_vect
+
 /* ------------------------ ENUMS ------------------------------------------- */
 
 /*!
  * Enumeration of BLE_CMD_SEND_STATES for the state machine implemented in
  * bleCmdSend()
  */
-enum BLE_CMD_SEND_STATE {INIT, SEND_HDR, SEND_BASE, SEND_MODE,
-                         SEND_PAYLOAD, DONE};
-typedef enum BLE_CMD_SEND_STATE BLE_CMD_SEND_STATE;
-
-/* ------------------------ INTERRUPT SERVICE ROUTINES ---------------------- */
-// TODO: Implement ISR macro for BLE interrupts
+typedef enum BLE_CMD_SEND_STATE
+             {INIT, SEND_HDR, SEND_BASE, SEND_MODE, SEND_PAYLOAD, DONE}
+             BLE_CMD_SEND_STATE;
 
 /* ------------------------ TYPEDEFS ---------------------------------------- */
+
+/*!
+ * Registers BLE module's external interrupt with MCU
+ */
+typedef inline void BleIRQRegister(void);
 
 /*!
  * Sends AT-commands to the BLE module
@@ -498,6 +506,7 @@ typedef void BleCmdSend(uint8_t length, const char *pBase,
                         const char *pMode, const char *pPayload);
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
-BleCmdSend bleCmdSend;
+BleIRQRegister bleIRQRegister;
+BleCmdSend     bleCmdSend;
 
 #endif // _BLE_H_
