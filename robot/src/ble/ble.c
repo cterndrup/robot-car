@@ -10,6 +10,13 @@
 #include "ble/ble.h"
 #include "common/utils.h"
 
+/* ------------------------ GLOBAL VARIABLES -------------------------------- */
+
+/*!
+ * Global buffer for storing BLE ALERT MSG payload
+ */
+unsigned char bleAlertBuffer[BLE_ALERT_BUF_SIZE];
+
 /* ------------------------ FUNCTION DEFINITIONS  --------------------------- */
 
 /*!
@@ -315,17 +322,17 @@ ISR(BLE_vect, ISR_NOBLOCK)
     {
         case SDEP_MSGTYPE_RESPONSE:
         {
-            RAISE_BLE_IRQ_RESP;
+            BLE_IRQ_RESP_TRAP;
             break;
         }
         case SDEP_MSGTYPE_ALERT:
         {
-            RAISE_BLE_IRQ_ALERT;
+            BLE_IRQ_ALERT_TRAP;
             break;
         }
         case SDEP_MSGTYPE_ERROR:
         {
-            RAISE_BLE_IRQ_ERROR;
+            BLE_IRQ_ERROR_TRAP;
         }
     }
 }
@@ -339,11 +346,6 @@ ISR(BLE_RESP_vect, ISR_BLOCK)
 }
 
 /*!
- * Global buffer for storing BLE ALERT MSG payload
- */
-unsigned char bleAlertBuffer[BLE_ALERT_BUF_SIZE];
-
-/*!
  * Registers the external BLE alert message handler with the MCU
  */
 ISR(BLE_ALERT_vect, ISR_BLOCK)
@@ -353,8 +355,9 @@ ISR(BLE_ALERT_vect, ISR_BLOCK)
     bool          done      = false;
     unsigned char length    = 0;
     uint8_t       bytesRead = 0;
-    unsigned char msgtype, alertIDh, alertIDl;
+
     BLE_ALERT_RECV_STATE nextState = ALERT_INIT;
+    unsigned char msgtype, alertIDh, alertIDl;
 
     unsigned char *buf = &bleAlertBuffer[0];
 

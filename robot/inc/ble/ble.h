@@ -483,7 +483,7 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
  */
 #define BLE_IRQ_RESP  3
 #define BLE_RESP_vect INT3_vect
-#define RAISE_BLE_IRQ_RESP \
+#define BLE_IRQ_RESP_TRAP \
         SET_BIT(PORTD, BLE_IRQ_RESP)
 
 /*!
@@ -492,9 +492,9 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
  */
 #define BLE_IRQ_ALERT  6
 #define BLE_ALERT_vect INT6_vect
-#define RAISE_BLE_IRQ_ALERT \
-        SET_BIT(PORTE, BLE_IRQ_ALERT)
 #define BLE_ALERT_BUF_SIZE 2
+#define BLE_IRQ_ALERT_TRAP \
+        SET_BIT(PORTE, BLE_IRQ_ALERT)
 
 /*!
  * Macro for the MCU I/O pin corresponding to SW interrupt for BLE error
@@ -502,7 +502,7 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
  */
 #define BLE_IRQ_ERROR  7
 #define BLE_ERROR_vect INT7_vect
-#define RAISE_BLE_IRQ_ERROR \
+#define BLE_IRQ_ERROR_TRAP \
         SET_BIT(PORTE, BLE_IRQ_ERROR)
 
 /* ------------------------ ENUMS ------------------------------------------- */
