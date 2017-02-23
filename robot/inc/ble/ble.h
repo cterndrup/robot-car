@@ -353,7 +353,7 @@ const char *atGapDevName = "AT+GAPDEVNAME";
 
 /*!
  * Command Name: AT+GAPDELBONDS
- * Description:  Deletes bonding information stored on teh BLuefruit LE module
+ * Description:  Deletes bonding information stored on the BLuefruit LE module
  */
 const char *atGapDelBonds = "AT+GAPDELBONDS";
 
@@ -474,18 +474,55 @@ const char *atDbgStackDump = "AT+DBGSTACKDUMP";
 /*!
  * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
  */
-#define BLE_IRQ  6
-#define BLE_vect INT0_vect
+#define BLE_IRQ  2
+#define BLE_vect INT2_vect
+
+/*!
+ * Macro for the MCU I/O pin corresponding to SW interrupt for BLE response
+ * msg handling
+ */
+#define BLE_IRQ_RESP  3
+#define BLE_RESP_vect INT3_vect
+#define RAISE_BLE_IRQ_RESP \
+        SET_BIT(PORTD, BLE_IRQ_RESP)
+
+/*!
+ * Macro for the MCU I/O pin corresponding to SW interrupt for BLE alert
+ * msg handling
+ */
+#define BLE_IRQ_ALERT  6
+#define BLE_ALERT_vect INT6_vect
+#define RAISE_BLE_IRQ_ALERT \
+        SET_BIT(PORTE, BLE_IRQ_ALERT)
+#define BLE_ALERT_BUF_SIZE 2
+
+/*!
+ * Macro for the MCU I/O pin corresponding to SW interrupt for BLE error
+ * msg handling
+ */
+#define BLE_IRQ_ERROR  7
+#define BLE_ERROR_vect INT7_vect
+#define RAISE_BLE_IRQ_ERROR \
+        SET_BIT(PORTE, BLE_IRQ_ERROR)
 
 /* ------------------------ ENUMS ------------------------------------------- */
 
 /*!
- * Enumeration of BLE_CMD_SEND_STATES for the state machine implemented in
+ * Enumeration of BLE_CMD_SEND_STATEs for the state machine implemented in
  * bleCmdSend()
  */
 typedef enum BLE_CMD_SEND_STATE
-             {INIT, SEND_HDR, SEND_BASE, SEND_MODE, SEND_PAYLOAD, DONE}
+             {SEND_INIT, SEND_HDR, SEND_BASE, 
+              SEND_MODE, SEND_PAYLOAD, SEND_DONE}
              BLE_CMD_SEND_STATE;
+
+/*!
+ * Enumeration of BLE_ALERT_RECV_STATEs for the state machine implemented for
+ * handling BLE ALERT messages from the BLE module
+ */
+typedef enum BLE_ALERT_RECV_STATE
+             {ALERT_INIT, READ_HDR, READ_PAYLOAD, ALERT_DONE}
+             BLE_ALERT_RECV_STATE;
 
 /* ------------------------ TYPEDEFS ---------------------------------------- */
 
@@ -503,10 +540,10 @@ typedef void BleCmdSend(uint8_t length, const char *pBase,
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 
 /*!
- * Registers BLE module's external interrupt with MCU
+ * Registers BLE module's external interrupts with MCU
  */
-inline void BleIRQRegister(void);
+void BleIRQRegister(void);
 
-BleCmdSend     bleCmdSend;
+BleCmdSend bleCmdSend;
 
 #endif // _BLE_H_

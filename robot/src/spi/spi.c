@@ -45,7 +45,7 @@ spiMasterInit(void)
  * @ref spi.h for function documentation
  */
 void
-spiMasterSendByte(char sendByte, char *pRecvByte)
+spiMasterSendByte(unsigned char sendByte, unsigned char *pRecvByte)
 {
     // Pull SS low
     CLEAR_BIT(SPI_PORT, SS);
@@ -67,17 +67,16 @@ spiMasterSendByte(char sendByte, char *pRecvByte)
     // Responsibility of the caller to pull SS high when transmission is 
     // complete
     //
-    // TODO: Don't forget to address this.
 }
 
 /*!
  * @ref spi.h for function documentation
  */
-char
-spiMasterRecvByte(char sendByte)
+unsigned char
+spiMasterRecvByte(void)
 {
-    char data;
-    spiMasterSendByte(sendByte, &data); 
+    unsigned char data;
+    spiMasterSendByte(0xFF, &data); 
     return data;
 }
 

@@ -36,20 +36,14 @@ void spiMasterInit(void);
  *                            argument is populated with the data sent from
  *                            the slave device. 
  */
-void spiMasterSendByte(char sendByte, char *pRecvByte);
+void spiMasterSendByte(unsigned char sendByte, unsigned char *pRecvByte);
 
 /*!
  * Function to receive a single byte of data from SPI slave
  * 
- * @param[in] sendByte   A byte of data to send to SPI slave. Ideally,
- *                       this value would be meaningless to the slave
- *                       device. This is needed because the master must
- *                       generate the SCK pulses needed for the slave to
- *                       transmit, which can only be done through a master send.
- *
- * @return    A character representing the data received from the slave. 
+ * @return    A unsigned char representing the data received from the slave. 
  */
-char spiMasterRecvByte(char sendByte);
+unsigned char spiMasterRecvByte(void);
 
 /*!
  * Function to terminate SPI send by raising the chip select high
