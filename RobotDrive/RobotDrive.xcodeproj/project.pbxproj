@@ -1,0 +1,543 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBE61E5F6DED00A15AC2 /* main.m */; };
+		1D95BBEA1E5F6DED00A15AC2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBE91E5F6DED00A15AC2 /* AppDelegate.m */; };
+		1D95BBED1E5F6DED00A15AC2 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBEC1E5F6DED00A15AC2 /* DiscoverViewController.m */; };
+		1D95BBF01E5F6DED00A15AC2 /* DriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBEF1E5F6DED00A15AC2 /* DriveViewController.m */; };
+		1D95BBF31E5F6DED00A15AC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BBF11E5F6DED00A15AC2 /* Main.storyboard */; };
+		1D95BBF51E5F6DED00A15AC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BBF41E5F6DED00A15AC2 /* Assets.xcassets */; };
+		1D95BBF81E5F6DED00A15AC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BBF61E5F6DED00A15AC2 /* LaunchScreen.storyboard */; };
+		1D95BC031E5F6DEE00A15AC2 /* RobotDriveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BC021E5F6DEE00A15AC2 /* RobotDriveTests.m */; };
+		1D95BC0E1E5F6DEE00A15AC2 /* RobotDriveUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BC0D1E5F6DEE00A15AC2 /* RobotDriveUITests.m */; };
+		1D95BC291E5F7EE000A15AC2 /* left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BC281E5F7EE000A15AC2 /* left_arrow.png */; };
+		1D95BC2D1E5F7F3900A15AC2 /* up_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BC2A1E5F7F3900A15AC2 /* up_arrow.png */; };
+		1D95BC2E1E5F7F3900A15AC2 /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BC2B1E5F7F3900A15AC2 /* right_arrow.png */; };
+		1D95BC351E5F82C000A15AC2 /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D95BC341E5F82C000A15AC2 /* down_arrow.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1D95BBFF1E5F6DEE00A15AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D95BBDA1E5F6DEC00A15AC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D95BBE11E5F6DEC00A15AC2;
+			remoteInfo = RobotDrive;
+		};
+		1D95BC0A1E5F6DEE00A15AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D95BBDA1E5F6DEC00A15AC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D95BBE11E5F6DEC00A15AC2;
+			remoteInfo = RobotDrive;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D95BBE21E5F6DEC00A15AC2 /* RobotDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D95BBE61E5F6DED00A15AC2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1D95BBE81E5F6DED00A15AC2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D95BBE91E5F6DED00A15AC2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1D95BBEB1E5F6DED00A15AC2 /* DiscoverViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscoverViewController.h; sourceTree = "<group>"; };
+		1D95BBEC1E5F6DED00A15AC2 /* DiscoverViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
+		1D95BBEE1E5F6DED00A15AC2 /* DriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveViewController.h; sourceTree = "<group>"; };
+		1D95BBEF1E5F6DED00A15AC2 /* DriveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriveViewController.m; sourceTree = "<group>"; };
+		1D95BBF21E5F6DED00A15AC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1D95BBF41E5F6DED00A15AC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1D95BBF71E5F6DED00A15AC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1D95BBF91E5F6DED00A15AC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D95BBFE1E5F6DEE00A15AC2 /* RobotDriveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotDriveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D95BC021E5F6DEE00A15AC2 /* RobotDriveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RobotDriveTests.m; sourceTree = "<group>"; };
+		1D95BC041E5F6DEE00A15AC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D95BC091E5F6DEE00A15AC2 /* RobotDriveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RobotDriveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D95BC0D1E5F6DEE00A15AC2 /* RobotDriveUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RobotDriveUITests.m; sourceTree = "<group>"; };
+		1D95BC0F1E5F6DEE00A15AC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D95BC281E5F7EE000A15AC2 /* left_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_arrow.png; sourceTree = "<group>"; };
+		1D95BC2A1E5F7F3900A15AC2 /* up_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_arrow.png; sourceTree = "<group>"; };
+		1D95BC2B1E5F7F3900A15AC2 /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
+		1D95BC341E5F82C000A15AC2 /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D95BBDF1E5F6DEC00A15AC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BBFB1E5F6DEE00A15AC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BC061E5F6DEE00A15AC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1D95BBD91E5F6DEC00A15AC2 = {
+			isa = PBXGroup;
+			children = (
+				1D95BBE41E5F6DED00A15AC2 /* RobotDrive */,
+				1D95BC011E5F6DEE00A15AC2 /* RobotDriveTests */,
+				1D95BC0C1E5F6DEE00A15AC2 /* RobotDriveUITests */,
+				1D95BBE31E5F6DEC00A15AC2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1D95BBE31E5F6DEC00A15AC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D95BBE21E5F6DEC00A15AC2 /* RobotDrive.app */,
+				1D95BBFE1E5F6DEE00A15AC2 /* RobotDriveTests.xctest */,
+				1D95BC091E5F6DEE00A15AC2 /* RobotDriveUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1D95BBE41E5F6DED00A15AC2 /* RobotDrive */ = {
+			isa = PBXGroup;
+			children = (
+				1D95BC341E5F82C000A15AC2 /* down_arrow.png */,
+				1D95BC2A1E5F7F3900A15AC2 /* up_arrow.png */,
+				1D95BC2B1E5F7F3900A15AC2 /* right_arrow.png */,
+				1D95BC281E5F7EE000A15AC2 /* left_arrow.png */,
+				1D95BBE81E5F6DED00A15AC2 /* AppDelegate.h */,
+				1D95BBE91E5F6DED00A15AC2 /* AppDelegate.m */,
+				1D95BBEB1E5F6DED00A15AC2 /* DiscoverViewController.h */,
+				1D95BBEC1E5F6DED00A15AC2 /* DiscoverViewController.m */,
+				1D95BBEE1E5F6DED00A15AC2 /* DriveViewController.h */,
+				1D95BBEF1E5F6DED00A15AC2 /* DriveViewController.m */,
+				1D95BBF11E5F6DED00A15AC2 /* Main.storyboard */,
+				1D95BBF41E5F6DED00A15AC2 /* Assets.xcassets */,
+				1D95BBF61E5F6DED00A15AC2 /* LaunchScreen.storyboard */,
+				1D95BBF91E5F6DED00A15AC2 /* Info.plist */,
+				1D95BBE51E5F6DED00A15AC2 /* Supporting Files */,
+			);
+			path = RobotDrive;
+			sourceTree = "<group>";
+		};
+		1D95BBE51E5F6DED00A15AC2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1D95BBE61E5F6DED00A15AC2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D95BC011E5F6DEE00A15AC2 /* RobotDriveTests */ = {
+			isa = PBXGroup;
+			children = (
+				1D95BC021E5F6DEE00A15AC2 /* RobotDriveTests.m */,
+				1D95BC041E5F6DEE00A15AC2 /* Info.plist */,
+			);
+			path = RobotDriveTests;
+			sourceTree = "<group>";
+		};
+		1D95BC0C1E5F6DEE00A15AC2 /* RobotDriveUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1D95BC0D1E5F6DEE00A15AC2 /* RobotDriveUITests.m */,
+				1D95BC0F1E5F6DEE00A15AC2 /* Info.plist */,
+			);
+			path = RobotDriveUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D95BBE11E5F6DEC00A15AC2 /* RobotDrive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D95BC121E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDrive" */;
+			buildPhases = (
+				1D95BBDE1E5F6DEC00A15AC2 /* Sources */,
+				1D95BBDF1E5F6DEC00A15AC2 /* Frameworks */,
+				1D95BBE01E5F6DEC00A15AC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RobotDrive;
+			productName = RobotDrive;
+			productReference = 1D95BBE21E5F6DEC00A15AC2 /* RobotDrive.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1D95BBFD1E5F6DEE00A15AC2 /* RobotDriveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D95BC151E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveTests" */;
+			buildPhases = (
+				1D95BBFA1E5F6DEE00A15AC2 /* Sources */,
+				1D95BBFB1E5F6DEE00A15AC2 /* Frameworks */,
+				1D95BBFC1E5F6DEE00A15AC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D95BC001E5F6DEE00A15AC2 /* PBXTargetDependency */,
+			);
+			name = RobotDriveTests;
+			productName = RobotDriveTests;
+			productReference = 1D95BBFE1E5F6DEE00A15AC2 /* RobotDriveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1D95BC081E5F6DEE00A15AC2 /* RobotDriveUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D95BC181E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveUITests" */;
+			buildPhases = (
+				1D95BC051E5F6DEE00A15AC2 /* Sources */,
+				1D95BC061E5F6DEE00A15AC2 /* Frameworks */,
+				1D95BC071E5F6DEE00A15AC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D95BC0B1E5F6DEE00A15AC2 /* PBXTargetDependency */,
+			);
+			name = RobotDriveUITests;
+			productName = RobotDriveUITests;
+			productReference = 1D95BC091E5F6DEE00A15AC2 /* RobotDriveUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1D95BBDA1E5F6DEC00A15AC2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "COLIN TERNDRUP";
+				TargetAttributes = {
+					1D95BBE11E5F6DEC00A15AC2 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					1D95BBFD1E5F6DEE00A15AC2 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 1D95BBE11E5F6DEC00A15AC2;
+					};
+					1D95BC081E5F6DEE00A15AC2 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 1D95BBE11E5F6DEC00A15AC2;
+					};
+				};
+			};
+			buildConfigurationList = 1D95BBDD1E5F6DEC00A15AC2 /* Build configuration list for PBXProject "RobotDrive" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1D95BBD91E5F6DEC00A15AC2;
+			productRefGroup = 1D95BBE31E5F6DEC00A15AC2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D95BBE11E5F6DEC00A15AC2 /* RobotDrive */,
+				1D95BBFD1E5F6DEE00A15AC2 /* RobotDriveTests */,
+				1D95BC081E5F6DEE00A15AC2 /* RobotDriveUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D95BBE01E5F6DEC00A15AC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D95BBF81E5F6DED00A15AC2 /* LaunchScreen.storyboard in Resources */,
+				1D95BBF51E5F6DED00A15AC2 /* Assets.xcassets in Resources */,
+				1D95BC351E5F82C000A15AC2 /* down_arrow.png in Resources */,
+				1D95BC2E1E5F7F3900A15AC2 /* right_arrow.png in Resources */,
+				1D95BC2D1E5F7F3900A15AC2 /* up_arrow.png in Resources */,
+				1D95BBF31E5F6DED00A15AC2 /* Main.storyboard in Resources */,
+				1D95BC291E5F7EE000A15AC2 /* left_arrow.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BBFC1E5F6DEE00A15AC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BC071E5F6DEE00A15AC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D95BBDE1E5F6DEC00A15AC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D95BBF01E5F6DED00A15AC2 /* DriveViewController.m in Sources */,
+				1D95BBEA1E5F6DED00A15AC2 /* AppDelegate.m in Sources */,
+				1D95BBED1E5F6DED00A15AC2 /* DiscoverViewController.m in Sources */,
+				1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BBFA1E5F6DEE00A15AC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D95BC031E5F6DEE00A15AC2 /* RobotDriveTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D95BC051E5F6DEE00A15AC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D95BC0E1E5F6DEE00A15AC2 /* RobotDriveUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1D95BC001E5F6DEE00A15AC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D95BBE11E5F6DEC00A15AC2 /* RobotDrive */;
+			targetProxy = 1D95BBFF1E5F6DEE00A15AC2 /* PBXContainerItemProxy */;
+		};
+		1D95BC0B1E5F6DEE00A15AC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D95BBE11E5F6DEC00A15AC2 /* RobotDrive */;
+			targetProxy = 1D95BC0A1E5F6DEE00A15AC2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1D95BBF11E5F6DED00A15AC2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D95BBF21E5F6DED00A15AC2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1D95BBF61E5F6DED00A15AC2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1D95BBF71E5F6DED00A15AC2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D95BC101E5F6DEE00A15AC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D95BC111E5F6DEE00A15AC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1D95BC131E5F6DEE00A15AC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RobotDrive/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDrive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1D95BC141E5F6DEE00A15AC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RobotDrive/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDrive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1D95BC161E5F6DEE00A15AC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RobotDriveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDriveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotDrive.app/RobotDrive";
+			};
+			name = Debug;
+		};
+		1D95BC171E5F6DEE00A15AC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RobotDriveTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDriveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RobotDrive.app/RobotDrive";
+			};
+			name = Release;
+		};
+		1D95BC191E5F6DEE00A15AC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RobotDriveUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDriveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = RobotDrive;
+			};
+			name = Debug;
+		};
+		1D95BC1A1E5F6DEE00A15AC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RobotDriveUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = colinterndrup.RobotDriveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = RobotDrive;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D95BBDD1E5F6DEC00A15AC2 /* Build configuration list for PBXProject "RobotDrive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D95BC101E5F6DEE00A15AC2 /* Debug */,
+				1D95BC111E5F6DEE00A15AC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1D95BC121E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDrive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D95BC131E5F6DEE00A15AC2 /* Debug */,
+				1D95BC141E5F6DEE00A15AC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1D95BC151E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D95BC161E5F6DEE00A15AC2 /* Debug */,
+				1D95BC171E5F6DEE00A15AC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1D95BC181E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D95BC191E5F6DEE00A15AC2 /* Debug */,
+				1D95BC1A1E5F6DEE00A15AC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1D95BBDA1E5F6DEC00A15AC2 /* Project object */;
+}
