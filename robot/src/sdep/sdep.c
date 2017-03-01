@@ -12,7 +12,7 @@
 void
 sdepMsgSend(SDEP_MSG *pMsg)
 {
-    uint8_t  lsb    = 0xff & pMsg->hdr.msgid.cmdid;
+    uint8_t  lsb    = pMsg->hdr.msgid.cmdid & 0xff;
     uint8_t  msb    = pMsg->hdr.msgid.cmdid >> 8;
     uint8_t  len    = pMsg->hdr.payloadLen & ~(1 << 7);
     uint8_t *pByte  = &(pMsg->payload[0]);
