@@ -2,6 +2,7 @@
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
 #include <avr/io.h>
+#include <util/delay.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "spi/spi.h"
@@ -49,6 +50,9 @@ spiMasterSendByte(unsigned char sendByte, unsigned char *pRecvByte)
 {
     // Pull SS low
     CLEAR_BIT(SPI_PORT, SS);
+
+    // Enforce 100 us delay before sending data -- required by SDEP
+    _delay_us(100);
 
     // Write data to SPI DR
     SPDR = sendByte;
