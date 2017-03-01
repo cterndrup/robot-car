@@ -46,7 +46,7 @@ spiMasterInit(void)
  * @ref spi.h for function documentation
  */
 void
-spiMasterSendByte(unsigned char sendByte, unsigned char *pRecvByte)
+spiMasterSendByte(uint8_t sendByte, uint8_t *pRecvByte)
 {
     // Pull SS low
     CLEAR_BIT(SPI_PORT, SS);
@@ -76,10 +76,10 @@ spiMasterSendByte(unsigned char sendByte, unsigned char *pRecvByte)
 /*!
  * @ref spi.h for function documentation
  */
-unsigned char
+uint8_t
 spiMasterRecvByte(void)
 {
-    unsigned char data;
+    uint8_t data;
     spiMasterSendByte(0xFF, &data); 
     return data;
 }
