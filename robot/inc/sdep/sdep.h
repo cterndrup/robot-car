@@ -27,9 +27,20 @@
 
 #define SDEP_MAX_PAYLOAD_LEN            (0x0010)
 #define SDEP_MAX_MSG_BUFFER_LEN         (0x0008)
+#define SDEP_MAX_FULL_MSG_LEN           (0x0030)
+
+/* ------------------------ ENUMERATED TYPES -------------------------------- */
+
+/*!
+ * Enum for types of AT-commands
+ */
+typedef enum SDEP_CMD_MODE {TEST, WRITE, EXEC, READ} SDEP_CMD_MODE;
 
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
 
+/*!
+ * Structure for representing SDEP messages
+ */
 typedef struct SDEP_MSG
 {
     // Message header
@@ -54,6 +65,9 @@ typedef struct SDEP_MSG
     uint8_t payload[SDEP_MAX_PAYLOAD_LEN];
 } SDEP_MSG;
 
+/*!
+ * Structure for representing SDEP message buffers
+ */
 typedef struct SDEP_MSG_BUFFER
 {
     // Mesage buffer

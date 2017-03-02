@@ -15,6 +15,30 @@ SDEP_MSG_BUFFER sdepRespBuffer;
 SDEP_MSG_BUFFER sdepAlertBuffer;
 SDEP_MSG_BUFFER sdepErrorBuffer;
 
+/* ------------------------ STATIC FUNCTIONS -------------------------------- */
+
+/*!
+ * Performs a deep copy from SDEP_MSG pointed to by pSrc to SDEP_MSG pointed
+ * to by pDest
+ *
+ * @param[in/out] pDest     Pointer to destination SDEP_MSG
+ * @param[in/out] pSrc      Pointer to source SDEP_MSG
+ */
+void
+_sdepMsgCopy(SDEP_MSG *pDest, SDEP_MSG *pSrc)
+{
+    // Copy hdr
+    pDest->hdr.msgtype    = pSrc->hdr.msgtype;
+    pDest->hdr.msgid      = pSrc->hdr.msgid;
+    pDest->hdr.payloadLen = pSrc->hdr.payloadLen;
+
+    // Copy message payload
+    for (int i = 0; i < SDEP_MAX_PAYLOAD_LEN; ++i)
+    {
+        pDest->payload[i] = pSrc->payload[i];
+    }
+}
+
 /* ------------------------ FUNCTION DEFINITIONS ---------------------------- */
 
 /*!
@@ -80,8 +104,7 @@ sdepRespCollect(void)
     uint8_t i = 0;
     uint8_t moreData;
 
-    do
-    {
+    do {
         sdepMsgRecv(&sdepIRQBuffer.buffer[i]);
         moreData = sdepIRQBuffer.buffer[i].payloadLen & (1 << 7);
         ++i;
@@ -104,7 +127,7 @@ sdepResponseMsgHandler(void)
     // Copy the data from the IRQ's resp buffer into the sdepRespBuffer
     for (uint8_t i = 0; i < len; ++i)
     {
-        sdepRespBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
+        _sdepMsgCopy(&sdepRespBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
 }
 
@@ -120,8 +143,10 @@ sdepAlertMsgHandler(void)
     // Copy the data from the IRQ's resp buffer into the sdepAlertBuffer
     for (uint8_t i = 0; i < len; ++i)
     {
-        sdepAlertBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
+        _sdepMsgCopy(&sdepAlertBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
+
+    // TODO: complete implementation
 }
 
 /*!
@@ -136,6 +161,8 @@ sdepErrorMsgHandler(void)
     // Copy the data from the IRQ's resp buffer into the sdepErrorBuffer
     for (uint8_t i = 0; i < len; ++i)
     {
-        sdepErrorBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
+        _sdepMsgCopy(&sdepErrorBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
+
+    // TODO: complete implementation
 }

@@ -383,35 +383,35 @@ typedef struct BLE BLE;
  */
 #include "ble/ble_gatt.h"
 
-// TODO: Add documentation
-/*
+/*!
+ * Constructor for the BLE object
+ *
+ * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ */
 typedef void BleConstruct(BLE *pBLE);
 
+/*!
+ * Initialization method for the BLE object
+ *
+ * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ */
 typedef void BleInitialize(BLE *pBLE);
 
-typedef void BleServericesConfigure(BLE *pBLE);
+/*!
+ * Configures the BLE GATT services offered by the BLE object
+ *
+ * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ */
+typedef void BleServicesConfigure(BLE *pBLE);
 
-typedef void BleCharacteristicUpdate(BLE *pBLE); 
-*/
+/*!
+ * Updates a BLE GATT characteristic configured for the BLE object
+ *
+ * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ */
+typedef void BleCharacteristicUpdate(BLE *pBLE);
 
 /* ------------------------ ENUMS ------------------------------------------- */
-
-/*!
- * Enumeration of BLE_CMD_SEND_STATEs for the state machine implemented in
- * bleCmdSend()
- */
-typedef enum BLE_CMD_SEND_STATE
-             {SEND_INIT, SEND_HDR, SEND_BASE, 
-              SEND_MODE, SEND_PAYLOAD, SEND_DONE}
-             BLE_CMD_SEND_STATE;
-
-/*!
- * Enumeration of BLE_ALERT_RECV_STATEs for the state machine implemented for
- * handling BLE ALERT messages from the BLE module
- */
-typedef enum BLE_ALERT_RECV_STATE
-             {ALERT_INIT, READ_HDR, READ_PAYLOAD, ALERT_DONE}
-             BLE_ALERT_RECV_STATE;
 
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
 
@@ -422,7 +422,6 @@ struct BLE
 {
     // Services, Characteristics
     // TODO: Add services and characteristics, buffer for characteristic idxs
-    // struct BLEServices[MAX_SERVICES];
 
     // BLE generic methods
     BleConstruct            *bleConstruct;
