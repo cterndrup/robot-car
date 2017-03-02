@@ -26,6 +26,7 @@
 #define SDEP_ERRORID_INVALID_PAYLOAD    (0x0003)
 
 #define SDEP_MAX_PAYLOAD_LEN            (0x0010)
+#define SDEP_MAX_MSG_BUFFER_LEN         (0x0008)
 
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
 
@@ -53,6 +54,37 @@ typedef struct SDEP_MSG
     uint8_t payload[SDEP_MAX_PAYLOAD_LEN];
 } SDEP_MSG;
 
+typedef struct SDEP_MSG_BUFFER
+{
+    // Mesage buffer
+    SDEP_MSG buffer[SDEP_MAX_PAYLOAD_LEN]; 
+
+    // Number of messages most recently written into the buffer
+    uint8_t  numMsgs;
+} SDEP_MSG_BUFFER;
+
+/* ----------------------- TYPEDEFS ----------------------------------------- */
+
+/*!
+ * Type definition for a SDEP message handler
+ */
+typedef void SdepMsgHandler(void);
+
+/*!
+ * Type definition for a SDEP response message handler
+ */
+typedef SdepResponseMsgHandler SdepMsgHandler;
+
+/*!
+ * Type definition for a SDEP alert message handler
+ */
+typedef SdepAlertMsgHandler SdepMsgHandler;
+
+/*!
+ * Type definition for a SDEP error message handler
+ */
+typedef SdepErrorMessageHandler SdepMsgHandler;
+
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 
 /*!
@@ -71,5 +103,33 @@ void sdepMsgSend(SDEP_MSG *pMsg);
  *       on the BLE module
  */
 void sdepMsgRecv(SDEP_MSG *pMsg);
+
+/*!
+ * Assembles SDEP_MSGs into a full response
+ *
+ * @return the msgtype of the first message in the full response
+ */
+uint8_t sdepRespCollect(void);
+
+/*!
+ * SDEP_MSG response message handler
+ *
+ * @ref see documentation above
+ */
+SdepResponseMsgHandler sdepResponseMsgHandler;
+
+/*!
+ * SDEP_MSG alert message handler
+ *
+ * @ref see documentation above
+ */
+SdepAlertMsgHandler sdepAlertMsgHandler;
+
+/*!
+ * SDEP_MSG error message handler
+ *
+ * @ref see documentation above
+ */
+SdepErrorMsgHandler sdepErrorMsgHandler;
 
 #endif // _SDEP_H_

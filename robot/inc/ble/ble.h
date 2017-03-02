@@ -5,6 +5,15 @@
 
 /* ----------------------- INCLUDES ----------------------------------------- */
 
+/* ----------------------- MACROS AND DEFINES ------------------------------- */
+
+/*!
+ * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
+ */
+#define BLE_PORT PORTD
+#define BLE_IRQ  2
+#define BLE_vect INT2_vect
+
 /* ----------------------- GLOBAL VARIABLES --------------------------------- */
 
 /* STANDARD AT-COMMAND STRINGS */
@@ -357,41 +366,33 @@ const char *atDbgStackSize = "AT+DBGSTACKSIZE";
  */
 const char *atDbgStackDump = "AT+DBGSTACKDUMP";
 
-/* ----------------------- MACROS AND DEFINES ------------------------------- */
+/* ------------------------ TYPEDEFS ---------------------------------------- */
 
 /*!
- * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
+ * Forward definition of BLE object
  */
-#define BLE_IRQ  2
-#define BLE_vect INT2_vect
+typedef struct BLE BLE;
 
 /*!
- * Macro for the MCU I/O pin corresponding to SW interrupt for BLE response
- * msg handling
+ * BLE GAP specific methods and defs
  */
-#define BLE_IRQ_RESP  3
-#define BLE_RESP_vect INT3_vect
-#define BLE_IRQ_RESP_TRAP \
-        SET_BIT(PORTD, BLE_IRQ_RESP)
+#include "ble/ble_gap.h"
 
 /*!
- * Macro for the MCU I/O pin corresponding to SW interrupt for BLE alert
- * msg handling
+ * BLE GATT specific methods and defs
  */
-#define BLE_IRQ_ALERT  6
-#define BLE_ALERT_vect INT6_vect
-#define BLE_ALERT_BUF_SIZE 2
-#define BLE_IRQ_ALERT_TRAP \
-        SET_BIT(PORTE, BLE_IRQ_ALERT)
+#include "ble/ble_gatt.h"
 
-/*!
- * Macro for the MCU I/O pin corresponding to SW interrupt for BLE error
- * msg handling
- */
-#define BLE_IRQ_ERROR  7
-#define BLE_ERROR_vect INT7_vect
-#define BLE_IRQ_ERROR_TRAP \
-        SET_BIT(PORTE, BLE_IRQ_ERROR)
+// TODO: Add documentation
+/*
+typedef void BleConstruct(BLE *pBLE);
+
+typedef void BleInitialize(BLE *pBLE);
+
+typedef void BleServericesConfigure(BLE *pBLE);
+
+typedef void BleCharacteristicUpdate(BLE *pBLE); 
+*/
 
 /* ------------------------ ENUMS ------------------------------------------- */
 
@@ -412,26 +413,56 @@ typedef enum BLE_ALERT_RECV_STATE
              {ALERT_INIT, READ_HDR, READ_PAYLOAD, ALERT_DONE}
              BLE_ALERT_RECV_STATE;
 
-/* ------------------------ TYPEDEFS ---------------------------------------- */
+/* ------------------------ STRUCT DEFINITION ------------------------------- */
 
 /*!
- * Sends AT-commands to the BLE module
- *
- * @param[in] length    The length of the payload of the AT-command
- * @param[in] pBase     The base AT-command string
- * @param[in] pMode     The AT-command mode
- * @param[in] pPayload  The payload in addition ot the base AT-command string
+ * Definition of the Bluetooth Low Energy object
  */
-typedef void BleCmdSend(uint8_t length, const char *pBase,
-                        const char *pMode, const char *pPayload);
+struct BLE
+{
+    // Services, Characteristics
+    // TODO: Add services and characteristics, buffer for characteristic idxs
+    // struct BLEServices[MAX_SERVICES];
+
+    // BLE generic methods
+    BleConstruct            *bleConstruct;
+    BleInitialize           *bleInitialize;
+
+    // BLE Services methods
+    BleServicesConfigure    *bleServicesConfigure;
+
+    // BLE Characteristics methods
+    BleCharacteristicUpdate *bleCharacteristicUpdate;
+
+    // BLE GAP methods
+    BleGapConnStatusGet     *bleGapConnStatusGet;
+    BleGapConnStatusSet     *bleGapConnStatusSet;
+    BleGapDisconnect        *bleGapDisconnect;
+
+    // BLE GATT methods
+    BleGattClear            *bleGattClear;
+    BleGattList             *bleGattList;
+};
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 
-/*!
- * Registers BLE module's external interrupts with MCU
- */
-void BleIRQRegister(void);
+// BLE generic methods
+BleConstruct            bleConstruct;
+BleInitialize           bleInitialize;
 
-BleCmdSend bleCmdSend;
+// BLE services methods
+BleServicesConfigure    bleServicesConfigure;
+
+// BLE Characteristics methods
+BleCharacteristicUpdate bleCharacteristicUpdate;
+
+// BLE GAP methods
+BleGapConnStatusGet     bleGapConnStatusGet;
+BleGapConnStatusSet     bleGapConnStatusSet;
+BleGapDisconnect        bleGapDisconnect;
+
+// BLE GATT methods
+BleGattClear            bleGattClear;
+BleGattList             bleGattList;
 
 #endif // _BLE_H_

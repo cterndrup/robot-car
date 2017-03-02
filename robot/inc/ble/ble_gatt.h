@@ -3,6 +3,8 @@
 #ifndef _BLE_GATT_H_
 #define _BLE_GATT_H_
 
+/* ------------------------ GLOBAL VARIABLES -------------------------------- */
+
 /* BLE GENERIC ATTRIBUTE PROFILE (GATT) AT-COMMAND STRINGS */
 
 /*!
@@ -46,5 +48,32 @@ const char *atGattList = "AT+GATTLIST";
  *               from a characteristic
  */
 const char *atGattCharRaw = "AT+GATTCHARRAW";
+
+/* ------------------------ MACROS AND DEFINES ------------------------------ */
+
+/*!
+ * GATT specific definitinons
+ */
+#define BLE_GATT_MAX_SERVICES                10
+#define BLE_GATT_MAX_CHARACTERISTICS         30
+#define BLE_GATT_MAX_CHARACTERISTIC_BUF_SIZE 32
+#define BLE_GATT_MAX_CCDS                    16
+
+/* ------------------------ TYPEDEFS ---------------------------------------- */
+
+/*!
+ * Clears any custom BLE GATT services and characterstics defined on the module
+ *
+ * @param[in/out] pBLE      Pointer to the BLE object
+ */
+typedef void BleGattClear(BLE *pBLE);
+
+/*!
+ * Lists all custom GATT services and characteristics that have been defined
+ * on the device
+ *
+ * @param[in/out] pBLE      Pointer to the BLE object
+ */
+typedef void BleGattList(BLE *pBLE);
 
 #endif // _BLE_GATT_H_

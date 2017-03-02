@@ -4,6 +4,17 @@
 #include "sdep/sdep.h"
 #include "spi/spi.h"
 
+/* ------------------------ GLOBAL VARIABLES -------------------------------- */
+
+/*!
+ * SDEP_MSG buffers into which incoming SDEP messages are placed by the BLE
+ * interrupt handler
+ */
+SDEP_MSG_BUFFER sdepIRQBuffer;
+SDEP_MSG_BUFFER sdepRespBuffer;
+SDEP_MSG_BUFFER sdepAlertBuffer;
+SDEP_MSG_BUFFER sdepErrorBuffer;
+
 /* ------------------------ FUNCTION DEFINITIONS ---------------------------- */
 
 /*!
@@ -57,5 +68,74 @@ sdepMsgRecv(SDEP_MSG *pMsg)
     {
         spiMasterRecv(pByte);
         ++pByte;
+    }
+}
+
+/*!
+ * @ref sdep.h for function documentation
+ */
+uint8_t
+sdepRespCollect(void)
+{
+    uint8_t i = 0;
+    uint8_t moreData;
+
+    do
+    {
+        sdepMsgRecv(&sdepIRQBuffer.buffer[i]);
+        moreData = sdepIRQBuffer.buffer[i].payloadLen & (1 << 7);
+        ++i;
+    } while (moreData && i < SDEP_MAX_MSG_BUFFER_LEN);
+
+    sdepIRQBuffer.numMsgs = i;
+
+    return sdepIRQBuffer.buffer[0].hdr.msgtype;
+}
+
+/*!
+ * @ref sdep.h for function documentation
+ */
+void
+sdepResponseMsgHandler(void)
+{
+    uint8_t len = sdepIRQBuffer.numMsgs;
+    sdepRespBuffer.numMsgs = len;
+
+    // Copy the data from the IRQ's resp buffer into the sdepRespBuffer
+    for (uint8_t i = 0; i < len; ++i)
+    {
+        sdepRespBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
+    }
+}
+
+/*!
+ * @ref sdep.h for function documentation
+ */
+void
+sdepAlertMsgHandler(void)
+{
+    uint8_t len = sdepIRQBuffer.numMsgs;
+    sdepAlertBuffer.numMsgs = len;
+
+    // Copy the data from the IRQ's resp buffer into the sdepAlertBuffer
+    for (uint8_t i = 0; i < len; ++i)
+    {
+        sdepAlertBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
+    }
+}
+
+/*!
+ * @ref sdep.h for function documentation
+ */
+void
+sdepErrorMsgHandler(void)
+{
+    uint8_t len = sdepIRQBuffer.numMsgs;
+    sdepErrorBuffer.numMsgs = len;
+
+    // Copy the data from the IRQ's resp buffer into the sdepErrorBuffer
+    for (uint8_t i = 0; i < len; ++i)
+    {
+        sdepErrorBuffer.buffer[i] = sdepIRQBuffer.buffer[i];
     }
 }
