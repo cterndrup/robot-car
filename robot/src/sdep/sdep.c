@@ -3,8 +3,14 @@
 /* ------------------------ INCLUDES ---------------------------------------- */
 #include "sdep/sdep.h"
 #include "spi/spi.h"
+#include "common/utils.h"
 
 /* ------------------------ GLOBAL VARIABLES -------------------------------- */
+
+/*!
+ * Semaphore for synchronizing access to below buffers
+ */
+semaphore_t sdepBufferSemaphore = 0;
 
 /*!
  * SDEP_MSG buffers into which incoming SDEP messages are placed by the BLE
@@ -146,7 +152,26 @@ sdepAlertMsgHandler(void)
         _sdepMsgCopy(&sdepAlertBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
 
-    // TODO: complete implementation
+    /* TODO: implement alert handling
+    // Extract alert id from the alert buffer
+    uint16_t alertid = sdepAlertBuffer.buffer[i].hdr.alertid;
+
+    switch (alertid)
+    {
+        case SDEP_ALERTID_RSVD:
+            // Reserved for future use
+            break;
+        case SDEP_ALERTID_SYS_RESET:
+            // BLE module about to undergo sys reset
+            break;
+        case SDEP_ALERTID_BATTERY_LOW:
+            // Battery level of BLE module is low
+            break;
+        case SDEP_ALERTID_BATTERY_CRITICIAL:
+            // Battery level of BLE module is very low
+            break;
+    }
+    */
 }
 
 /*!
@@ -164,5 +189,21 @@ sdepErrorMsgHandler(void)
         _sdepMsgCopy(&sdepErrorBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
 
-    // TODO: complete implementation
+    /* TODO: implement error handling
+    // Extract errorid from the error buffer
+    uint16_t errorid = sdepErrorBuffer.buffer[i].hdr.errorid;
+
+    switch (errorid)
+    {
+        case SDEP_ERRORID_RSVD:
+            // Reserved for future use
+            break;
+        case SDEP_ERRORID_INVALID_CMDID:
+            // Invalid cmd id sent to BLE module
+            break;
+        case SDEP_ERRORID_INVALID_PAYLOAD:
+            // Invalid payload sent to BLE module
+            break;
+    }
+    */
 }
