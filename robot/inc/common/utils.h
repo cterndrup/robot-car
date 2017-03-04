@@ -122,4 +122,34 @@ typedef int8_t STATUS;
  */
 typedef uint8_t bool;
 
+/*!
+ * A semaphore
+ */
+typedef volatile uint8_t semaphore_t;
+
+/* ------------------------ FUNCTION DEFINITIONS ---------------------------- */
+
+/*!
+ * Copies character string src to character string dst, including the NULL byte
+ * 
+ * @param[in/out] dst   The destination string
+ * @param[in]     src   The source string
+ *
+ * @note implementation assumes both dst and src are null-terminated
+ */
+void stringcpy(char *dst, const char *src);
+
+/*!
+ * Compares two character strings, and unlike stdlib, only checks whether
+ * they are character by character equal -- returns true if so; else false.
+ *
+ * @param[in] str1
+ * @param[in] str2
+ *
+ * @return true if str1 == str2 else false
+ *
+ * @note implementation assumes both dst and src are null-terminated
+ */
+bool stringcmp(const char *str1, const char *str2);
+
 #endif /* _COMMON_UTILS_H_ */
