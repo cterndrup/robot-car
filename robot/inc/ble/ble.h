@@ -8,13 +8,40 @@
 /* ----------------------- MACROS AND DEFINES ------------------------------- */
 
 /*!
- * Macro for the MCU I/O pin corresponding to BLE module's IRQ pin
+ * MCU I/O pin corresponding to BLE module's IRQ pin
  */
 #define BLE_PORT PORTD
 #define BLE_IRQ  2
 #define BLE_vect INT2_vect
 
+/*!
+ * BLE characteristic properties and their associated values, as defined by
+ * Bluetooth SIG
+ */
+#define BLE_CHAR_PROP_READ              (0x02)
+#define BLE_CHAR_PROP_WRITE             (0x04)
+#define BLE_CHAR_PROP_WRITE_NO_RESP     (0x08)
+#define BLE_CHAR_PROP_NOTIFY            (0x10)
+#define BLE_CHAR_PROP_INDICATE          (0x20)
+
+/*!
+ * Definition of empty BLE command payload
+ */
+#define BLE_CMD_EMPTY_PAYLOAD           (&bleCmdEmptyPayload[0])
+
 /* ----------------------- GLOBAL VARIABLES --------------------------------- */
+
+/*!
+ * Definition of BLE module name
+ */
+const char *bleDeviceName = "BluefruitLE";
+
+/*!
+ * Definition of empty BLE command payload
+ */
+const char bleCmdEmptyPayload[1] = {'\0'};
+
+
 
 /* STANDARD AT-COMMAND STRINGS */
 
@@ -215,8 +242,8 @@ const char *atBleUartTx = "AT+BLEUARTTX";
 
 /*!
  * Command Name: AT+BLEUARTTXF
- * Decription:   This is a convenience functino that serves the same purpose as
- *               AT+BLEUARTTX, but data is immdiately sent in a singlbe BLE 
+ * Decription:   This is a convenience function that serves the same purpose as
+ *               AT+BLEUARTTX, but data is immediately sent in a single BLE 
  *               packet
  */
 const char *atBleUartTxF = "AT+BLEUARTTXF";
@@ -407,24 +434,30 @@ typedef void BleServicesConfigure(BLE *pBLE);
 /*!
  * Updates a BLE GATT characteristic configured for the BLE object
  *
- * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ * @param[in/out] pBLE       Pointer to the Bluetooth LE object
+ * @param[in]     serviceIdx Index to service in the services table
+ * @param[in]     charIdx    Index to characteristic in the characteristics
+ *                           table
  */
-typedef void BleCharacteristicUpdate(BLE *pBLE);
-
-/* ------------------------ ENUMS ------------------------------------------- */
+typedef void BleCharacteristicUpdate(BLE *pBLE,
+                                     uint8_t serviceIdx, uint8_t charIdx);
 
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
+
+/*!
+ * Definition of the Robot Drive Service
+ */
+typedef BLE_GATT_SERVICE RobotDriveService;
 
 /*!
  * Definition of the Bluetooth Low Energy object
  */
 struct BLE
 {
-    // Services, Characteristics
-    // TODO: Add services and characteristics, buffer for characteristic idxs
+    // BLE services
+    BLE_GATT_SERVICE         services[BLE_GATT_MAX_SERVICES];
 
     // BLE generic methods
-    BleConstruct            *bleConstruct;
     BleInitialize           *bleInitialize;
 
     // BLE Services methods
@@ -432,15 +465,6 @@ struct BLE
 
     // BLE Characteristics methods
     BleCharacteristicUpdate *bleCharacteristicUpdate;
-
-    // BLE GAP methods
-    BleGapConnStatusGet     *bleGapConnStatusGet;
-    BleGapConnStatusSet     *bleGapConnStatusSet;
-    BleGapDisconnect        *bleGapDisconnect;
-
-    // BLE GATT methods
-    BleGattClear            *bleGattClear;
-    BleGattList             *bleGattList;
 };
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
@@ -454,14 +478,5 @@ BleServicesConfigure    bleServicesConfigure;
 
 // BLE Characteristics methods
 BleCharacteristicUpdate bleCharacteristicUpdate;
-
-// BLE GAP methods
-BleGapConnStatusGet     bleGapConnStatusGet;
-BleGapConnStatusSet     bleGapConnStatusSet;
-BleGapDisconnect        bleGapDisconnect;
-
-// BLE GATT methods
-BleGattClear            bleGattClear;
-BleGattList             bleGattList;
 
 #endif // _BLE_H_
