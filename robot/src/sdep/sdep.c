@@ -103,6 +103,7 @@ sdepMsgRecv(SDEP_MSG *pMsg)
         *pByte = spiMasterRecvByte();
         ++pByte;
     }
+    spiMasterSendDone();
 }
 
 /*!
