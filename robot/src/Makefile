@@ -1,6 +1,9 @@
 SRC_PATH  := /Users/colint/Development/robot-car/robot/src#/home/pi/robot/src
 INC       := /Users/colint/Development/robot-car/robot/inc#/home/pi/robot/inc
 
+CARDIR    := $(SRC_PATH)/car
+CAROBJS   := car.o
+
 MOTORDIR  := $(SRC_PATH)/motor
 MOTOROBJS := motor.o
 
@@ -22,6 +25,7 @@ SPIOBJS   := spi.o
 UTILSDIR  := $(SRC_PATH)/common
 UTILSOBJS := utils.o
 
+CAROBJS   := $(patsubst %.o, $(CARDIR)/%.o, $(CAROBJS))
 MOTOROBJS := $(patsubst %.o, $(MOTORDIR)/%.o, $(MOTOROBJS))
 PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
@@ -30,8 +34,8 @@ SDEPOBJS  := $(patsubst %.o, $(SDEPDIR)/%.o, $(SDEPOBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
 UTILSOBJS := $(patsubst %.o, $(UTILSDIR)/%.o, $(UTILSOBJS))
 
-OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) $(SDEPOBJS) \
-             $(SPIOBJS) $(UTILSOBJS)
+OBJS      := $(CAROBJS) $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) \
+             $(SDEPOBJS) $(SPIOBJS) $(UTILSOBJS)
 EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -47,6 +51,9 @@ $(EXEC): $(MAIN_OBJ) $(OBJS)
 
 $(MAIN_OBJ): $(MAIN_SRC) #$(OBJS)
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $(MAIN_SRC) -o $(MAIN_OBJ) -I $(INC)
+
+$(CARDIR)/%.o: $(CARDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(MOTORDIR)/%.o: $(MOTORDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
