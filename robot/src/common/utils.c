@@ -54,3 +54,47 @@ stringcmp
 
     return *s1 == *s2; 
 }
+
+/*!
+ * @ref utils.h for function documentation
+ */
+char * stringcat
+(
+    char       *dst,
+    const char *src1,
+    const char *src2
+)
+{
+    while (*src1 != '\0')
+    {
+        *dst = *src1;
+        ++dst;
+        ++src1;
+    }
+
+    while (*src2 != '\0')
+    {
+        *dst = *src2;
+        ++dst;
+        ++src2;
+    }
+    *dst = '\0';
+
+    return dst;
+}
+
+/*!
+ * @ref utils.h for function documentation
+ */
+uint16_t
+string2int(const char *str)
+{
+    uint16_t result = 0;
+    while (*str != '\0')
+    {
+        result = result*10 + (uint16_t)(*str - '0');
+        ++str;
+    }
+
+    return result;
+}

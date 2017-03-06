@@ -3,6 +3,9 @@
 #ifndef _BLE_GAP_H_
 #define _BLE_GAP_H_
 
+/* ------------------------ INCLUDES ---------------------------------------- */
+#include "common/utils.h"
+
 /* ------------------------ GLOBAL VARIABLES -------------------------------- */
 
 /* BLE GENERIC ACCESS PROFILE (GAP) AT-COMMANDS */

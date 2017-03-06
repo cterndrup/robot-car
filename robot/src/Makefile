@@ -13,16 +13,25 @@ TIMEROBJS := timer16.o
 BLEDIR    := $(SRC_PATH)/ble
 BLEOBJS   := ble.o
 
+SDEPDIR   := $(SRC_PATH)/sdep
+SDEPOBJS  := sdep.o
+
 SPIDIR    := $(SRC_PATH)/spi
 SPIOBJS   := spi.o
+
+UTILSDIR  := $(SRC_PATH)/common
+UTILSOBJS := utils.o
 
 MOTOROBJS := $(patsubst %.o, $(MOTORDIR)/%.o, $(MOTOROBJS))
 PWMOBJS   := $(patsubst %.o, $(PWMDIR)/%.o, $(PWMOBJS))
 TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
 BLEOBJS   := $(patsubst %.o, $(BLEDIR)/%.o, $(BLEOBJS))
+SDEPOBJS  := $(patsubst %.o, $(SDEPDIR)/%.o, $(SDEPOBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
+UTILSOBJS := $(patsubst %.o, $(UTILSDIR)/%.o, $(UTILSOBJS))
 
-OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) $(SPIOBJS)
+OBJS      := $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) $(SDEPOBJS) \
+             $(SPIOBJS) $(UTILSOBJS)
 EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -51,7 +60,13 @@ $(TIMERDIR)/%.o: $(TIMERDIR)/%.c
 $(BLEDIR)/%.o: $(BLEDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
+$(SDEPDIR)/%.o: $(SDEPDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
 $(SPIDIR)/%.o: $(SPIDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
+$(UTILSDIR)/%.o: $(UTILSDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 copy:

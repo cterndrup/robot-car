@@ -3,6 +3,9 @@
 #ifndef _COMMON_UTILS_H_
 #define _COMMON_UTILS_H_
 
+/* ------------------------ INCLUDES ---------------------------------------- */
+#include <stdint.h>
+
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 #define INPUT_PORT      (0x00)
 #define OUTPUT_PORT     (0xFF)
@@ -151,5 +154,31 @@ void stringcpy(char *dst, const char *src);
  * @note implementation assumes both dst and src are null-terminated
  */
 bool stringcmp(const char *str1, const char *str2);
+
+/*!
+ * Appends src1 to src2 and stores result in dst
+ *
+ * @param[in]       src1  Prefix string
+ * @param[in]       src2  Postfix string
+ * @param[in/out]   dst   Result string
+ *
+ * @return Pointer to the last character written to dst
+ *
+ * @note implementation assumes both src1 and src2 are null-terminated
+ */
+char * stringcat(char *dst, const char *src1, const char *src2);
+
+/*!
+ * Converts a string into corresponding integer
+ *
+ * @param[in] str
+ *
+ * @return integer representation of str
+ *
+ * @note if str contains characters that do not belong to the set {0,1,2,...,9}
+ *       then output is undefined
+ * @note implementation assumes str is null-terminated
+ */
+uint16_t string2int(const char *str);
 
 #endif /* _COMMON_UTILS_H_ */

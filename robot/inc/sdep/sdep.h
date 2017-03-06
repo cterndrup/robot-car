@@ -4,6 +4,7 @@
 #define _SDEP_H_
 
 /* ------------------------ INCLUDES ---------------------------------------- */
+#include "common/utils.h"
 
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 #define SDEP_MSGTYPE_CMD                (0x10)
@@ -27,7 +28,7 @@
 
 #define SDEP_MAX_PAYLOAD_LEN            (0x0010)
 #define SDEP_MAX_MSG_BUFFER_LEN         (0x0008)
-#define SDEP_MAX_FULL_MSG_LEN           (0x0030)
+#define SDEP_MAX_FULL_MSG_LEN           (0x0100)
 
 /* ------------------------ ENUMERATED TYPES -------------------------------- */
 
@@ -55,11 +56,11 @@ typedef struct SDEP_MSG
             uint16_t cmdid;
             uint16_t alertid;
             uint16_t errorid;
-        };
+        } msgid;
     
         // Length of the payload byte (or rsvd in case of error msg)
         uint8_t payloadLen;
-    };
+    } hdr;
 
     // Message payload
     uint8_t payload[SDEP_MAX_PAYLOAD_LEN];
@@ -87,17 +88,17 @@ typedef void SdepMsgHandler(void);
 /*!
  * Type definition for a SDEP response message handler
  */
-typedef SdepResponseMsgHandler SdepMsgHandler;
+typedef SdepMsgHandler SdepResponseMsgHandler;
 
 /*!
  * Type definition for a SDEP alert message handler
  */
-typedef SdepAlertMsgHandler SdepMsgHandler;
+typedef SdepMsgHandler SdepAlertMsgHandler;
 
 /*!
  * Type definition for a SDEP error message handler
  */
-typedef SdepErrorMessageHandler SdepMsgHandler;
+typedef SdepMsgHandler SdepErrorMsgHandler;
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 

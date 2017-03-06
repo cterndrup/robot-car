@@ -39,7 +39,8 @@ _sdepMsgCopy(SDEP_MSG *pDest, SDEP_MSG *pSrc)
     pDest->hdr.payloadLen = pSrc->hdr.payloadLen;
 
     // Copy message payload
-    for (int i = 0; i < SDEP_MAX_PAYLOAD_LEN; ++i)
+    uint8_t i;
+    for (i = 0; i < SDEP_MAX_PAYLOAD_LEN; ++i)
     {
         pDest->payload[i] = pSrc->payload[i];
     }
@@ -56,19 +57,21 @@ sdepMsgSend(SDEP_MSG *pMsg)
     uint8_t  lsb    = pMsg->hdr.msgid.cmdid & 0xff;
     uint8_t  msb    = pMsg->hdr.msgid.cmdid >> 8;
     uint8_t  len    = pMsg->hdr.payloadLen & ~(1 << 7);
-    uint8_t *pByte  = &(pMsg->payload[0]);
+    uint8_t *pByte  = &pMsg->payload[0];
 
-    spiMasterSendByte(pMsg->hdr.msgtype);
-    spiMasterSendByte(lsb);
-    spiMasterSendByte(msb);
-    spiMasterSendByte(pMsg->hdr.payloadLen);
+    spiMasterSendByte(pMsg->hdr.msgtype, NULL);
+    spiMasterSendByte(lsb, NULL);
+    spiMasterSendByte(msb, NULL);
+    spiMasterSendByte(pMsg->hdr.payloadLen, NULL);
 
     // Send payload
-    for (uint8_t i = 0; i < len; ++i)
+    uint8_t i;
+    for (i = 0; i < len; ++i)
     {
-        spiMasterSendByte(*pByte);
+        spiMasterSendByte(*pByte, NULL);
         ++pByte;
     }
+    spiMasterSendDone();
 }
 
 /*!
@@ -83,20 +86,21 @@ sdepMsgRecv(SDEP_MSG *pMsg)
     uint8_t *pByte = &pMsg->payload[0];
 
     // Receive header
-    spiMasterRecv(&pMsg->hdr.msgtype);
-    spiMasterRecv(&lsb);
-    spiMasterRecv(&msb);
-    spiMasterRecv(&pMsg->hdr.payloadLen);
+    pMsg->hdr.msgtype    = spiMasterRecvByte();
+    lsb                  = spiMasterRecvByte();
+    msb                  = spiMasterRecvByte();
+    pMsg->hdr.payloadLen = spiMasterRecvByte();
 
     pMsg->hdr.msgid.cmdid = ((uint16_t)msb << 8) | lsb;
 
-    if (pMsg->hdr.msgtype == SDEP_MSG_ERROR) return;
+    if (pMsg->hdr.msgtype == SDEP_MSGTYPE_ERROR) return;
 
     // Receive payload
     len = pMsg->hdr.payloadLen & ~(1 << 7);
-    for (uint8_t i = 0; i < len; ++i)
+    uint8_t i;
+    for (i = 0; i < len; ++i)
     {
-        spiMasterRecv(pByte);
+        *pByte = spiMasterRecvByte();
         ++pByte;
     }
 }
@@ -112,7 +116,7 @@ sdepRespCollect(void)
 
     do {
         sdepMsgRecv(&sdepIRQBuffer.buffer[i]);
-        moreData = sdepIRQBuffer.buffer[i].payloadLen & (1 << 7);
+        moreData = sdepIRQBuffer.buffer[i].hdr.payloadLen & (1 << 7);
         ++i;
     } while (moreData && i < SDEP_MAX_MSG_BUFFER_LEN);
 
@@ -131,7 +135,8 @@ sdepResponseMsgHandler(void)
     sdepRespBuffer.numMsgs = len;
 
     // Copy the data from the IRQ's resp buffer into the sdepRespBuffer
-    for (uint8_t i = 0; i < len; ++i)
+    uint8_t i;
+    for (i = 0; i < len; ++i)
     {
         _sdepMsgCopy(&sdepRespBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
@@ -147,7 +152,8 @@ sdepAlertMsgHandler(void)
     sdepAlertBuffer.numMsgs = len;
 
     // Copy the data from the IRQ's resp buffer into the sdepAlertBuffer
-    for (uint8_t i = 0; i < len; ++i)
+    uint8_t i;
+    for (i = 0; i < len; ++i)
     {
         _sdepMsgCopy(&sdepAlertBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }
@@ -184,7 +190,8 @@ sdepErrorMsgHandler(void)
     sdepErrorBuffer.numMsgs = len;
 
     // Copy the data from the IRQ's resp buffer into the sdepErrorBuffer
-    for (uint8_t i = 0; i < len; ++i)
+    uint8_t i;
+    for (i = 0; i < len; ++i)
     {
         _sdepMsgCopy(&sdepErrorBuffer.buffer[i], &sdepIRQBuffer.buffer[i]);
     }

@@ -15,16 +15,6 @@
 #define BLE_vect INT2_vect
 
 /*!
- * BLE characteristic properties and their associated values, as defined by
- * Bluetooth SIG
- */
-#define BLE_CHAR_PROP_READ              (0x02)
-#define BLE_CHAR_PROP_WRITE             (0x04)
-#define BLE_CHAR_PROP_WRITE_NO_RESP     (0x08)
-#define BLE_CHAR_PROP_NOTIFY            (0x10)
-#define BLE_CHAR_PROP_INDICATE          (0x20)
-
-/*!
  * Definition of empty BLE command payload
  */
 #define BLE_CMD_EMPTY_PAYLOAD           (&bleCmdEmptyPayload[0])
@@ -434,20 +424,12 @@ typedef void BleServicesConfigure(BLE *pBLE);
 /*!
  * Updates a BLE GATT characteristic configured for the BLE object
  *
- * @param[in/out] pBLE       Pointer to the Bluetooth LE object
- * @param[in]     serviceIdx Index to service in the services table
- * @param[in]     charIdx    Index to characteristic in the characteristics
- *                           table
+ * @param[in/out] pBLE  Pointer to the Bluetooth LE object
+ * @param[in/out] pChar Pointer to BLE GATT characteristic to update
  */
-typedef void BleCharacteristicUpdate(BLE *pBLE,
-                                     uint8_t serviceIdx, uint8_t charIdx);
+typedef void BleCharacteristicUpdate(BLE *pBLE, BLE_GATT_CHAR *pChar);
 
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
-
-/*!
- * Definition of the Robot Drive Service
- */
-typedef BLE_GATT_SERVICE RobotDriveService;
 
 /*!
  * Definition of the Bluetooth Low Energy object

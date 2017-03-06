@@ -66,6 +66,12 @@ const char *atGattCharRaw = "AT+GATTCHARRAW";
 #define BLE_GATT_CHAR_VALUE_LEN              (21)
 #define BLE_GATT_CHAR_INDEX_LEN              (3)
 
+#define BLE_GATT_CHAR_PROP_READ              (0x02)
+#define BLE_GATT_CHAR_PROP_WRITE             (0x04)
+#define BLE_GATT_CHAR_PROP_WRITE_NO_RESP     (0x08)
+#define BLE_GATT_CHAR_PROP_NOTIFY            (0x10)
+#define BLE_GATT_CHAR_PROP_INDICATE          (0x020)
+
 #define BLE_GATT_SERVICE_UUID_LEN            (7)
 #define BLE_GATT_SERVICE_UUID128_LEN         (48)
 #define BLE_GATT_SERVICE_INDEX_LEN           (3)
@@ -76,48 +82,48 @@ const char *atGattCharRaw = "AT+GATTCHARRAW";
  * Type definition for Bluetooth LE characteristic
  * Universally Unique Identifier (UUID)
  */
-typedef char[BLE_GATT_CHAR_UUID_LEN] ble_char_uuid;
+typedef char ble_char_uuid[BLE_GATT_CHAR_UUID_LEN];
 
 /*!
  * Type definition for Bluetooth LE characteristic properties
  */
-typedef char[BLE_GATT_CHAR_PROPERTIES_LEN] ble_char_properties;
+typedef char ble_char_properties[BLE_GATT_CHAR_PROPERTIES_LEN];
 
 /*!
  * Type definition for Bluetooth LE characteristic value size min and max
  */
-typedef char[BLE_GATT_CHAR_VALUE_MIN_LEN] ble_char_value_min_len;
-typedef char[BLE_GATT_CHAR_VALUE_MAX_LEN] ble_char_value_max_len;
+typedef char ble_char_value_min_len[BLE_GATT_CHAR_VALUE_MIN_LEN];
+typedef char ble_char_value_max_len[BLE_GATT_CHAR_VALUE_MAX_LEN];
 
 /*!
  * Type definition for Bluetooth LE characteristic value
  */
-typedef char[BLE_GATT_CHAR_VALUE_LEN] ble_char_value;
+typedef char ble_char_value[BLE_GATT_CHAR_VALUE_LEN];
 
 /*!
  * Type definition for Bluetooth LE characteristic index
  */
-typedef char[BLE_GATT_CHAR_INDEX_LEN] ble_char_index;
+typedef char ble_char_index[BLE_GATT_CHAR_INDEX_LEN];
 
 /*!
  * Type definition for Bluetooth LE service UUID (16-bit)
  */
-typedef char[BLE_GATT_SERVICE_UUID_LEN] ble_service_uuid;
+typedef char ble_service_uuid[BLE_GATT_SERVICE_UUID_LEN];
 
 /*!
  * Type definition for Bluetooth LE service UUID (128-bit)
  */
-typedef char[BLE_GATT_SERVICE_UUID128_LEN] ble_service_uuid128;
+typedef char ble_service_uuid128[BLE_GATT_SERVICE_UUID128_LEN];
 
 /*!
  * Type definition for Bluetooth LE service index
  */
-typedef char[BLE_GATT_SERVICE_INDEX_LEN] ble_service_index;
+typedef char ble_service_index[BLE_GATT_SERVICE_INDEX_LEN];
 
 /*!
  * Type definition for Bluetooth LE characteristic update handler
  */
-typedef (void)(*ble_char_update_handler)(void);
+typedef void (*ble_char_update_handler)(void);
 
 /*!
  * Structure representing a Bluetooth LE GATT characteristic
@@ -150,7 +156,7 @@ typedef struct BLE_GATT_SERVICE
     {
         ble_service_uuid    uuid16;
         ble_service_uuid128 uuid128;
-    };
+    } uuid;
 
     uint8_t       numCharacteristics;
     BLE_GATT_CHAR characteristics[BLE_GATT_NUM_CHAR_PER_SERVICE];
