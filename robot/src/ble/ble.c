@@ -8,6 +8,7 @@
 #include "spi/spi.h"
 #include "sdep/sdep.h"
 #include "ble/ble.h"
+#include "car/car.h"
 #include "common/utils.h"
 
 /* ------------------------ EXTERNS ----------------------------------------- */
@@ -21,6 +22,11 @@ extern semaphore_t sdepBufferSemaphore;
  * External definition of sdepRespBuffer
  */
 extern SDEP_MSG_BUFFER sdepRespBuffer;
+
+/*!
+ * External definition of the Car object
+ */
+extern Car car;
 
 /* ------------------------ GLOBAL VARIABLES -------------------------------- */
 
@@ -335,20 +341,20 @@ _bleGattCharacteristicInitialize
  * Update handler for the RobotDriveService speed characteristic
  */
 static void
-_robotDriveServiceSpeedHandler(void)
+_robotDriveServiceSpeedHandler(ble_char_value value)
 {
-    // TODO
-    return;
+    uint8_t speed = string2int(&value[0]);
+    car.carDrive(&car, speed, car.direction);
 }
 
 /*!
  * Update handler for the RobotDriveService direction characteristic
  */
 static void
-_robotDriveServiceDirectionHandler(void)
+_robotDriveServiceDirectionHandler(ble_char_value value)
 {
-    // TODO
-    return;
+    uint8_t dir = string2int(&value[0]);
+    car.carDrive(&car, car.speed, dir);
 }
 
 /* ------------------------ FUNCTION DEFINITIONS ---------------------------- */
@@ -455,7 +461,7 @@ bleCharacteristicUpdate
     if (!stringcmp(currValue, &newValue[0]))
     {
         // Call characteristic update handler
-        pChar->handler();
+        pChar->handler(&newValue[0]);
     }
 }
 

@@ -123,7 +123,7 @@ typedef char ble_service_index[BLE_GATT_SERVICE_INDEX_LEN];
 /*!
  * Type definition for Bluetooth LE characteristic update handler
  */
-typedef void (*ble_char_update_handler)(void);
+typedef void (*ble_char_update_handler)(ble_char_value value);
 
 /*!
  * Structure representing a Bluetooth LE GATT characteristic

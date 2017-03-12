@@ -18,6 +18,7 @@ _carDriveForward
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_FORWARD;
 
     pCar->pFrontLeft->driveForward(pCar->pFrontLeft, speed);
@@ -39,6 +40,7 @@ _carDriveReverse
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_REVERSE;
 
     pCar->pFrontLeft->driveReverse(pCar->pFrontLeft, speed);
@@ -60,6 +62,7 @@ _carDriveForwardLeft
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_FORWARD | DRIVE_LEFT;
 
     pCar->pFrontLeft->driveForward(pCar->pFrontLeft, DRIVE_TURN_SPEED);
@@ -81,6 +84,7 @@ _carDriveForwardRight
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_FORWARD | DRIVE_RIGHT;
 
     pCar->pFrontLeft->driveForward(pCar->pFrontLeft, speed);
@@ -102,6 +106,7 @@ _carDriveReverseLeft
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_REVERSE | DRIVE_LEFT;
 
     pCar->pFrontLeft->driveReverse(pCar->pFrontLeft, DRIVE_TURN_SPEED);
@@ -123,6 +128,7 @@ _carDriveReverseRight
     uint8_t  speed
 )
 {
+    pCar->speed     = speed;
     pCar->direction = DRIVE_REVERSE | DRIVE_RIGHT;
 
     pCar->pFrontLeft->driveReverse(pCar->pFrontLeft, speed);

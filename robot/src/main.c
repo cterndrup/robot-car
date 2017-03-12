@@ -2,9 +2,11 @@
 
 /* ------------------------  SYSTEM INCLUDES -------------------------------- */
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <util/delay.h>
 
 /* ------------------------ APPLICATION INCLUDES ---------------------------- */
+#include "car/car.h"
 #include "motor/motor.h"
 #include "pwm/pfcpwm.h"
 #include "common/utils.h"
@@ -19,6 +21,8 @@ Motor lf;
 Motor lb;
 Motor rf;
 Motor rb;
+
+Car car;
 
 void test_initialize()
 {
@@ -83,7 +87,7 @@ void test_stop()
 int main(void)
 {
     // Enable global interrupts
-    SET_BIT(SREG, 7);
+    sei();
 
     // Initialize PWM and Motors
     test_initialize();
