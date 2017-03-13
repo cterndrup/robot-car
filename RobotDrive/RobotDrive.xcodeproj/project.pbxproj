@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D65FA571E767940001A8218 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D65FA561E76793F001A8218 /* CoreBluetooth.framework */; };
+		1D65FA591E7687F9001A8218 /* BLECentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D65FA581E7687F9001A8218 /* BLECentralManager.m */; };
 		1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBE61E5F6DED00A15AC2 /* main.m */; };
 		1D95BBEA1E5F6DED00A15AC2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBE91E5F6DED00A15AC2 /* AppDelegate.m */; };
 		1D95BBED1E5F6DED00A15AC2 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBEC1E5F6DED00A15AC2 /* DiscoverViewController.m */; };
@@ -40,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D65FA561E76793F001A8218 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		1D65FA581E7687F9001A8218 /* BLECentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLECentralManager.m; sourceTree = "<group>"; };
+		1D65FA5A1E76882B001A8218 /* BLECentralManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLECentralManager.h; sourceTree = "<group>"; };
 		1D95BBE21E5F6DEC00A15AC2 /* RobotDrive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotDrive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D95BBE61E5F6DED00A15AC2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D95BBE81E5F6DED00A15AC2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D65FA571E767940001A8218 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +98,7 @@
 		1D95BBD91E5F6DEC00A15AC2 = {
 			isa = PBXGroup;
 			children = (
+				1D65FA561E76793F001A8218 /* CoreBluetooth.framework */,
 				1D95BBE41E5F6DED00A15AC2 /* RobotDrive */,
 				1D95BC011E5F6DEE00A15AC2 /* RobotDriveTests */,
 				1D95BC0C1E5F6DEE00A15AC2 /* RobotDriveUITests */,
@@ -122,6 +129,8 @@
 				1D95BBEC1E5F6DED00A15AC2 /* DiscoverViewController.m */,
 				1D95BBEE1E5F6DED00A15AC2 /* DriveViewController.h */,
 				1D95BBEF1E5F6DED00A15AC2 /* DriveViewController.m */,
+				1D65FA581E7687F9001A8218 /* BLECentralManager.m */,
+				1D65FA5A1E76882B001A8218 /* BLECentralManager.h */,
 				1D95BBF11E5F6DED00A15AC2 /* Main.storyboard */,
 				1D95BBF41E5F6DED00A15AC2 /* Assets.xcassets */,
 				1D95BBF61E5F6DED00A15AC2 /* LaunchScreen.storyboard */,
@@ -295,6 +304,7 @@
 				1D95BBEA1E5F6DED00A15AC2 /* AppDelegate.m in Sources */,
 				1D95BBED1E5F6DED00A15AC2 /* DiscoverViewController.m in Sources */,
 				1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */,
+				1D65FA591E7687F9001A8218 /* BLECentralManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +530,7 @@
 				1D95BC141E5F6DEE00A15AC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D95BC151E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +539,7 @@
 				1D95BC171E5F6DEE00A15AC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D95BC181E5F6DEE00A15AC2 /* Build configuration list for PBXNativeTarget "RobotDriveUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +548,7 @@
 				1D95BC1A1E5F6DEE00A15AC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
