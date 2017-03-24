@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D5CDB1D1E8470E200098BC9 /* BLEPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5CDB1C1E8470E200098BC9 /* BLEPeripheral.m */; };
 		1D65FA571E767940001A8218 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D65FA561E76793F001A8218 /* CoreBluetooth.framework */; };
 		1D65FA591E7687F9001A8218 /* BLECentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D65FA581E7687F9001A8218 /* BLECentralManager.m */; };
 		1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D95BBE61E5F6DED00A15AC2 /* main.m */; };
@@ -42,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D5CDB1B1E8470E200098BC9 /* BLEPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEPeripheral.h; sourceTree = "<group>"; };
+		1D5CDB1C1E8470E200098BC9 /* BLEPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEPeripheral.m; sourceTree = "<group>"; };
 		1D65FA561E76793F001A8218 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		1D65FA581E7687F9001A8218 /* BLECentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLECentralManager.m; sourceTree = "<group>"; };
 		1D65FA5A1E76882B001A8218 /* BLECentralManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLECentralManager.h; sourceTree = "<group>"; };
@@ -131,6 +134,8 @@
 				1D95BBEF1E5F6DED00A15AC2 /* DriveViewController.m */,
 				1D65FA581E7687F9001A8218 /* BLECentralManager.m */,
 				1D65FA5A1E76882B001A8218 /* BLECentralManager.h */,
+				1D5CDB1B1E8470E200098BC9 /* BLEPeripheral.h */,
+				1D5CDB1C1E8470E200098BC9 /* BLEPeripheral.m */,
 				1D95BBF11E5F6DED00A15AC2 /* Main.storyboard */,
 				1D95BBF41E5F6DED00A15AC2 /* Assets.xcassets */,
 				1D95BBF61E5F6DED00A15AC2 /* LaunchScreen.storyboard */,
@@ -305,6 +310,7 @@
 				1D95BBED1E5F6DED00A15AC2 /* DiscoverViewController.m in Sources */,
 				1D95BBE71E5F6DED00A15AC2 /* main.m in Sources */,
 				1D65FA591E7687F9001A8218 /* BLECentralManager.m in Sources */,
+				1D5CDB1D1E8470E200098BC9 /* BLEPeripheral.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

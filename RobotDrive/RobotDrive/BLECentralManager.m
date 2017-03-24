@@ -7,9 +7,16 @@
 //
 
 #import "BLECentralManager.h"
+#import "BLEPeripheral.h"
 
 @interface BLECentralManager ()
 
+@property (readonly, nonatomic) CBUUID *bleBatteryServiceId;
+@property (readonly, nonatomic) CBUUID *bleRobotDriveServiceId;
+
+@property (readonly, nonatomic) NSDictionary *bleConnectOpts;
+
+@property CBPeripheral *bleConnectedPeripheral;
 
 @end
 
@@ -30,7 +37,7 @@
 }
 
 /*
- * Initializes the BLECentralManager
+ * Initializes the BLECentralManager.
  */
 - (BLECentralManager *)init {
     NSDictionary *opts = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -39,6 +46,15 @@
     
     self = [super initWithDelegate:self queue:
             dispatch_get_main_queue() options:opts];
+    
+    // Initialize the CBUUID objects
+    // TODO: fill in appropriate service UUIDs
+    _bleBatteryServiceId = [CBUUID UUIDWithString:@""];
+    _bleRobotDriveServiceId = [CBUUID UUIDWithString:@""];
+    
+    // Initialize connection options
+    _bleConnectOpts = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], nil] forKeys:[NSArray arrayWithObjects:CBConnectPeripheralOptionNotifyOnConnectionKey, CBConnectPeripheralOptionNotifyOnDisconnectionKey, nil]];
+    
     return self;
 }
 
@@ -49,18 +65,32 @@
     // TODO
 }
 
-
 /*
  * Invoked when a connection is successfully created with a peripheral.
  *
  * @Discussion 
  * This method is invoked when a call to connectPeripheral:options: is
- * successful.You typically implement this method to set the peripheral’s
+ * successful. You typically implement this method to set the peripheral’s
  * delegate and to discover its services.
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:
     (CBPeripheral *)peripheral {
-    // TODO
+    _bleConnectedPeripheral = peripheral;
+    NSLog(@"Connected to peripheral: %@\n", [peripheral name]);
+    
+    // Set peripheral's delegate and begin discovering services
+    BLEPeripheral *blePeripheral = [BLEPeripheral sharedBLEPeripheral];
+    [blePeripheral setPeripheral:peripheral];
+}
+
+/*
+ * Invoked when a central manager fails to create a connection with a
+ * peripheral.
+ */
+- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:
+(CBPeripheral *)peripheral error:(NSError *)error {
+    NSLog(@"Failed to connect to peripheral: %@\n", [peripheral name]);
+    NSLog(@"Error: %@", error);
 }
 
 /*
@@ -68,16 +98,36 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:
     (CBPeripheral *)peripheral error:(NSError *)error {
-    // TODO
+    NSLog(@"Disconnected from peripheral: %@\n", [peripheral name]);
 }
 
 /*
- * Invoked when a central manager fails to create a connection with a 
- * peripheral.
+ * Invoked when a central manager discovers a peripheral while scanning.
  */
-- (void)centralManager:(CBCentralManager *)central didFailToConnectPeripheral:
-    (CBPeripheral *)peripheral error:(NSError *)error {
-    // TODO
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
+    // Stop scanning
+    [self stopScan];
+    
+    NSLog(@"Discovered peripheral: %@\n", [peripheral name]);
+    NSLog(@"Peripheral RSSI: %@\n", RSSI);
+    
+    // TODO: Segue to peripheral card where user has option to connect or cancel
+}
+
+/*
+ * Scans for the robot car's Bluetooth Low Energy services with the
+ * provided options.
+ */
+- (void)scanForPeripheralsWithOptions:(NSDictionary<NSString *,id> *)opts {
+    [self scanForPeripheralsWithServices:[self getServiceUUIDs] options: opts];
+}
+
+/*
+ * Returns an NSArray composed of the UUIDs of the robot car's Bluetooth
+ * Low Energy services.
+ */
+- (NSArray *)getServiceUUIDs {
+    return [NSArray arrayWithObjects:_bleBatteryServiceId, _bleRobotDriveServiceId, nil];
 }
 
 @end

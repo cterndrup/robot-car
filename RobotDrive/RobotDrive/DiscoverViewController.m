@@ -7,6 +7,7 @@
 //
 
 #import "DiscoverViewController.h"
+#import "BLECentralManager.h"
 
 @interface DiscoverViewController ()
 
@@ -22,6 +23,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)discoverClicked:(UIButton*)sender {
+    // Retrieve the BLE Central Manager and begin discovery...
+    BLECentralManager *bleManager = [BLECentralManager sharedBLECentralManager];
+    
+    [bleManager scanForPeripheralsWithOptions: nil];
 }
 
 @end

@@ -10,6 +10,8 @@
 
 @interface BLECentralManager : CBCentralManager <CBCentralManagerDelegate>
 
-+ (BLECentralManager *) sharedBLECentralManager;
++ (BLECentralManager *)sharedBLECentralManager;
+
+- (void) scanForPeripheralsWithOptions: (NSDictionary<NSString *,id> *) opts;
 
 @end
