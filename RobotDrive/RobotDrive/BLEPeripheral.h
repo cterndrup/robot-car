@@ -15,5 +15,6 @@
 
 - (void)setPeripheral:(CBPeripheral *) peripheral;
 - (void)discoverServices;
+- (BOOL)isConnected;
 
 @end

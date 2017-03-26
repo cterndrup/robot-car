@@ -16,8 +16,6 @@
 
 @property (readonly, nonatomic) NSDictionary *bleConnectOpts;
 
-@property CBPeripheral *bleConnectedPeripheral;
-
 @end
 
 @implementation BLECentralManager
@@ -75,12 +73,11 @@
  */
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:
     (CBPeripheral *)peripheral {
-    _bleConnectedPeripheral = peripheral;
-    NSLog(@"Connected to peripheral: %@\n", [peripheral name]);
-    
     // Set peripheral's delegate and begin discovering services
     BLEPeripheral *blePeripheral = [BLEPeripheral sharedBLEPeripheral];
     [blePeripheral setPeripheral:peripheral];
+    
+     NSLog(@"Connected to peripheral: %@\n", [peripheral name]);
 }
 
 /*
