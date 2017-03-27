@@ -11,6 +11,11 @@
 
 @interface BLEPeripheral : NSObject <CBPeripheralDelegate>
 
+@property CBService *bleBatteryService;
+@property CBService *bleRobotDriveService;
+@property NSArray<CBCharacteristic *> *bleBatteryCharacteristics;
+@property NSArray<CBCharacteristic *> *bleRobotDriveCharacteristics;
+
 + (BLEPeripheral *)sharedBLEPeripheral;
 
 - (void)setPeripheral:(CBPeripheral *) peripheral;

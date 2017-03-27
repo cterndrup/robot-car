@@ -61,6 +61,11 @@
     _bleRobotDriveChars = [NSArray arrayWithObjects:_bleRobotDriveSpeedChar,
                            _bleRobotDriveDirectionChar, nil];
     
+    _bleRobotDriveService = nil;
+    _bleRobotDriveCharacteristics = nil;
+    _bleBatteryService = nil;
+    _bleBatteryCharacteristics = nil;
+    
     return self;
 }
 
@@ -88,6 +93,7 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     if (error != nil) {
         NSLog(@"Error: %@", error);
+        return;
     }
     
     // Discover the characteristics for both services
@@ -98,9 +104,11 @@
         NSLog(@"Service discovered: %@", service);
         
         if ([service UUID] == _bleRobotDriveServiceId) {
+            _bleRobotDriveService = service;
             [peripheral discoverCharacteristics:
                 _bleRobotDriveChars forService:service];
         } else {
+            _bleBatteryService = service;
             [peripheral discoverCharacteristics:
                 _bleBatteryServiceChars forService:service];
         }
@@ -113,6 +121,13 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
     if (error != nil) {
         NSLog(@"Error: %@", error);
+        return;
+    }
+    
+    if ([service UUID] == _bleRobotDriveServiceId) {
+        _bleRobotDriveCharacteristics = [service characteristics];
+    } else {
+        _bleBatteryCharacteristics = [service characteristics];
     }
     
     NSUInteger numServices = [[service characteristics] count];
