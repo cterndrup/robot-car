@@ -13,7 +13,6 @@
 
 @property (readonly, nonatomic) CBUUID *bleBatteryServiceId;
 @property (readonly, nonatomic) CBUUID *bleRobotDriveServiceId;
-
 @property (readonly, nonatomic) NSDictionary *bleConnectOpts;
 
 @end
@@ -38,12 +37,12 @@
  * Initializes the BLECentralManager.
  */
 - (BLECentralManager *)init {
-    NSDictionary *opts = [[NSDictionary alloc] initWithObjectsAndKeys:
+    NSDictionary *initOpts = [[NSDictionary alloc] initWithObjectsAndKeys:
                           CBCentralManagerOptionShowPowerAlertKey,
                           [NSNumber numberWithBool:YES], nil];
     
     self = [super initWithDelegate:self queue:
-            dispatch_get_main_queue() options:opts];
+            dispatch_get_main_queue() options:initOpts];
     
     // Initialize the CBUUID objects
     // TODO: fill in appropriate service UUIDs
@@ -51,7 +50,16 @@
     _bleRobotDriveServiceId = [CBUUID UUIDWithString:@""];
     
     // Initialize connection options
-    _bleConnectOpts = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithBool:YES], [NSNumber numberWithBool:YES], nil] forKeys:[NSArray arrayWithObjects:CBConnectPeripheralOptionNotifyOnConnectionKey, CBConnectPeripheralOptionNotifyOnDisconnectionKey, nil]];
+    NSArray *connectOpts =
+        [NSArray arrayWithObjects:
+         CBConnectPeripheralOptionNotifyOnConnectionKey,
+         CBConnectPeripheralOptionNotifyOnDisconnectionKey, nil];
+    
+    _bleConnectOpts = [NSDictionary dictionaryWithObjects:
+                       [NSArray arrayWithObjects:
+                        [NSNumber numberWithBool:YES],
+                        [NSNumber numberWithBool:YES], nil] forKeys:
+                       connectOpts];
     
     return self;
 }
@@ -77,7 +85,9 @@
     BLEPeripheral *blePeripheral = [BLEPeripheral sharedBLEPeripheral];
     [blePeripheral setPeripheral:peripheral];
     
-     NSLog(@"Connected to peripheral: %@\n", [peripheral name]);
+    NSLog(@"Connected to peripheral: %@\n", [peripheral name]);
+    NSLog(@"Begin discovering peripheral's services...");
+    [blePeripheral discoverServices];
 }
 
 /*
@@ -102,13 +112,22 @@
  * Invoked when a central manager discovers a peripheral while scanning.
  */
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary<NSString *,id> *)advertisementData RSSI:(NSNumber *)RSSI {
+    
     // Stop scanning
     [self stopScan];
     
     NSLog(@"Discovered peripheral: %@\n", [peripheral name]);
     NSLog(@"Peripheral RSSI: %@\n", RSSI);
     
-    // TODO: Segue to peripheral card where user has option to connect or cancel
+    // delegate to alert where user has option to connect or cancel
+    if ([_alertDelegate bleCentralManager:self willConnectForPeripheral:peripheral]) {
+        // Create timer to fire connection timeout
+        [self scheduledConnectionTimeoutWithTimerInterval:5.0 forCentralManager:
+         central andPeripheral:peripheral];
+        
+        // Connect to peripheral
+        [self connectPeripheral:peripheral options:_bleConnectOpts];
+    }
 }
 
 /*
@@ -124,7 +143,39 @@
  * Low Energy services.
  */
 - (NSArray *)getServiceUUIDs {
-    return [NSArray arrayWithObjects:_bleBatteryServiceId, _bleRobotDriveServiceId, nil];
+    return [NSArray arrayWithObjects:
+            _bleBatteryServiceId, _bleRobotDriveServiceId, nil];
+}
+
+/*
+ * Invokes the alertDelegate's corresponding method to present an alert to inform
+ * the user that the connection request to the peripheral has timed out.
+ */
+- (void)centralManager:(CBCentralManager *)central connectionTimeoutForPeripheral:(CBPeripheral *)peripheral {
+    
+    [_alertDelegate bleCentralManager:self connectionToPeripheral:
+     peripheral didTimeoutWithMessage:
+     [NSString stringWithFormat:
+      @"Connection to peripheral %@ timed out.", [peripheral name]]];
+}
+
+/*
+ * Creates and returns an NSTimer object representing a Bluetooth Low Energy
+ * connection request timeout. The NSTimer object is scheduled on the default
+ * NSRunLoop.
+ */
+- (NSTimer *)scheduledConnectionTimeoutWithTimerInterval:(NSTimeInterval)ti forCentralManager:(CBCentralManager *)central andPeripheral:(CBPeripheral *)peripheral {
+    
+    NSMethodSignature *ms =
+        [NSMethodSignature methodSignatureForSelector:
+         @selector(centralManager:connectionTimeoutForPeripheral:)];
+    
+    NSInvocation *inv = [NSInvocation invocationWithMethodSignature:ms];
+    
+    [inv setArgument:&central atIndex:0];
+    [inv setArgument:&peripheral atIndex:1];
+    
+    return [NSTimer scheduledTimerWithTimeInterval:ti invocation:inv repeats:NO];
 }
 
 @end

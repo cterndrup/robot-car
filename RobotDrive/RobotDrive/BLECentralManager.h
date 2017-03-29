@@ -8,10 +8,21 @@
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
+@protocol BLECentralManagerDiscoveryAlertDelegate
+
+- (BOOL)bleCentralManager:(CBCentralManager *)central willConnectForPeripheral:(CBPeripheral *)peripheral;
+- (void)bleCentralManager:(CBCentralManager *)central connectionToPeripheral:(CBPeripheral *)peripheral didTimeoutWithMessage:(NSString *)message;
+
+@end
+
 @interface BLECentralManager : CBCentralManager <CBCentralManagerDelegate>
+
+@property (weak) id <BLECentralManagerDiscoveryAlertDelegate> alertDelegate;
 
 + (BLECentralManager *)sharedBLECentralManager;
 
-- (void) scanForPeripheralsWithOptions: (NSDictionary<NSString *,id> *) opts;
+- (id)alertDelegate;
+- (void)setAlertDelegate:(id<BLECentralManagerDiscoveryAlertDelegate>)alertDelegate;
+- (void)scanForPeripheralsWithOptions:(NSDictionary<NSString *,id> *)opts;
 
 @end

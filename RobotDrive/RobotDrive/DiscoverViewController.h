@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLECentralManager.h"
 
-@interface DiscoverViewController : UIViewController
+@interface DiscoverViewController : UIViewController <BLECentralManagerDiscoveryAlertDelegate>
 
 
 @end

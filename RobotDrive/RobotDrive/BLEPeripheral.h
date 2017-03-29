@@ -18,7 +18,7 @@
 
 + (BLEPeripheral *)sharedBLEPeripheral;
 
-- (void)setPeripheral:(CBPeripheral *) peripheral;
+- (void)setPeripheral:(CBPeripheral *)peripheral;
 - (void)discoverServices;
 - (BOOL)isConnected;
 
