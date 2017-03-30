@@ -122,7 +122,7 @@
     // delegate to alert where user has option to connect or cancel
     if ([_alertDelegate bleCentralManager:self willConnectForPeripheral:peripheral]) {
         // Create timer to fire connection timeout
-        [self scheduledConnectionTimeoutWithTimerInterval:5.0 forCentralManager:
+        [self scheduledConnectionTimeoutWithTimerInterval:10.0 forCentralManager:
          central andPeripheral:peripheral];
         
         // Connect to peripheral

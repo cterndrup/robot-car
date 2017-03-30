@@ -16,11 +16,13 @@
 @property (readonly, nonatomic) CBUUID *bleRobotDriveServiceId;
 @property (readonly, nonatomic) NSArray<CBUUID *> *bleServiceIds;
 
-@property (readonly, nonatomic) CBUUID  *bleBatteryServiceChar;
+@property (readonly, nonatomic) CBUUID  *bleBatteryServiceCharId;
 @property (readonly, nonatomic) NSArray<CBUUID *> *bleBatteryServiceChars;
 
-@property (readonly, nonatomic) CBUUID *bleRobotDriveSpeedChar;
-@property (readonly, nonatomic) CBUUID *bleRobotDriveDirectionChar;
+@property (readonly, nonatomic) CBUUID *bleRobotDriveSpeedCharId;
+@property (readonly, nonatomic) CBUUID *bleRobotDriveDirectionCharId;
+@property (readonly, nonatomic) CBCharacteristic *bleRobotDriveSpeedChar;
+@property (readonly, nonatomic) CBCharacteristic *bleRobotDriveDirectionChar;
 @property (readonly, nonatomic) NSArray<CBUUID *> *bleRobotDriveChars;
 
 @end
@@ -53,13 +55,13 @@
     _bleServiceIds = [NSArray arrayWithObjects:_bleBatteryServiceId,
                       _bleRobotDriveServiceId, nil];
     
-    _bleBatteryServiceChar = [CBUUID UUIDWithString:@""];
-    _bleBatteryServiceChars = [NSArray arrayWithObject:_bleBatteryServiceChar];
+    _bleBatteryServiceCharId = [CBUUID UUIDWithString:@""];
+    _bleBatteryServiceChars = [NSArray arrayWithObject:_bleBatteryServiceCharId];
     
-    _bleRobotDriveSpeedChar = [CBUUID UUIDWithString:@""];
-    _bleRobotDriveDirectionChar = [CBUUID UUIDWithString:@""];
-    _bleRobotDriveChars = [NSArray arrayWithObjects:_bleRobotDriveSpeedChar,
-                           _bleRobotDriveDirectionChar, nil];
+    _bleRobotDriveSpeedCharId = [CBUUID UUIDWithString:@""];
+    _bleRobotDriveDirectionCharId = [CBUUID UUIDWithString:@""];
+    _bleRobotDriveChars = [NSArray arrayWithObjects:_bleRobotDriveSpeedCharId,
+                           _bleRobotDriveDirectionCharId, nil];
     
     _bleRobotDriveService = nil;
     _bleRobotDriveCharacteristics = nil;
@@ -126,6 +128,22 @@
     
     if ([service UUID] == _bleRobotDriveServiceId) {
         _bleRobotDriveCharacteristics = [service characteristics];
+        
+        CBCharacteristic *firstChar =
+            [_bleRobotDriveCharacteristics objectAtIndex:0];
+        if ([firstChar UUID] == _bleRobotDriveSpeedCharId) {
+            _bleRobotDriveSpeedChar =
+                [_bleRobotDriveCharacteristics objectAtIndex:0];
+            
+            _bleRobotDriveDirectionChar =
+                [_bleRobotDriveCharacteristics objectAtIndex:1];
+        } else {
+            _bleRobotDriveSpeedChar =
+                [_bleRobotDriveCharacteristics objectAtIndex:1];
+            
+            _bleRobotDriveDirectionChar =
+                [_bleRobotDriveCharacteristics objectAtIndex:0];
+        }
     } else {
         _bleBatteryCharacteristics = [service characteristics];
     }
@@ -145,6 +163,26 @@
  */
 - (BOOL)isConnected {
     return _blePeripheral != nil;
+}
+
+/*
+ * Sets the robot's speed.
+ */
+- (void)setRobotDriveSpeed:(NSData *)speed {
+    if ([self isConnected]) {
+        [_blePeripheral writeValue:speed forCharacteristic:
+         _bleRobotDriveSpeedChar type:CBCharacteristicWriteWithoutResponse];
+    }
+}
+
+/*
+ * Sets the robot's direction.
+ */
+- (void)setRobotDriveDirection:(NSData *)direction {
+    if ([self isConnected]) {
+        [_blePeripheral writeValue:direction forCharacteristic:
+        _bleRobotDriveDirectionChar type:CBCharacteristicWriteWithoutResponse];
+    }
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DriveViewController.h"
+#import "BLEPeripheral.h"
 
 @interface DriveViewController ()
 
@@ -22,6 +23,14 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)robotSpeedDidChangeFromSender:(UISlider *)sender {
+    float speed = [sender value];
+    
+    BLEPeripheral *robot = [BLEPeripheral sharedBLEPeripheral];
+    [robot setRobotDriveSpeed:[NSData dataWithBytes:&speed length:
+                               sizeof(float)]];
 }
 
 @end

@@ -21,5 +21,7 @@
 - (void)setPeripheral:(CBPeripheral *)peripheral;
 - (void)discoverServices;
 - (BOOL)isConnected;
+- (void)setRobotDriveSpeed:(NSData *)speed;
+- (void)setRobotDriveDirection:(NSData *)direction;
 
 @end
