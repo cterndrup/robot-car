@@ -47,6 +47,11 @@
 /* ------------------------ TYPEDEFS ---------------------------------------- */
 
 /*!
+ * Forward definition of UART structure
+ */
+typedef struct UART UART;
+
+/*!
  * UART parity mode bits
  */
 typedef enum UART_PARITY_MODE
@@ -90,13 +95,11 @@ typedef enum UART_PR_BIT
     UART_PR_PRUSART3 = PRUSART3  // In PRR1
 } UART_PR_BIT;
 
-/* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
-
 /*!
- * Function to initialize UART
+ * Function to construct UART
  *
- * @param[in/out] PRRn      Power Reduction Register n
- * @param[in]     PRBitn    Power Reduction UART n bit     
+ * @param[in/out] uart      Pointer to UART object
+ * @param[in/out] UDRn      UART data register n
  * @param[in/out] UCSRnA    UART Control and Status Register A
  * @param[in/out] UCSRnB    UART Control and Status Register B
  * @param[in/out] UCSRnC    UART Control and Status Register C
@@ -106,8 +109,9 @@ typedef enum UART_PR_BIT
  * @param[in]     dataSize  Size of data portion of UART frame
  * @param[in]     baud      UART Baud Rate
  */
-void uartInit(REG8             *PRRn,
-              UART_PR_BIT       PRBitn,
+typedef void
+UartConstruct(UART             *uart,
+              REG8             *UDRn,
               REG8             *UCSRnA,
               REG8             *UCSRnB,
               REG8             *UCSRnC,
@@ -118,12 +122,58 @@ void uartInit(REG8             *PRRn,
               UART_BAUD         baud);
 
 /*!
+ * Function to initialize UART
+ *
+ * @param[in/out] uart      Pointer to UART object
+ * @param[in/out] PRRn      Power Reduction Register n
+ * @param[in]     PRBitn    Power Reduction UART n bit
+ */
+typedef void
+UartInit(UART *uart,
+         REG8 *PRRn,
+         REG8 *PRBITn);
+
+/*!
  * Function transmit a single data byte of UART
  *
- * @param[in/out]  UDRn     UART data register n
- * @param[in/out]  UCSRnA   UART Control and Status Register A
+ * @param[in/out]  uart     Pointer to UART object
  * @param[in]      data     A byte of data to transmit over UART TX
  */
-void uartTX(REG8 *UDRn, REG8 *UCSRnA, uint8_t data);
+typedef void
+UartTX(UART *uart, uint8_t data);
+
+/* ------------------------ STRUCTURE DEFINITION ---------------------------- */
+
+/*!
+ * UART object
+ */
+struct UART
+{
+    // UART Data Register
+    REG8 *UDRn;
+
+    // UART Status and Control Registers
+    REG8 *UCSRnA;
+    REG8 *UCSRnB;
+    REG8 *UCSRnC;
+
+    // UART Baud Rate Registers
+    REG8 *UBRRnH;
+    REG8 *UBRRnL;
+
+    // UART Parity
+    UART_PARITY_MODE parity;
+
+    // UART Data Size
+    UART_CHAR_SIZE   dataSize;
+
+    // UART Baud Rate
+    UART_BAUD        baud;
+};
+
+/* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
+UartConstruct uartConstruct;
+UartInit      uartInit;
+UartTX        uartTX;
 
 #endif // _UART_H_

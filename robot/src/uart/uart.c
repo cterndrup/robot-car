@@ -1,8 +1,5 @@
 /* Implementation file for UART Interface */
 
-/* ------------------------- SYSTEM INCLUDES -------------------------------- */
-#include <avr/io.h>
-
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "uart/uart.h"
 #include "common/utils.h"
@@ -13,10 +10,10 @@
  * @ref uart.h for function documentation
  */
 void
-uartInit
+uartConstruct
 (
-    REG8             *PRRn,
-    UART_PR_BIT       PRBitn,
+    UART             *uart,
+    REG8             *UDRn,
     REG8             *UCSRnA,
     REG8             *UCSRnB,
     REG8             *UCSRnC,
@@ -27,6 +24,38 @@ uartInit
     UART_BAUD         baud
 )
 {
+    if (uart == NULL)
+        return;
+
+    // Copy registers
+    uart->UDRn   = UDRn;
+    uart->UCSRnA = UCSRnA;   
+    uart->UCSRnB = UCSRnB;   
+    uart->UCSRnC = UCSRnC;
+    uart->UBRRnH = UBRRnH;
+    uart->UBRRnL = UBRRnL;
+
+    uart->parity   = parity;
+    uart->dataSize = dataSize;
+    uart->baud     = baud;
+}
+
+/*!
+ * @ref uart.h for function documentation
+ */
+void
+uartInit
+(
+    UART             *uart,
+    REG8             *PRRn,
+    UART_PR_BIT       PRBitn,
+)
+{
+    REG8 *UCSRnA;
+
+    if (uart == NULL)
+        return;
+
     // Power Reduction Register n init
     CLEAR_BIT(*PRRn, PRBitn);
 
@@ -36,6 +65,7 @@ uartInit
     // --> Disable double transmit speed
     // --> Disable multi-processor communication mode
     //
+    UCSRnA = uart->UCSRnA;
     CLEAR_BIT(*UCSRnA, TXCn);
     CLEAR_BIT(*UCSRnA, U2Xn);
     CLEAR_BIT(*UCSRnA, MPCMn);
@@ -45,32 +75,40 @@ uartInit
     // --> Set USART mode to asynchronous
     // --> Disable parity
     //
-    *UCSRnC = 0x06 | (parity << 4) | dataSize;
+    *(uart->UCSRnC) = 0x06 | (parity << 4) | dataSize;
 
     //
     // USART Baud Rate Registers init
     // --> Set Baud Rate
     //
-    *UBRRnH = baud >> 8;
-    *UBRRnL = 0x00ff & baud;
+    *(uart->UBRRnH) = baud >> 8;
+    *(uart->UBRRnL) = 0x00ff & baud;
 
     //
     // USART Control and Status Register B init
     // --> Enable transmit
     // --> Disable receive
     //
-    *UCSRnB = 0x08;
+    *(uart->UCSRnB) = 0x08;
 }
 
 /*!
  * @ref uart.h for function documentation
  */
 void
-uartTX(REG8 *UDRn, REG8 *UCSRnA, uint8_t data)
+uartTX(UART *uart, uint8_t data)
 {
+    REG8 *UCSRnA;
+    REG8 *UDREn;
+
+    if (uart == NULL)
+        return;
+
     // Wait until the UART data register is empty
-    while (!(*UCSRnA & (1 << UDREn)));
+    UCSRnA = uart->UCSRnA;
+    UDREn  = uart->UDREn;
+    while (!(*UCSRnA & (1 << *UDREn)));
 
     // Transmit the byte
-    *UDRn = data; 
+    *(uart->UDRn) = data; 
 }
