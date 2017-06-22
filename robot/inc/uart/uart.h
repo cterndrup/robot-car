@@ -3,6 +3,9 @@
 #ifndef _UART_H_
 #define _UART_H_
 
+/* ------------------------- SYSTEM INCLUDES -------------------------------- */
+#include <avr/io.h>
+
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "common/utils.h"
 
@@ -129,9 +132,9 @@ UartConstruct(UART             *uart,
  * @param[in]     PRBitn    Power Reduction UART n bit
  */
 typedef void
-UartInit(UART *uart,
-         REG8 *PRRn,
-         REG8 *PRBITn);
+UartInit(UART        *uart,
+         REG8        *PRRn,
+         UART_PR_BIT  PRBITn);
 
 /*!
  * Function transmit a single data byte of UART

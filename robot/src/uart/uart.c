@@ -48,10 +48,11 @@ uartInit
 (
     UART             *uart,
     REG8             *PRRn,
-    UART_PR_BIT       PRBitn,
+    UART_PR_BIT       PRBitn
 )
 {
-    REG8 *UCSRnA;
+    REG8      *UCSRnA;
+    UART_BAUD  baud;
 
     if (uart == NULL)
         return;
@@ -75,12 +76,13 @@ uartInit
     // --> Set USART mode to asynchronous
     // --> Disable parity
     //
-    *(uart->UCSRnC) = 0x06 | (parity << 4) | dataSize;
+    *(uart->UCSRnC) = 0x06 | (uart->parity << 4) | uart->dataSize;
 
     //
     // USART Baud Rate Registers init
     // --> Set Baud Rate
     //
+    baud = uart->baud;
     *(uart->UBRRnH) = baud >> 8;
     *(uart->UBRRnL) = 0x00ff & baud;
 
@@ -99,15 +101,13 @@ void
 uartTX(UART *uart, uint8_t data)
 {
     REG8 *UCSRnA;
-    REG8 *UDREn;
 
     if (uart == NULL)
         return;
 
     // Wait until the UART data register is empty
     UCSRnA = uart->UCSRnA;
-    UDREn  = uart->UDREn;
-    while (!(*UCSRnA & (1 << *UDREn)));
+    while (!(*UCSRnA & (1 << UDREn)));
 
     // Transmit the byte
     *(uart->UDRn) = data; 

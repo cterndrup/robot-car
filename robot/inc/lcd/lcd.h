@@ -3,6 +3,9 @@
 #ifndef _LCD_H_
 #define _LCD_H_
 
+/* ------------------------ APPLICATION INCLUDES ---------------------------- */
+#include "uart/uart.h"
+
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 
 /*! Display custom character X */
