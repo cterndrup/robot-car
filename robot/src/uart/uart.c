@@ -2,7 +2,6 @@
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "uart/uart.h"
-#include "common/utils.h"
 
 /* ------------------------- FUNCTION DEFINITIONS --------------------------- */
 
