@@ -9,30 +9,6 @@
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 
 /*!
- * UART parity mode bits
- */
-#define UART_PARITY_MODE_DISABLED   (0b00)
-#define UART_PARITY_MODE_EVEN       (0b10)
-#define UART_PARITY_MODE_ODD        (0b11)
-
-/*!
- * UART data size
- */
-#define UART_CHAR_SIZE_5            (0b000)
-#define UART_CHAR_SIZE_6            (0b001)
-#define UART_CHAR_SIZE_7            (0b010)
-#define UART_CHAR_SIZE_8            (0b011)
-
-/*!
- * UART baud rate (these are the values to be written to UBRRn)
- */
-#define UART_BAUD_2400              (0x19)
-#define UART_BAUD_4800              (0x0C)
-#define UART_BAUD_9600              (0x06)
-#define UART_BAUD_14400             (0x03)
-#define UART_BAUD_19200             (0x02)
-
-/*!
  * UART Control and Status Register A bit definitions
  */
 #define RXCn    (7) // UART Receive Complete
@@ -68,31 +44,86 @@
 #define UCSZn0  (1) // Character Size bit 0
 #define UCPOLn  (0) // Clock Polarity
 
+/* ------------------------ TYPEDEFS ---------------------------------------- */
+
+/*!
+ * UART parity mode bits
+ */
+typedef enum UART_PARITY_MODE
+{
+    UART_PARITY_MODE_DISABLED = 0b00,
+    UART_PARITY_MODE_EVEN     = 0b10,
+    UART_PARITY_MODE_ODD      = 0b11
+} UART_PARITY_MODE;
+
+/*!
+ * UART data size
+ */
+typedef enum UART_CHAR_SIZE
+{
+    UART_CHAR_SIZE_5 = 0b000,
+    UART_CHAR_SIZE_6 = 0b001,
+    UART_CHAR_SIZE_7 = 0b010,
+    UART_CHAR_SIZE_8 = 0b011
+} UART_CHAR_SIZE;
+
+/*!
+ * UART baud rate (these are the values to be written to UBRRn)
+ */
+typedef enum UART_BAUD
+{
+    UART_BAUD_2400  = 0x19,
+    UART_BAUD_4800  = 0x0C,
+    UART_BAUD_9600  = 0x06,
+    UART_BAUD_14400 = 0x03,
+    UART_BAUD_19200 = 0x02
+} UART_BAUD;
+
+/*!
+ * UART Power Reduction Register bits
+ */
+typedef enum UART_PR_BIT
+{
+    UART_PR_PRUSART0 = PRUSART0, // In PRR0
+    UART_PR_PRUSART1 = PRUSART1, // In PRR1
+    UART_PR_PRUSART2 = PRUSART2, // In PRR1
+    UART_PR_PRUSART3 = PRUSART3  // In PRR1
+} UART_PR_BIT;
+
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
 
 /*!
  * Function to initialize UART
  *
  * @param[in/out] PRRn      Power Reduction Register n
+ * @param[in]     PRBitn    Power Reduction UART n bit     
  * @param[in/out] UCSRnA    UART Control and Status Register A
  * @param[in/out] UCSRnB    UART Control and Status Register B
  * @param[in/out] UCSRnC    UART Control and Status Register C
  * @param[in/out] UBRRnH    UART Baud Rate Register High
  * @param[in/out] UBRRnL    UART Baud Rate Register Low
+ * @param[in]     parity    Parity mode for UART frame
+ * @param[in]     dataSize  Size of data portion of UART frame
+ * @param[in]     baud      UART Baud Rate
  */
-void uartInit(REG8 *PRRn,
-              REG8 *UCSRnA,
-              REG8 *UCSRnB,
-              REG8 *UCSRnC,
-              REG8 *UBRRnH,
-              REG8 *UBRRnL);
+void uartInit(REG8             *PRRn,
+              UART_PR_BIT       PRBitn,
+              REG8             *UCSRnA,
+              REG8             *UCSRnB,
+              REG8             *UCSRnC,
+              REG8             *UBRRnH,
+              REG8             *UBRRnL,
+              UART_PARITY_MODE  parity,
+              UART_CHAR_SIZE    dataSize,
+              UART_BAUD         baud);
 
 /*!
  * Function transmit a single data byte of UART
  *
  * @param[in/out]  UDRn     UART data register n
+ * @param[in/out]  UCSRnA   UART Control and Status Register A
  * @param[in]      data     A byte of data to transmit over UART TX
  */
-void uartTX(REG8 *UDRn, uint8_t data);
+void uartTX(REG8 *UDRn, REG8 *UCSRnA, uint8_t data);
 
 #endif // _UART_H_
