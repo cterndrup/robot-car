@@ -47,7 +47,7 @@
 /* ------------------------ TYPEDEFS ---------------------------------------- */
 
 /*!
- * Forward definition of UART structure
+ * Forward declaration of UART structure
  */
 typedef struct UART UART;
 
