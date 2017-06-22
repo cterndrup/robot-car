@@ -22,6 +22,12 @@ SDEPOBJS  := sdep.o
 SPIDIR    := $(SRC_PATH)/spi
 SPIOBJS   := spi.o
 
+LCDDIR    := $(SRC_PATH)/lcd
+LCDOBJS   := lcd.o
+
+UARTDIR   := $(SRC_PATH)/uart
+UARTOBJS  := uart.o
+
 UTILSDIR  := $(SRC_PATH)/common
 UTILSOBJS := utils.o
 
@@ -32,10 +38,12 @@ TIMEROBJS := $(patsubst %.o, $(TIMERDIR)/%.o, $(TIMEROBJS))
 BLEOBJS   := $(patsubst %.o, $(BLEDIR)/%.o, $(BLEOBJS))
 SDEPOBJS  := $(patsubst %.o, $(SDEPDIR)/%.o, $(SDEPOBJS))
 SPIOBJS   := $(patsubst %.o, $(SPIDIR)/%.o, $(SPIOBJS))
+LCDOBJS   := $(patsubst %.o, $(LCDDIR)/%.o, $(LCDOBJS))
+UARTOBJS  := $(patsubst %.o, $(UARTDIR)/%.o, $(UARTOBJS))
 UTILSOBJS := $(patsubst %.o, $(UTILSDIR)/%.o, $(UTILSOBJS))
 
 OBJS      := $(CAROBJS) $(MOTOROBJS) $(PWMOBJS) $(TIMEROBJS) $(BLEOBJS) \
-             $(SDEPOBJS) $(SPIOBJS) $(UTILSOBJS)
+             $(SDEPOBJS) $(SPIOBJS) $(LCDOBJS) $(UARTOBJS) $(UTILSOBJS)
 EXEC      := main
 MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
@@ -71,6 +79,12 @@ $(SDEPDIR)/%.o: $(SDEPDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(SPIDIR)/%.o: $(SPIDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
+$(LCDDIR)/%.o: $(LCDDIR)/%.c
+	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
+
+$(UARTDIR)/%.o: $(UARTDIR)/%.c
 	avr-gcc -Os -DF_CPU=16000000UL -mmcu=$(MCU) -c $< -o $@ -I $(INC)
 
 $(UTILSDIR)/%.o: $(UTILSDIR)/%.c
