@@ -3,9 +3,6 @@
 #ifndef _LCD_H_
 #define _LCD_H_
 
-/* ------------------------- APPLICATION INCLUDES --------------------------- */
-#include "uart/uart.h"
-
 /* ------------------------ MACROS AND DEFINES ------------------------------ */
 
 /*! Display custom character X */
@@ -43,7 +40,7 @@
 /*!
  * Forward declaration of LCD structure
  */
-typedef UART LCD;
+typedef struct LCD LCD;
 
 /*!
  * LCD Custom Commands
@@ -93,6 +90,15 @@ typedef enum LCD_DISPLAY_CMD
 } LCD_DISPLAY_CMD;
 
 /*!
+ * Function to construct LCD object
+ *
+ * @param[in/out] lcd   Pointer to LCD object
+ * @param[in/out] uart  Pointer to UART object
+ */
+typedef
+void LcdConstruct(LCD *lcd, UART *uart);
+
+/*!
  * Function to send cursor control command to LCD
  *
  * @param[in/out] lcd   Pointer to LCD object
@@ -128,7 +134,19 @@ void LcdDisplayCmdSend(LCD *lcd, LCD_DISPLAY_CMD cmd);
 typedef
 void LcdCharacterSend(LCD *lcd, char c);
 
+/* ------------------------ STRUCTURE DEFINITION  --------------------------- */
+
+/*!
+ * LCD object
+ */
+struct LCD
+{
+    // Data Register to which LCD commands are written
+    REG8 *writeBuffer;
+};
+
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
+LcdConstruct        lcdConstruct;
 LcdCursorCmdSend    lcdCursorCmdSend;
 LcdBacklightCmdSend lcdBacklightCmdSend;
 LcdDisplayCmdSend   lcdDisplayCmdSend;
