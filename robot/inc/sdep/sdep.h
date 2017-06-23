@@ -28,7 +28,7 @@
 
 #define SDEP_MAX_PAYLOAD_LEN            (0x0010)
 #define SDEP_MAX_MSG_BUFFER_LEN         (0x0008)
-#define SDEP_MAX_FULL_MSG_LEN           (0x0100)
+#define SDEP_MAX_FULL_MSG_LEN           (0x0080)
 
 /* ------------------------ ENUMERATED TYPES -------------------------------- */
 
