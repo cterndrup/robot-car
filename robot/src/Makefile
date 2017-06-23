@@ -49,6 +49,7 @@ MAIN_OBJ  := main.o
 MAIN_SRC  := main.c
 HEX       := main.hex
 MCU       := atmega2560
+PROC      := m2560
 
 .PHONY: all copy upload clean
 
@@ -94,7 +95,7 @@ copy:
 	avr-objcopy -O ihex -R .eeprom $(EXEC) $(HEX)
 
 upload:
-	avrdude -D -F -V -c wiring -p m2560 -P /dev/cu.usbmodem1411 -b 115200 -U flash:w:$(HEX)
+	avrdude -D -F -V -c wiring -p $(PROC) -P /dev/cu.usbmodem1411 -b 115200 -U flash:w:$(HEX)
 
 clean:
 	rm $(MAIN_OBJ) $(OBJS) $(HEX) $(EXEC)
