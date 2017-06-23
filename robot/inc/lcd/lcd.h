@@ -137,6 +137,15 @@ void LcdDisplayCmdSend(LCD *lcd, LCD_DISPLAY_CMD cmd);
 typedef
 void LcdCharacterSend(LCD *lcd, char c);
 
+/*!
+ * Function to write character string to LCD
+ *
+ * @param[in/out] lcd   Pointer to LCD object
+ * @param[in]     str   String to send to LCD
+ */
+typedef
+void LcdWrite(LCD *lcd, const char *str);
+
 /* ------------------------ STRUCTURE DEFINITION  --------------------------- */
 
 /*!
@@ -144,8 +153,14 @@ void LcdCharacterSend(LCD *lcd, char c);
  */
 struct LCD
 {
-    // Data Register to which LCD commands are written
-    REG8 *writeBuffer;
+    // Pointer to UART object
+    UART *uart;
+
+    LcdCursorCmdSend    *lcdCursorCmdSend;
+    LcdBacklightCmdSend *lcdBacklightCmdSend;
+    LcdDisplayCmdSend   *lcdDisplayCmdSend;
+    LcdCharacterSend    *lcdCharacterSend;
+    LcdWrite            *lcdWrite;
 };
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
@@ -154,5 +169,6 @@ LcdCursorCmdSend    lcdCursorCmdSend;
 LcdBacklightCmdSend lcdBacklightCmdSend;
 LcdDisplayCmdSend   lcdDisplayCmdSend;
 LcdCharacterSend    lcdCharacterSend;
+LcdWrite            lcdWrite;
 
 #endif // _LCD_H_
