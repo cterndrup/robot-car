@@ -1,6 +1,9 @@
 /* Implementation file for Simple Data Exchange Protocol (SDEP) */
 
-/* ------------------------ INCLUDES ---------------------------------------- */
+/* ------------------------ SYSTEM INCLUDES --------------------------------- */
+#include <stdlib.h>
+
+/* ------------------------ APPLICATION INCLUDES ---------------------------- */
 #include "sdep/sdep.h"
 #include "spi/spi.h"
 #include "common/utils.h"

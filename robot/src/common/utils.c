@@ -1,6 +1,9 @@
 /* Implementation of utility functions */
 
-/* ------------------------ INCLUDES ---------------------------------------- */
+/* ------------------------- SYSTEM INCLUDES -------------------------------- */
+#include <stdlib.h>
+
+/* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "common/utils.h"
 
 /* ------------------------ FUNCTION DEFINITIONS ---------------------------- */

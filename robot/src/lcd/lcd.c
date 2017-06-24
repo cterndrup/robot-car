@@ -1,5 +1,8 @@
 /*! Implementation file for LCD Interface */
 
+/* ------------------------- SYSTEM INCLUDES -------------------------------- */
+#include <stdlib.h>
+
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "lcd/lcd.h"
 #include "common/utils.h"

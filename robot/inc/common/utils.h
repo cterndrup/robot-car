@@ -13,8 +13,6 @@
 #define false           (0x00)
 #define true            (0x01)
 
-#define NULL            ((void *)(0))
-
 /*!
  * Status codes for functions return values
  */

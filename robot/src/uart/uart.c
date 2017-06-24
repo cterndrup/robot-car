@@ -1,5 +1,8 @@
 /* Implementation file for UART Interface */
 
+/* ------------------------- SYSTEM INCLUDES -------------------------------- */
+#include <stdlib.h>
+
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "uart/uart.h"
 

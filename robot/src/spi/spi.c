@@ -3,6 +3,7 @@
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdlib.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "spi/spi.h"
