@@ -842,6 +842,7 @@ bleConstruct(BLE *pBLE)
 {
     // Initialize methods of BLE object
     pBLE->bleInitialize           = bleInitialize;
+    pBLE->bleConnect              = bleConnect;
     pBLE->bleServicesConfigure    = bleServicesConfigure;
     pBLE->bleCharacteristicUpdate = bleCharacteristicUpdate;
     pBLE->blePing                 = blePing;
@@ -854,10 +855,17 @@ bleConstruct(BLE *pBLE)
 void
 bleInitialize(BLE *pBLE)
 {
-    char reply[SDEP_MAX_FULL_MSG_LEN];
-
     // Register the BLE external interrupt
     _bleIRQRegister();
+}
+
+/*!
+ * @ref ble.h for function documentation
+ */
+void
+bleConnect(BLE *pBLE)
+{
+    char reply[SDEP_MAX_FULL_MSG_LEN];
 
     // Ensure BLE device is connectable
     _bleCmdSend(atGapConnectAble, "1", WRITE, NULL);

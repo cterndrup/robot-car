@@ -51,6 +51,11 @@ typedef void BleConstruct(BLE *pBLE);
 typedef void BleInitialize(BLE *pBLE);
 
 /*!
+ * Establishes connection with the BLE central
+ */
+typedef void BleConnect(BLE *pBLE);
+
+/*!
  * Configures the BLE GATT services offered by the BLE object
  *
  * @param[in/out] pBLE  Pointer to the Bluetooth LE object
@@ -95,6 +100,7 @@ struct BLE
 
     // BLE generic methods
     BleInitialize           *bleInitialize;
+    BleConnect              *bleConnect;
 
     // BLE Services methods
     BleServicesConfigure    *bleServicesConfigure;
@@ -112,6 +118,7 @@ struct BLE
 // BLE generic methods
 BleConstruct            bleConstruct;
 BleInitialize           bleInitialize;
+BleConnect              bleConnect;
 
 // BLE services methods
 BleServicesConfigure    bleServicesConfigure;
