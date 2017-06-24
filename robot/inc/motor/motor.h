@@ -35,7 +35,7 @@ typedef STATUS MotorConstruct(Motor *pMotor, PWM *pPwm);
  */
 typedef STATUS MotorDriveForward(Motor *pMotor, uint8_t speed);
 
-/*! 
+/*!
  * Type definition for the Motor object's driveReverse method
  *
  * @param[in/out] pMotor    pointer to the Motor object to drive reverse
@@ -50,7 +50,7 @@ typedef STATUS MotorDriveReverse(Motor *pMotor, uint8_t speed);
  */
 typedef STATUS MotorStop(Motor *pMotor);
 
-/*! 
+/*!
  * Type definition for the Motor object's changeSpeed method
  *
  * @param[in/out] pMotor    pointer to the Moto object to change speed
@@ -64,7 +64,7 @@ typedef STATUS MotorChangeSpeed(Motor *pMotor, uint8_t speed);
 struct Motor
 {
     //
-    // Unsigned 8-bit integer representing the motor's speed. Speed is 
+    // Unsigned 8-bit integer representing the motor's speed. Speed is
     // represented by percentage of total speed capable by the motor.
     //
     uint8_t            speed;

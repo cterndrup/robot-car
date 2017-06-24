@@ -79,7 +79,7 @@ pwmInit
     timer16Init(pPwm->prr, pPwm->prrBit, pPwm->tccrA, pPwm->tccrB,
         TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA,
         TIMER_MODE_COM_PFC_PWM_CLEAR_UP, pPwm->clkSrc);
-    
+
     // Initialize output compare registers
     SET_OUTPUT_COMPARE_REG(*(pPwm->ocrA), 0xFFFF);
     SET_OUTPUT_COMPARE_REG(*(pPwm->ocrB), 0x0000);

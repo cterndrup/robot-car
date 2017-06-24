@@ -32,7 +32,7 @@
 #define TIMER_MODE_WGM_FPWM_9b              (0x06)
 #define TIMER_MODE_WGM_FPWM_10b             (0x07)
 #define TIMER_MODE_WGM_PFC_PWM_TOP_ICRn     (0x08)
-#define TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA    (0x09)  
+#define TIMER_MODE_WGM_PFC_PWM_TOP_OCRnA    (0x09)
 #define TIMER_MODE_WGM_PC_PWM_TOP_ICRn      (0x0A)
 #define TIMER_MODE_WGM_PC_PWM_TOP_OCRnA     (0x0B)
 #define TIMER_MODE_WGM_CTC_TOP_ICRn         (0x0C)
@@ -44,7 +44,7 @@
 #define TIMER_MODE_COM_NON_PWM_CLEAR        (0x02)
 #define TIMER_MODE_COM_NON_PWM_SET          (0x03)
 
-#define TIMER_MODE_COM_FPWM_NORMAL          (0x00) 
+#define TIMER_MODE_COM_FPWM_NORMAL          (0x00)
 #define TIMER_MODE_COM_FPWM_TOGGLE          (0x01)
 #define TIMER_MODE_COM_FPWM_CLEAR           (0x02)
 #define TIMER_MODE_COM_FPWM_SET             (0x03)
@@ -67,9 +67,9 @@
  * Helper macro to set the waveform generation bits of the timer control
  * registers
  *
- * @param[in/out] tccrA     Timer control register A 
+ * @param[in/out] tccrA     Timer control register A
  *                          (i.e. TCCR1A for 16-bit timer 1)
- * @param[in/out] tccrB     Timer control register B 
+ * @param[in/out] tccrB     Timer control register B
  *                          (i.e. TCCR1B for 16-bit timer 1)
  * @param[in]     mode      The waveform generation mode (see #define's above)
  */
@@ -82,7 +82,7 @@
 /*!
  * Helper macro to set the compare output mode bits of the timer control
  * registers
- * 
+ *
  * @param[in/out] reg   Timer control register (i.e. TCCR1 for 16-bit timer 1)
  * @param[in]     mode  The compare output mode (see #define's above)
  */
@@ -95,7 +95,7 @@
         } while (0)
 
 /*!
- * Helper macro to set the waveform generation mode bits and the compare 
+ * Helper macro to set the waveform generation mode bits and the compare
  * output mode bits of the timer control registers
  *
  * @param[in\out] tccrA     Timer control register A
@@ -103,18 +103,18 @@
  * @param[in\out] tccrB     Timer control register B
  *                          (i.e. TCCR1B for 16-bit timer 1)
  * @param[in]     comMode   The compare output mode
- * @param[in]     wgmMode   The waveform generation mode  
+ * @param[in]     wgmMode   The waveform generation mode
  */
 #define SET_TIMER_MODE(tccrA, tccrB, wgmMode, comMode) \
         do { \
             SET_TIMER_MODE_WGM(tccrA, tccrB, wgmMode); \
             SET_TIMER_MODE_COM(tccrA, comMode); \
         } while (0)
- 
+
 /*!
  * Helper macro to set the clock source bits of timer control register B
- * 
- * @param[in/out] tccrB     Timer control register B 
+ *
+ * @param[in/out] tccrB     Timer control register B
  *                          (i.e. TCCR1B for 16-bit timer 1)
  * @param[in]     source    The desired clock source for the timer/counter
  */
@@ -125,8 +125,8 @@
 
 /*!
  * Helper macro to set output compare register to provided value
- * 
- * @param[in/out] reg   Output compare register 
+ *
+ * @param[in/out] reg   Output compare register
  *                      (i.e. OCR1{A,B,C} for 16-bit Timer 1)
  * @param[in]     val   The value reg is set to
  */

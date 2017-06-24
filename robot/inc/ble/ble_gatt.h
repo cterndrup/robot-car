@@ -88,7 +88,7 @@ typedef struct BLE_GATT_CHAR
     ble_char_index          index;
 
     ble_char_uuid           uuid;
-    ble_char_properties     properties;    
+    ble_char_properties     properties;
 
     ble_char_value_min_len  minLen;
     ble_char_value_max_len  maxLen;

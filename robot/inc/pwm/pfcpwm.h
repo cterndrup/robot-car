@@ -24,7 +24,7 @@ typedef struct PWM PWM;
 
 /*!
  * Type definition for the PWM object's constructor
- * 
+ *
  * @param[in/out] pPWM      pointer to the PWM object to construct
  * @param[in/out] ddr       A data direction register for port
  * @param[in]     bit1      The bit of port to initialize PWM on
@@ -52,7 +52,7 @@ typedef STATUS PWMConstruct(PWM *pPWM, REG8 *ddr, uint8_t bit1, uint8_t bit2,
  * PWM.
  *
  * @param[in/out] pPWM  pointer to PWM object to initialize
- * 
+ *
  * @return STATUS_OK if PWM initialized successfully
  * @return STATUS_ERR_INVALID_PTR if input pointer is NULL
  */
@@ -60,7 +60,7 @@ typedef STATUS PWMInit(PWM *pPWM);
 
 /*!
  * Type definition for the PWM object's setDutyCycle method
- * 
+ *
  * param[in/out] pPWM   pointer to the PWM object's duty cycle to change
  * param[in]     pct    percent representing PWM duty cycle
  */
@@ -72,7 +72,7 @@ typedef STATUS PWMSetDutyCycle(PWM *pPWM, uint8_t pct);
 struct PWM
 {
     //
-    // This field is used for the purposes of determining which output 
+    // This field is used for the purposes of determining which output
     // compare register to modify when setting the PWM duty cycle.
     //
     uint8_t dir;
@@ -90,7 +90,7 @@ struct PWM
     // timer unit used for generating PWM
     //
     REG8   *prr;
-    uint8_t prrBit;    
+    uint8_t prrBit;
 
     //
     // Timer control registers and Clk source for underlying timer unit used
@@ -115,11 +115,11 @@ struct PWM
 // TODO: Deprecate use of this macro
 /*!
  * Helper macro to set the PWM duty cycle
- * 
- * @param[in/out] ocr   An output compare register 
+ *
+ * @param[in/out] ocr   An output compare register
  *                      (i.e. OCR1 for 16-bit timer 1)
  * @param[in]     pct   The duty cycle % (so 100% is 100, not 1)
- * 
+ *
  * @note OCRA must be greater than 100; Otherwise OCRB will be set to 0 due to
  *       integer division
  */

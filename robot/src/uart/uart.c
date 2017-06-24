@@ -31,8 +31,8 @@ uartConstruct
 
     // Copy registers
     uart->UDRn   = UDRn;
-    uart->UCSRnA = UCSRnA;   
-    uart->UCSRnB = UCSRnB;   
+    uart->UCSRnA = UCSRnA;
+    uart->UCSRnB = UCSRnB;
     uart->UCSRnC = UCSRnC;
     uart->UBRRnH = UBRRnH;
     uart->UBRRnL = UBRRnL;
@@ -112,5 +112,5 @@ uartTX(UART *uart, uint8_t data)
     while (!(*UCSRnA & (1 << UDREn)));
 
     // Transmit the byte
-    *(uart->UDRn) = data; 
+    *(uart->UDRn) = data;
 }

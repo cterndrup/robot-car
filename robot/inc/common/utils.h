@@ -57,9 +57,9 @@
  * Helper macro to set an I/O port's mode to either input or output
  *
  * @param[in/out] port  The I/O port whose mode is to be set
- * @param[in]     mode  The data direction mode of the port: either INPUT or 
+ * @param[in]     mode  The data direction mode of the port: either INPUT or
  *                      OUTPUT
- * 
+ *
  * @note port in this macro does not refer to PORT register, but rather to data
  *       direction register (DDR)
  */
@@ -132,7 +132,7 @@ typedef volatile uint8_t semaphore_t;
 
 /*!
  * Copies character string src to character string dst, including the NULL byte
- * 
+ *
  * @param[in/out] dst   The destination string
  * @param[in]     src   The source string
  *

@@ -49,7 +49,7 @@ typedef struct SDEP_MSG
     {
         // Type of SDEP msg
         uint8_t  msgtype;
-    
+
         // msgid (command, alert, or error)
         union msgid
         {
@@ -57,7 +57,7 @@ typedef struct SDEP_MSG
             uint16_t alertid;
             uint16_t errorid;
         } msgid;
-    
+
         // Length of the payload byte (or rsvd in case of error msg)
         uint8_t payloadLen;
     } hdr;
@@ -72,7 +72,7 @@ typedef struct SDEP_MSG
 typedef struct SDEP_MSG_BUFFER
 {
     // Mesage buffer
-    SDEP_MSG buffer[SDEP_MAX_PAYLOAD_LEN]; 
+    SDEP_MSG buffer[SDEP_MAX_PAYLOAD_LEN];
 
     // Number of messages most recently written into the buffer
     uint8_t  numMsgs;

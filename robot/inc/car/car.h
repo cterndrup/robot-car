@@ -48,7 +48,7 @@ typedef void CarConstruct(Car   *pCar,
  * Drives the car according to given speed and direction
  *
  * @param[in/out] pCar      Pointer to Car object
- * @param[in]     speed     Speed to drive (as % of total speed) 
+ * @param[in]     speed     Speed to drive (as % of total speed)
  * @param[in]     direction Direction to drive relative to front of the car
  */
 typedef void CarDrive(Car *pCar, uint8_t speed, uint8_t direction);

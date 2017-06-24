@@ -69,7 +69,7 @@ spiMasterSendByte(uint8_t sendByte, uint8_t *pRecvByte)
         *pRecvByte = SPDR;
 
     //
-    // Responsibility of the caller to pull SS high when transmission is 
+    // Responsibility of the caller to pull SS high when transmission is
     // complete
     //
 }
@@ -81,7 +81,7 @@ uint8_t
 spiMasterRecvByte(void)
 {
     uint8_t data;
-    spiMasterSendByte(0xFF, &data); 
+    spiMasterSendByte(0xFF, &data);
     return data;
 }
 

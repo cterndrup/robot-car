@@ -65,6 +65,24 @@ typedef void BleServicesConfigure(BLE *pBLE);
  */
 typedef void BleCharacteristicUpdate(BLE *pBLE, BLE_GATT_CHAR *pChar);
 
+/*!
+ * Pings BLE module to check if in command mode
+ *
+ * @param[in/out] pBLE     Pointer to BLE object
+ *
+ * @return 0 if in command mode, 1 otherwise
+ */
+typedef uint8_t BlePing(BLE *pBLE);
+
+/*!
+ * Displays basic info about the BLE module
+ *
+ * @param[in/out] pBLE      Pointer to BLE object
+ * @param[in/out] info      Character array into which info is written
+ * @param[in]     infoLen   Length of the character array
+ */
+typedef void BleInfo(BLE *pBLE, char info[], uint8_t infoLen);
+
 /* ------------------------ STRUCT DEFINITION ------------------------------- */
 
 /*!
@@ -83,6 +101,10 @@ struct BLE
 
     // BLE Characteristics methods
     BleCharacteristicUpdate *bleCharacteristicUpdate;
+
+    // BLE Utilities
+    BlePing                 *blePing;
+    BleInfo                 *bleInfo;
 };
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
@@ -96,5 +118,9 @@ BleServicesConfigure    bleServicesConfigure;
 
 // BLE Characteristics methods
 BleCharacteristicUpdate bleCharacteristicUpdate;
+
+// BLE Utilities
+BlePing                 blePing;
+BleInfo                 bleInfo;
 
 #endif // _BLE_H_

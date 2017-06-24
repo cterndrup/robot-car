@@ -3,6 +3,7 @@
 /* ------------------------ SYSTEM INCLUDES --------------------------------- */
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <string.h>
 
 /* ------------------------ APPLICATION INCLUDES ---------------------------- */
 #include "spi/spi.h"
@@ -249,7 +250,7 @@ static const char *atBleUartTx = "AT+BLEUARTTX";
 /*!
  * Command Name: AT+BLEUARTTXF
  * Decription:   This is a convenience function that serves the same purpose as
- *               AT+BLEUARTTX, but data is immediately sent in a single BLE 
+ *               AT+BLEUARTTX, but data is immediately sent in a single BLE
  *               packet
  */
 static const char *atBleUartTxF = "AT+BLEUARTTXF";
@@ -365,8 +366,8 @@ static const char *atBleBattVal = "AT+BLEBATTVAL";
 
 
 /* DEBUG AT-COMMANDS */
-/*! 
- * NOTE: Debug commands should be used with care since they can easily lead to 
+/*!
+ * NOTE: Debug commands should be used with care since they can easily lead to
  *       HardFault on ARM Cortex-M core of BLE module
  */
 
@@ -445,7 +446,7 @@ static const char *atGapIntervals = "AT+GAPINTERVALS";
 
 /*!
  * Command Name: AT+GAPSTARTADV
- * Description:  Causes the Bluefruit LE module to start transmitting 
+ * Description:  Causes the Bluefruit LE module to start transmitting
  *               advertising packets if this isn't already the case
  */
 static const char *atGapStartAdv = "AT+GAPSTARTADV";
@@ -632,9 +633,9 @@ _bleCmdSend
             uint8_t j;
             for (j = 0; j < len; ++j)
             {
-                reply[k++] = sdepRespBuffer.buffer[i].payload[j]; 
+                reply[k++] = sdepRespBuffer.buffer[i].payload[j];
             }
-        }   
+        }
     }
 
     // Clear the semaphore
@@ -673,7 +674,7 @@ _bleGattCharacteristicRead
  * @param[in/out] pChar     Pointer to BLE GATT characteristic to write
  * @param[in]     value     Value of characteristic to set
  */
-static void 
+static void
 _bleGattCharacteristicWrite
 (
     BLE_GATT_CHAR  *pChar,
@@ -693,7 +694,7 @@ _bleGattCharacteristicWrite
     {
         *p = *idx;
         ++p;
-        ++idx; 
+        ++idx;
     }
     *p = ',';
     ++p;
@@ -843,6 +844,8 @@ bleConstruct(BLE *pBLE)
     pBLE->bleInitialize           = bleInitialize;
     pBLE->bleServicesConfigure    = bleServicesConfigure;
     pBLE->bleCharacteristicUpdate = bleCharacteristicUpdate;
+    pBLE->blePing                 = blePing;
+    pBLE->bleInfo                 = bleInfo;
 }
 
 /*!
@@ -937,6 +940,35 @@ bleCharacteristicUpdate
         // Call characteristic update handler
         pChar->handler(&newValue[0]);
     }
+}
+
+/*!
+ * @ref ble.h for function documentation
+ */
+uint8_t
+blePing(BLE *pBLE)
+{
+    char reply[SDEP_MAX_FULL_MSG_LEN];
+    memset(&reply[0], 0, SDEP_MAX_FULL_MSG_LEN);
+
+    _bleCmdSend(at, BLE_CMD_EMPTY_PAYLOAD, EXEC, &reply[0]);
+
+    return !(reply[0] == 'O' && reply[1] == 'K');
+}
+
+/*!
+ * @ref ble.h for function documentation
+ */
+void
+bleInfo(BLE *pBLE, char info[], uint8_t infoLen)
+{
+    char reply[SDEP_MAX_FULL_MSG_LEN];
+    memset(&reply[0], 0, SDEP_MAX_FULL_MSG_LEN);
+
+    _bleCmdSend(ati, BLE_CMD_EMPTY_PAYLOAD, EXEC, &reply[0]);
+    memcpy(&info[0],
+           &reply[0],
+           infoLen < SDEP_MAX_FULL_MSG_LEN ? infoLen : SDEP_MAX_FULL_MSG_LEN);
 }
 
 /* ------------------------ ISR DEFS ---------------------------------------- */
