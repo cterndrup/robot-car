@@ -36,8 +36,8 @@ spiMasterInit(void)
     // Select Master
     SET_BIT(SPCR, MSTR);
 
-    // Enable SPI interrupts
-    SET_BIT(SPCR, SPIE);
+    // Disable SPI interrupts
+    CLEAR_BIT(SPCR, SPIE);
 
     // Enable SPI
     SET_BIT(SPCR, SPE);
