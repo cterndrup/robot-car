@@ -25,6 +25,9 @@ spiMasterInit(void)
     SET_PORT_BIT_OUTPUT(DDR_SPI, SCK);
     SET_PORT_BIT_OUTPUT(DDR_SPI, MOSI);
 
+    // MISO as input
+    SET_PORT_BIT_INPUT(DDR_SPI, MISO);
+
     // Select Clock Polarity/Phase
     CLEAR_BIT(SPCR, CPOL);
     CLEAR_BIT(SPCR, CPHA);
