@@ -2,6 +2,7 @@
 
 /* ------------------------- SYSTEM INCLUDES -------------------------------- */
 #include <stdlib.h>
+#include <util/delay.h>
 
 /* ------------------------- APPLICATION INCLUDES --------------------------- */
 #include "lcd/lcd.h"
@@ -89,4 +90,30 @@ lcdWrite(LCD *lcd, const char *str)
         lcd->lcdCharacterSend(lcd, *str);
         str++;
     }
+}
+
+/*!
+ * @ref lcd.h for function documentation
+ */
+void
+lcdPrintln(LCD *lcd, const char *str)
+{
+    if (lcd == NULL || str == NULL)
+        return;
+
+    lcd->lcdWrite(lcd, str);
+    lcd->lcdCursorCmdSend(lcd, LCD_CURSOR_CMD_CR);
+}
+
+/*!
+ * @ref lcd.h for function documentation
+ */
+void
+lcdClear(LCD *lcd)
+{
+    if (lcd == NULL)
+        return;
+
+    lcd->lcdCursorCmdSend(lcd, LCD_CURSOR_CMD_FF);
+    _delay_ms(10); // Time for LCD to clear display
 }

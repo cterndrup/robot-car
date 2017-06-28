@@ -146,6 +146,23 @@ void LcdCharacterSend(LCD *lcd, char c);
 typedef
 void LcdWrite(LCD *lcd, const char *str);
 
+/*!
+ * Function to write character string to LCD followed by a new line
+ *
+ * @param[in/out] lcd   Pointer to LCD object
+ * @param[in]     str   String to send to LCD
+ */
+typedef
+void LcdPrintln(LCD *lcd, const char *str);
+
+/*!
+ * Function to clear LCD screen
+ *
+ * @param[in/out] lcd   Pointer to LCD object
+ */
+typedef
+void LcdClear(LCD *lcd);
+
 /* ------------------------ STRUCTURE DEFINITION  --------------------------- */
 
 /*!
@@ -161,6 +178,8 @@ struct LCD
     LcdDisplayCmdSend   *lcdDisplayCmdSend;
     LcdCharacterSend    *lcdCharacterSend;
     LcdWrite            *lcdWrite;
+    LcdPrintln          *lcdPrintln;
+    LcdClear            *lcdClear;
 };
 
 /* ------------------------ FUNCTION PROTOTYPES ----------------------------- */
@@ -170,5 +189,7 @@ LcdBacklightCmdSend lcdBacklightCmdSend;
 LcdDisplayCmdSend   lcdDisplayCmdSend;
 LcdCharacterSend    lcdCharacterSend;
 LcdWrite            lcdWrite;
+LcdPrintln          lcdPrintln;
+LcdClear            lcdClear;
 
 #endif // _LCD_H_
