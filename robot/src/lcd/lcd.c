@@ -26,6 +26,8 @@ lcdConstruct(LCD *lcd, UART *uart)
     lcd->lcdDisplayCmdSend   = lcdDisplayCmdSend;
     lcd->lcdCharacterSend    = lcdCharacterSend;
     lcd->lcdWrite            = lcdWrite;
+    lcd->lcdPrintln          = lcdPrintln;
+    lcd->lcdClear            = lcdClear;
 }
 
 /*!
