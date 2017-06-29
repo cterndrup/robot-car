@@ -25,8 +25,8 @@ int main(void)
     lcdConstruct(&lcd, &uart);
     lcd.lcdDisplayCmdSend(&lcd, LCD_DISPLAY_CMD_ON_CURSOR_BLINK);
     lcd.lcdBacklightCmdSend(&lcd, LCD_BACKLIGHT_CMD_ON);
-    lcd.lcdCursorCmdSend(&lcd, LCD_CURSOR_CMD_FF); _delay_ms(10);
-    lcd.lcdWrite(&lcd, "TEST!");
+    lcd.lcdClear(&lcd);
+    lcd.lcdPrintln(&lcd, "TEST!");
 
     while(1);
 

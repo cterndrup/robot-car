@@ -1,5 +1,6 @@
 /*! Tests for BLE */
 
+#include <util/delay.h>
 #include "car/car.h"
 #include "ble/ble.h"
 #include "lcd/lcd.h"
@@ -34,6 +35,7 @@ int main(void)
 
     // LCD init
     lcdConstruct(&lcd, &uart);
+    lcd.lcdClear(&lcd);
     lcd.lcdDisplayCmdSend(&lcd, LCD_DISPLAY_CMD_ON_CURSOR_BLINK);
     lcd.lcdBacklightCmdSend(&lcd, LCD_BACKLIGHT_CMD_ON);
 
@@ -47,17 +49,19 @@ int main(void)
     // BLE tests
     res1 = blePingTest(&ble);
     if (res1) {
-        lcd.lcdWrite(&lcd, "PING TEST: FAILED");
+        lcd.lcdPrintln(&lcd, "PING TEST: FAIL");
     } else {
-        lcd.lcdWrite(&lcd, "PING TEST: PASSED");
+        lcd.lcdPrintln(&lcd, "PING TEST: PASS");
     }
+
+    _delay_ms(1000);
 
     res2 = bleInfoTest(&ble);
     if (res2) {
-        lcd.lcdWrite(&lcd, "INFO TEST: FAILED");
+        lcd.lcdPrintln(&lcd, "INFO TEST: FAIL");
     } else {
-        lcd.lcdWrite(&lcd, "INFO TEST: PASSED");
-    } 
+        lcd.lcdPrintln(&lcd, "INFO TEST: PASS");
+    }
 
     return 0;
 }
